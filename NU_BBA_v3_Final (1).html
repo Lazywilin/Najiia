@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NU BBA Prep — by Waterflame</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090f;--bg2:#0b1018;--bg3:#10161f;--card:#131b28;
+  --border:#192538;--border2:#243350;
+  --gold:#d4a843;--gold2:#f0c84a;--goldg:rgba(212,168,67,.12);
+  --cream:#f0e2c0;--muted:#7a8fa8;--muted2:#a0b4cc;
+  --green:#3ecf8e;--green2:rgba(62,207,142,.14);
+  --red:#f87171;--red2:rgba(248,113,113,.13);
+  --blue:#60a5fa;--blue2:rgba(96,165,250,.12);
+  --purple:#a78bfa;--purple2:rgba(167,139,250,.12);
+  --r:10px;--rs:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--cream);font-family:'Crimson Pro',Georgia,serif;min-height:100vh;overflow-x:hidden}
+button,select,input{font-family:inherit;cursor:pointer}
+::-webkit-scrollbar{width:5px;height:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:9999}
+
+/* ══ NAV ══ */
+#topnav{position:fixed;top:0;left:0;right:0;z-index:200;height:52px;background:rgba(7,9,15,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1rem;gap:.3rem;overflow-x:auto}
+#topnav::-webkit-scrollbar{height:0}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:.9rem;color:var(--gold);white-space:nowrap;margin-right:.5rem;flex-shrink:0}
+.nb{background:none;border:1px solid transparent;color:var(--muted);font-size:.78rem;padding:.28rem .65rem;border-radius:4px;transition:all .18s;white-space:nowrap;flex-shrink:0}
+.nb:hover{background:var(--goldg);border-color:rgba(212,168,67,.22);color:var(--gold)}
+.nb.on{background:var(--goldg);border-color:rgba(212,168,67,.35);color:var(--gold)}
+.nb-test{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0a0a;border:none;font-weight:700;padding:.28rem .9rem;border-radius:4px}
+.nb-test:hover{opacity:.88;transform:translateY(-1px)}
+.nb-about{border-color:rgba(167,139,250,.3);color:var(--purple)}
+.nb-about:hover,.nb-about.on{background:var(--purple2);border-color:rgba(167,139,250,.45);color:var(--purple)}
+
+/* ══ PANELS ══ */
+.panel{display:none;padding-top:52px;min-height:100vh}
+.panel.on{display:block;animation:fadeIn .22s ease}
+
+/* ══ HOME ══ */
+#home-hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 1.5rem 4rem;text-align:center;position:relative;overflow:hidden}
+.home-glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(212,168,67,.08) 0%,transparent 68%),radial-gradient(ellipse 40% 35% at 85% 70%,rgba(167,139,250,.05) 0%,transparent 60%);pointer-events:none}
+.h-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(212,168,67,.08);border:1px solid rgba(212,168,67,.22);border-radius:100px;padding:.3rem 1rem;font-size:.72rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.4rem;animation:fadeUp .7s ease both}
+.h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,4.2rem);font-weight:900;line-height:1.07;color:#fff;margin-bottom:.8rem;animation:fadeUp .75s ease .07s both}
+.h1 em{color:var(--gold);font-style:normal}
+.h-quote{font-style:italic;font-size:clamp(.95rem,2vw,1.1rem);color:var(--muted2);max-width:500px;line-height:1.8;margin-bottom:2rem;animation:fadeUp .75s ease .14s both}
+.h-quote strong{color:var(--cream);font-style:normal}
+.h-btns{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center;animation:fadeUp .75s ease .2s both}
+.btn-pri{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0a0a;font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;padding:.7rem 1.9rem;border:none;border-radius:var(--rs);transition:all .22s}
+.btn-pri:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(212,168,67,.3)}
+.btn-sec{background:none;color:var(--cream);font-family:'Playfair Display',serif;font-weight:600;font-size:.9rem;padding:.68rem 1.6rem;border:1px solid var(--border2);border-radius:var(--rs);transition:all .22s}
+.btn-sec:hover{border-color:rgba(212,168,67,.4);color:var(--gold)}
+.btn-ghost{background:none;color:var(--purple);font-family:'Playfair Display',serif;font-weight:600;font-size:.9rem;padding:.68rem 1.6rem;border:1px solid rgba(167,139,250,.3);border-radius:var(--rs);transition:all .22s}
+.btn-ghost:hover{background:var(--purple2);border-color:rgba(167,139,250,.5)}
+
+/* Quick stats strip */
+.qs-strip{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem;margin:2rem 0 1.5rem;animation:fadeUp .75s ease .26s both}
+.qs-item{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:.55rem 1rem;text-align:center;min-width:100px}
+.qs-val{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--gold)}
+.qs-lbl{font-size:.63rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-top:.15rem}
+
+/* Home sections */
+.home-sections{max-width:1100px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:2.5rem 0}
+.home-section-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem}
+.home-section-title em{color:var(--gold);font-style:normal}
+
+/* Info cards grid */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.85rem}
+.ic{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem 1.2rem;position:relative;overflow:hidden;transition:border-color .2s,transform .2s}
+.ic::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.ic.gold::before{background:linear-gradient(90deg,var(--gold),transparent)}
+.ic.green::before{background:linear-gradient(90deg,var(--green),transparent)}
+.ic.blue::before{background:linear-gradient(90deg,var(--blue),transparent)}
+.ic.purple::before{background:linear-gradient(90deg,var(--purple),transparent)}
+.ic:hover{border-color:var(--border2);transform:translateY(-1px)}
+.ic .ico{font-size:1.4rem;margin-bottom:.55rem}
+.ic h3{font-family:'Playfair Display',serif;font-size:.92rem;color:#fff;margin-bottom:.45rem}
+.ic li{color:var(--muted);font-size:.81rem;line-height:1.6;margin-bottom:.2rem}
+.ic ul{padding-left:1rem}
+.ic p{color:var(--muted);font-size:.82rem;line-height:1.6}
+
+/* Motivation card */
+.motiv-card{background:linear-gradient(135deg,rgba(212,168,67,.06),rgba(167,139,250,.05));border:1px solid rgba(212,168,67,.2);border-radius:var(--r);padding:1.4rem 1.6rem;text-align:center;margin-bottom:1.2rem}
+.motiv-q{font-family:'Playfair Display',serif;font-size:1.05rem;font-style:italic;color:var(--cream);line-height:1.7;margin-bottom:.4rem}
+.motiv-src{font-size:.75rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+
+/* Countdown */
+.exam-countdown{background:var(--card);border:1px solid rgba(212,168,67,.2);border-radius:var(--r);padding:1.1rem 1.4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;margin-bottom:1.2rem}
+.ec-label{font-family:'Playfair Display',serif;font-size:1rem;color:var(--cream)}
+.ec-date{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--gold)}
+.ec-days{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--gold)}
+.ec-dsub{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+
+/* Tips */
+.tips-list{display:flex;flex-direction:column;gap:.5rem}
+.tip-row{display:flex;align-items:flex-start;gap:.8rem;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:.75rem 1rem}
+.tip-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--gold);background:var(--goldg);border:1px solid rgba(212,168,67,.2);border-radius:3px;padding:.15rem .4rem;min-width:1.8rem;text-align:center;flex-shrink:0;margin-top:.1rem}
+.tip-txt{font-size:.85rem;color:var(--muted2);line-height:1.55}
+.tip-txt strong{color:var(--cream)}
+
+/* Start reading cta */
+.start-reading-cta{text-align:center;padding:2rem 0}
+.btn-start{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0a0a;font-family:'Playfair Display',serif;font-weight:900;font-size:1.1rem;padding:.9rem 3rem;border:none;border-radius:50px;transition:all .25s;box-shadow:0 4px 20px rgba(212,168,67,.25);letter-spacing:.03em}
+.btn-start:hover{transform:translateY(-3px);box-shadow:0 10px 35px rgba(212,168,67,.38)}
+.btn-start::after{content:' →';font-size:1.1rem}
+
+/* ══ SUBJECTS ══ */
+.subjects-wrap{max-width:1100px;margin:0 auto;padding:1.5rem}
+.subjects-welcome{font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff;margin-bottom:.4rem}
+.subjects-sub{color:var(--muted);font-size:.88rem;margin-bottom:1.5rem}
+.subject-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+.subj-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:1.4rem;cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
+.subj-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,168,67,.04),transparent);opacity:0;transition:opacity .22s}
+.subj-card:hover{border-color:rgba(212,168,67,.35);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.subj-card:hover::after{opacity:1}
+.sc-icon{font-size:2.2rem;margin-bottom:.75rem}
+.sc-name{font-family:'Playfair Display',serif;font-size:1.15rem;color:#fff;margin-bottom:.35rem}
+.sc-desc{color:var(--muted);font-size:.82rem;margin-bottom.6rem;margin-bottom:.6rem;line-height:1.5}
+.sc-stats{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.75rem}
+.sc-stat{background:var(--bg3);border:1px solid var(--border);border-radius:100px;padding:.18rem .7rem;font-size:.72rem;color:var(--muted)}
+.sc-stat strong{color:var(--cream)}
+.sc-enter{display:inline-flex;align-items:center;gap:.3rem;margin-top:.9rem;background:var(--goldg);border:1px solid rgba(212,168,67,.25);color:var(--gold);font-size:.8rem;padding:.3rem .85rem;border-radius:100px;transition:all .18s}
+.subj-card:hover .sc-enter{background:rgba(212,168,67,.18)}
+
+/* Subject reader */
+.subj-reader{display:none;max-width:1100px;margin:0 auto;padding:1.2rem 1rem 3rem}
+.subj-reader.on{display:block;animation:fadeIn .2s ease}
+.reader-topbar{display:flex;align-items:center;gap:.7rem;margin-bottom:1.4rem;flex-wrap:wrap}
+.back-btn{background:var(--bg3);border:1px solid var(--border);color:var(--muted2);font-size:.82rem;padding:.35rem .9rem;border-radius:var(--rs);transition:all .2s;display:flex;align-items:center;gap:.3rem}
+.back-btn:hover{border-color:var(--gold);color:var(--gold)}
+.reader-title{font-family:'Playfair Display',serif;font-size:1.4rem;color:#fff}
+.reader-desc{color:var(--muted);font-size:.85rem}
+.reader-meta{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:.5rem}
+.r-pill{background:var(--bg3);border:1px solid var(--border);border-radius:100px;padding:.2rem .8rem;font-size:.73rem;color:var(--muted)}
+.r-pill strong{color:var(--cream)}
+
+/* Tips box */
+.tips-box{background:var(--card);border:1px solid rgba(212,168,67,.18);border-radius:var(--r);padding:1.1rem 1.3rem;margin-bottom:1.1rem}
+.tips-box h4{font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:.65rem;font-size:.88rem}
+.tips-box ol{padding-left:1.1rem}
+.tips-box li{color:var(--muted2);font-size:.82rem;margin-bottom:.4rem;line-height:1.55}
+.tips-box li strong{color:var(--cream)}
+
+/* Chapter star badge for chapters */
+.ch-stars{font-size:.68rem;white-space:nowrap}
+
+/* Chapter accordion */
+.chapter-list{display:flex;flex-direction:column;gap:.5rem}
+.chapter{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .22s}
+.chapter.open{border-color:var(--border2)}
+.ch-head{display:flex;align-items:center;gap:.7rem;padding:.85rem 1.1rem;cursor:pointer;user-select:none;transition:background .18s}
+.ch-head:hover{background:rgba(255,255,255,.022)}
+.ch-num{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);min-width:1.6rem;flex-shrink:0}
+.ch-name{font-family:'Playfair Display',serif;font-size:.88rem;color:#fff;flex:1;line-height:1.3}
+.ch-meta{display:flex;align-items:center;gap:.55rem;margin-left:auto;flex-shrink:0}
+.ch-cnt{font-size:.68rem;color:var(--muted);font-family:'JetBrains Mono',monospace;background:var(--bg3);padding:.14rem .45rem;border-radius:3px;border:1px solid var(--border)}
+.ch-prog-w{width:50px;height:4px;background:var(--border);border-radius:100px;overflow:hidden}
+.ch-prog-f{height:100%;background:var(--green);border-radius:100px;transition:width .35s;width:0}
+.ch-arrow{color:var(--muted);font-size:.72rem;transition:transform .28s}
+.chapter.open .ch-arrow{transform:rotate(180deg)}
+.ch-body{display:none;padding:0 1.1rem 1.1rem}
+.chapter.open .ch-body{display:block;animation:fadeIn .18s ease}
+
+/* MCQ (reading mode - NO points) */
+.mcq-list{display:flex;flex-direction:column;gap:.5rem;margin-top:.4rem}
+.mcq{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:.82rem .95rem;transition:border-color .18s}
+.mcq.r-correct{border-color:rgba(62,207,142,.3);background:rgba(62,207,142,.03)}
+.mcq.r-wrong{border-color:rgba(248,113,113,.25);background:rgba(248,113,113,.025)}
+.mcq-top{display:flex;align-items:flex-start;gap:.55rem}
+.mcq-qn{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);min-width:1.9rem;margin-top:.14rem;flex-shrink:0}
+.mcq-q{font-size:.9rem;color:var(--cream);line-height:1.55;flex:1}
+.mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:.3rem;margin-top:.6rem;margin-left:2.45rem}
+@media(max-width:540px){.mcq-opts{grid-template-columns:1fr}}
+.opt{background:rgba(255,255,255,.032);border:1px solid var(--border);border-radius:var(--rs);padding:.36rem .62rem;font-size:.8rem;color:var(--muted2);text-align:left;transition:all .16s;line-height:1.4;font-family:'Crimson Pro',serif}
+.opt:hover:not(:disabled){background:rgba(212,168,67,.07);border-color:rgba(212,168,67,.26);color:var(--cream)}
+.opt.c-right{background:var(--green2)!important;border-color:rgba(62,207,142,.42)!important;color:var(--green)!important}
+.opt.c-wrong{background:var(--red2)!important;border-color:rgba(248,113,113,.35)!important;color:var(--red)!important}
+.opt.c-show{background:var(--green2)!important;border-color:rgba(62,207,142,.42)!important;color:var(--green)!important}
+.mcq-foot{margin-top:.45rem;margin-left:2.45rem;display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+.show-btn{background:none;border:1px solid var(--border);color:var(--muted);font-size:.7rem;padding:.18rem .55rem;border-radius:3px;transition:all .18s}
+.show-btn:hover{border-color:var(--gold);color:var(--gold)}
+.ans-txt{font-size:.77rem;color:var(--green);display:none}
+.ans-txt.show{display:inline}
+
+/* ans key */
+.ans-key{background:rgba(0,0,0,.18);border:1px solid var(--border);border-radius:var(--rs);padding:.8rem .9rem;margin-top:.9rem}
+.ans-key h5{font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:.5rem;font-size:.82rem}
+.ans-key-grid{display:flex;flex-wrap:wrap;gap:.25rem}
+.ak-pill{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:.12rem .45rem;font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--muted)}
+.ak-pill span{color:var(--green)}
+
+/* ══ TEST TAB ══ */
+.test-tab-wrap{max-width:1100px;margin:0 auto;padding:1.5rem}
+.test-tab-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff;margin-bottom:.4rem}
+.test-tab-sub{color:var(--muted);font-size:.88rem;margin-bottom:1.5rem}
+.mode-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.1rem;margin-bottom:2rem}
+.mode-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:1.5rem;transition:all .22s;position:relative;overflow:hidden;cursor:pointer}
+.mode-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.mode-card.practice::before{background:linear-gradient(90deg,var(--blue),var(--purple))}
+.mode-card.exam::before{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.mode-card:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(0,0,0,.4)}
+.mode-card.practice:hover{border-color:rgba(96,165,250,.35)}
+.mode-card.exam:hover{border-color:rgba(212,168,67,.35)}
+.mc-icon{font-size:2rem;margin-bottom:.75rem}
+.mc-name{font-family:'Playfair Display',serif;font-size:1.25rem;color:#fff;margin-bottom:.5rem}
+.mc-desc{color:var(--muted);font-size:.83rem;line-height:1.6;margin-bottom:.9rem}
+.mc-features{display:flex;flex-direction:column;gap:.3rem;margin-bottom:1rem}
+.mc-feat{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted2)}
+.mc-feat::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.mc-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.5rem 1.3rem;border-radius:var(--rs);font-size:.85rem;font-weight:600;font-family:'Playfair Display',serif;border:none;transition:all .2s}
+.mc-btn.b-blue{background:var(--blue2);color:var(--blue);border:1px solid rgba(96,165,250,.3)}
+.mc-btn.b-blue:hover{background:rgba(96,165,250,.22)}
+.mc-btn.b-gold{background:var(--goldg);color:var(--gold);border:1px solid rgba(212,168,67,.3)}
+.mc-btn.b-gold:hover{background:rgba(212,168,67,.2)}
+
+/* Difficulty grid */
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-bottom:1.1rem}
+@media(max-width:500px){.diff-grid{grid-template-columns:1fr}}
+.diff-card{background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--rs);padding:.9rem;cursor:pointer;transition:all .2s;text-align:center}
+.diff-card:hover,.diff-card.sel{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.diff-card.easy.sel{border-color:var(--green);background:var(--green2)}
+.diff-card.medium.sel{border-color:var(--gold);background:var(--goldg)}
+.diff-card.hard.sel{border-color:var(--red);background:var(--red2)}
+.diff-icon{font-size:1.5rem;margin-bottom:.4rem}
+.diff-name{font-family:'Playfair Display',serif;font-size:.9rem;color:#fff;margin-bottom:.3rem}
+.diff-info{font-size:.72rem;color:var(--muted);line-height:1.5}
+
+/* ══ MODAL ══ */
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:500;overflow-y:auto;backdrop-filter:blur(10px);padding:1.5rem 1rem}
+#modal.on{display:flex;align-items:flex-start;justify-content:center}
+.modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;width:100%;max-width:700px;box-shadow:0 24px 60px rgba(0,0,0,.6);overflow:hidden}
+.modal-hd{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.3rem;border-bottom:1px solid var(--border);background:var(--card)}
+.modal-hd h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff}
+.m-close{background:none;border:none;color:var(--muted);font-size:1.3rem;padding:.2rem;transition:color .18s}
+.m-close:hover{color:var(--red)}
+.modal-bd{padding:1.3rem}
+
+/* Form elements */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.9rem}
+@media(max-width:460px){.form-row{grid-template-columns:1fr}}
+.form-group label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:.35rem}
+.form-sel,.form-inp{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--cream);font-family:'Crimson Pro',serif;font-size:.9rem;padding:.48rem .7rem;border-radius:var(--rs);outline:none;transition:border-color .18s;-webkit-appearance:none;appearance:none}
+.form-sel:focus,.form-inp:focus{border-color:rgba(212,168,67,.38)}
+option{background:var(--bg3)}
+
+/* Chap checklist */
+.chap-checks{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;margin:.5rem 0 .9rem}
+@media(max-width:440px){.chap-checks{grid-template-columns:1fr}}
+.cc-lbl{display:flex;align-items:center;gap:.45rem;padding:.4rem .65rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);cursor:pointer;font-size:.8rem;color:var(--muted2);transition:all .18s}
+.cc-lbl:hover{border-color:rgba(212,168,67,.28);color:var(--cream)}
+.cc-lbl.ck{border-color:rgba(212,168,67,.35);background:var(--goldg);color:var(--cream)}
+.cc-lbl input{accent-color:var(--gold);cursor:pointer}
+
+/* ══ ACTIVE TEST/EXAM UI ══ */
+#exam-screen{display:none}
+.exam-topbar{position:sticky;top:52px;z-index:50;background:rgba(7,9,15,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:.7rem 1rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.ex-title{font-family:'Playfair Display',serif;font-size:.9rem;color:#fff;flex:1;min-width:120px}
+.ex-prog-txt{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted2)}
+.ex-timer{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:600;color:var(--cream);background:var(--bg3);padding:.28rem .75rem;border-radius:var(--rs);border:1px solid var(--border);min-width:60px;text-align:center}
+.ex-timer.warn{color:var(--gold);border-color:rgba(212,168,67,.35)}
+.ex-timer.urgent{color:var(--red);border-color:rgba(248,113,113,.35);animation:pulseR 1s infinite}
+.ex-score-live{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--gold);white-space:nowrap}
+.ex-prog-bar-w{width:100%;height:3px;background:var(--border);border-radius:100px;overflow:hidden}
+.ex-prog-bar-f{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:100px;transition:width .3s}
+.ex-time-per-q{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--muted);white-space:nowrap}
+
+.exam-body{max-width:780px;margin:0 auto;padding:1.1rem 1rem 2rem}
+.ex-q-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem 1.2rem;margin-bottom:.65rem}
+.ex-q-info{font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-bottom:.5rem}
+.ex-q-txt{font-size:.95rem;color:var(--cream);line-height:1.6;margin-bottom:.85rem}
+.ex-opts{display:grid;grid-template-columns:1fr 1fr;gap:.35rem}
+@media(max-width:500px){.ex-opts{grid-template-columns:1fr}}
+.ex-opt{background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:var(--rs);padding:.4rem .7rem;font-size:.83rem;color:var(--muted2);text-align:left;transition:all .17s;font-family:'Crimson Pro',serif;line-height:1.4}
+.ex-opt:hover:not(:disabled){background:rgba(212,168,67,.07);border-color:rgba(212,168,67,.28);color:var(--cream)}
+.ex-opt.sel{background:var(--blue2)!important;border-color:rgba(96,165,250,.42)!important;color:var(--blue)!important}
+.ex-opt.ex-right{background:var(--green2)!important;border-color:rgba(62,207,142,.5)!important;color:var(--green)!important}
+.ex-opt.ex-wrong{background:var(--red2)!important;border-color:rgba(248,113,113,.4)!important;color:var(--red)!important}
+
+.ex-nav{display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
+.btn-nav{background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.5rem 1.2rem;border-radius:var(--rs);font-size:.83rem;transition:all .18s}
+.btn-nav:hover{border-color:var(--gold);color:var(--gold)}
+.btn-nav:disabled{opacity:.4;cursor:not-allowed}
+.btn-submit{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0a0a;border:none;padding:.5rem 1.4rem;border-radius:var(--rs);font-weight:700;font-size:.85rem}
+.btn-submit:hover{opacity:.9}
+
+/* Time taken per question (shown in review) */
+.q-time-tag{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:.1rem .4rem;border-radius:3px}
+
+/* ══ RESULTS ══ */
+#results-screen{display:none}
+.result-wrap{max-width:700px;margin:0 auto;padding:1rem 1rem 3rem}
+.result-hero{text-align:center;padding:1.5rem 1rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:1rem}
+.r-score-big{font-family:'Playfair Display',serif;font-size:3.8rem;font-weight:900;color:var(--gold);line-height:1}
+.r-of{font-size:.88rem;color:var(--muted);margin-top:.25rem}
+.r-grade{display:inline-block;margin:.5rem auto;padding:.28rem 1.1rem;border-radius:100px;font-size:.82rem;font-weight:700;letter-spacing:.07em}
+.rg-a{background:var(--green2);color:var(--green);border:1px solid rgba(62,207,142,.3)}
+.rg-b{background:var(--blue2);color:var(--blue);border:1px solid rgba(96,165,250,.3)}
+.rg-c{background:var(--goldg);color:var(--gold);border:1px solid rgba(212,168,67,.3)}
+.rg-d{background:var(--red2);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.r-pass{font-size:.78rem;padding:.22rem .7rem;border-radius:100px;margin-top:.3rem;display:inline-block}
+.r-pass.pass{background:var(--green2);color:var(--green);border:1px solid rgba(62,207,142,.3)}
+.r-pass.fail{background:var(--red2);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+
+.r-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem;margin-bottom:1rem}
+@media(max-width:420px){.r-stats{grid-template-columns:repeat(2,1fr)}}
+.r-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);text-align:center;padding:.6rem .4rem}
+.r-sv{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700}
+.r-sl{font-size:.65rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:.12rem}
+.rv-g{color:var(--green)}.rv-r{color:var(--red)}.rv-m{color:var(--muted2)}.rv-gold{color:var(--gold)}
+
+.r-chap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.1rem;margin-bottom:1rem}
+.r-chap h4{font-family:'Playfair Display',serif;color:var(--cream);font-size:.9rem;margin-bottom:.7rem}
+.rc-row{display:flex;align-items:center;gap:.5rem;font-size:.77rem;margin-bottom:.35rem;padding:.4rem .6rem;background:var(--bg3);border-radius:var(--rs)}
+.rc-name{flex:1;color:var(--cream);line-height:1.3}
+.rc-bar-w{width:70px;height:5px;background:var(--border);border-radius:100px;overflow:hidden;flex-shrink:0}
+.rc-bar-f{height:100%;border-radius:100px;transition:width .4s .2s}
+.rc-pct{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--muted2);min-width:2.5rem;text-align:right}
+.rc-c{color:var(--green)}.rc-w{color:var(--red)}
+
+.r-review{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.1rem;margin-bottom:1rem}
+.r-review h4{font-family:'Playfair Display',serif;color:var(--cream);font-size:.9rem;margin-bottom:.7rem}
+.rv-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:.7rem .85rem;margin-bottom:.45rem}
+.rv-qnum{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);margin-bottom:.3rem;display:flex;align-items:center;gap:.5rem}
+.rv-qtxt{font-size:.85rem;color:var(--cream);margin-bottom:.4rem;line-height:1.5}
+.rv-ans{font-size:.78rem;display:flex;gap:.8rem;flex-wrap:wrap}
+.rv-cor{color:var(--green)}.rv-usr{color:var(--red)}.rv-skip{color:var(--muted)}
+
+.r-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+
+/* ══ HISTORY ══ */
+.hist-wrap{max-width:1000px;margin:0 auto;padding:1.5rem}
+.hist-empty{text-align:center;color:var(--muted);padding:3rem;font-size:.9rem}
+.hist-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.hist-head h2{font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff}
+.hist-list{display:flex;flex-direction:column;gap:.5rem}
+.hi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.hi-head{display:flex;align-items:center;gap:.65rem;padding:.65rem .95rem;cursor:pointer}
+.hi-head:hover{background:rgba(255,255,255,.02)}
+.hi-date{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--muted);flex-shrink:0;min-width:7rem}
+.hi-name{font-size:.83rem;color:var(--cream);flex:1}
+.hi-mode{font-size:.7rem;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:.1rem .45rem;border-radius:3px}
+.hi-score{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;padding:.16rem .5rem;border-radius:4px}
+.hi-score.g{background:var(--green2);color:var(--green)}.hi-score.a{background:var(--goldg);color:var(--gold)}.hi-score.b{background:var(--red2);color:var(--red)}
+.hi-body{display:none;padding:.5rem .95rem .8rem;border-top:1px solid var(--border)}
+.hi.open .hi-body{display:block}
+.hi-row{display:flex;gap:.6rem;font-size:.77rem;margin-bottom:.35rem}
+.hi-chap-r{display:flex;align-items:center;gap:.45rem;font-size:.75rem;padding:.3rem .55rem;background:var(--bg3);border-radius:4px;margin-bottom:.25rem}
+.hi-cr{flex:1;color:var(--muted2)}.hi-cc{color:var(--green)}.hi-cw{color:var(--red)}
+
+/* ══ ABOUT ══ */
+.about-wrap{max-width:800px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.about-hero{background:linear-gradient(135deg,rgba(212,168,67,.06),rgba(167,139,250,.05));border:1px solid rgba(212,168,67,.18);border-radius:var(--r);padding:2rem;text-align:center;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.about-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(212,168,67,.06),transparent);pointer-events:none}
+.ab-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto .9rem;box-shadow:0 4px 20px rgba(212,168,67,.3)}
+.ab-name{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--gold);margin-bottom:.2rem}
+.ab-title{font-size:.82rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom.8rem;margin-bottom:.8rem}
+.ab-quote{font-style:italic;font-size:1rem;color:var(--muted2);max-width:480px;margin:0 auto;line-height:1.7}
+.ab-quote strong{color:var(--cream);font-style:normal}
+.about-section{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.3rem 1.4rem;margin-bottom:.9rem}
+.about-section h3{font-family:'Playfair Display',serif;color:var(--gold);font-size:.95rem;margin-bottom:.65rem;display:flex;align-items:center;gap:.4rem}
+.about-section p{color:var(--muted2);font-size:.85rem;line-height:1.7;margin-bottom:.5rem}
+.about-section p:last-child{margin-bottom:0}
+.ab-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top.6rem;margin-top:.6rem}
+@media(max-width:440px){.ab-stat-row{grid-template-columns:1fr 1fr}}
+.ab-stat{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);text-align:center;padding:.7rem}
+.ab-sv{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--gold)}
+.ab-sl{font-size:.65rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:.1rem}
+
+/* ══ ANIMATIONS ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulseR{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="topnav">
+  <div class="nav-logo">📚 NU BBA</div>
+  <button class="nb on" id="nb-home" onclick="goPanel('home')">Home</button>
+  <button class="nb" id="nb-subjects" onclick="goPanel('subjects')">Subjects</button>
+  <button class="nb" id="nb-test" onclick="goPanel('test')">🎯 Test</button>
+  <button class="nb" id="nb-history" onclick="goPanel('history')">History</button>
+  <button class="nb nb-about" id="nb-about" onclick="goPanel('about')">About</button>
+</nav>
+
+<!-- ══ HOME PANEL ══ -->
+<div class="panel on" id="panel-home">
+  <div id="home-hero">
+    <div class="home-glow"></div>
+    <div class="h-badge">✦ NU BBA Commerce Unit · Admission 2025–2026 ✦</div>
+    <h1 class="h1">Welcome,<br><em>Flame</em> 🔥</h1>
+    <p class="h-quote">"Consistency over Intensity — the river reaches the ocean not in one rush, but by <strong>showing up every single day.</strong>"</p>
+    <div class="qs-strip">
+      <div class="qs-item"><div class="qs-val">100</div><div class="qs-lbl">Total MCQ Marks</div></div>
+      <div class="qs-item"><div class="qs-val">1 Hr</div><div class="qs-lbl">Exam Duration</div></div>
+      <div class="qs-item"><div class="qs-val">35</div><div class="qs-lbl">Pass Mark</div></div>
+      <div class="qs-item"><div class="qs-val">200</div><div class="qs-lbl">Merit Total</div></div>
+      <div class="qs-item"><div class="qs-val">None</div><div class="qs-lbl">Negative Marking</div></div>
+      <div class="qs-item"><div class="qs-val" id="daysLeft">—</div><div class="qs-lbl">Days to Exam</div></div>
+    </div>
+    <div class="h-btns">
+      <button class="btn-pri" onclick="goPanel('subjects')">📖 Start Reading</button>
+      <button class="btn-sec" onclick="goPanel('test')">🎯 Take Test</button>
+      <button class="btn-ghost" onclick="goPanel('about')">✨ About</button>
+    </div>
+  </div>
+
+  <div class="home-sections">
+    <!-- Countdown -->
+    <div class="exam-countdown">
+      <div>
+        <div class="ec-label">📅 NU BBA Exam Date</div>
+        <div class="ec-date">April 25, 2026 · 11:00 AM</div>
+      </div>
+      <div style="text-align:center">
+        <div class="ec-days" id="ecDays">—</div>
+        <div class="ec-dsub">Days Remaining</div>
+      </div>
+      <div style="font-size:.8rem;color:var(--muted);max-width:180px;line-height:1.5">Admit card available ~7 days before. Check nu.ac.bd/admissions</div>
+    </div>
+
+    <!-- Motivation -->
+    <div class="motiv-card">
+      <div class="motiv-q" id="motivQ">"The expert in anything was once a beginner."</div>
+      <div class="motiv-src">Daily Motivation · <span id="motivSrc">Helen Hayes</span></div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Exam Structure -->
+    <div class="home-section-title">📋 <em>Exam Structure</em> — BBA Commerce Unit</div>
+    <div class="info-grid">
+      <div class="ic gold"><div class="ico">📖</div><h3>বাংলা — 20 MCQs</h3><ul><li>গদ্য সাহিত্য (অপরিচিতা, বিড়াল)</li><li>পদ্য সাহিত্য (সোনার তরী, আঠারো বছর)</li><li>নাটক (সিরাজউদ্দৌলা)</li><li>ব্যাকরণ (সন্ধি, সমাস, কারক)</li></ul></div>
+      <div class="ic blue"><div class="ico">🔤</div><h3>English — 20 MCQs</h3><ul><li>Parts of Speech & Grammar</li><li>Tense, Voice, Narration</li><li>Vocabulary (Synonyms/Antonyms)</li><li>Sentence correction & idioms</li></ul></div>
+      <div class="ic green"><div class="ico">🌍</div><h3>General Knowledge — 20 MCQs</h3><ul><li>মুক্তিযুদ্ধ ও ইতিহাস</li><li>Bangladesh Geography & Symbols</li><li>Mega-Projects 2024–25</li><li>International Affairs & Current Events</li></ul></div>
+      <div class="ic gold"><div class="ico">📊</div><h3>Accounting — 20 MCQs</h3><ul><li>হিসাবের সমীকরণ ও জাবেদা</li><li>নগদান বই ও ব্যাংক সমন্বয়</li><li>রেওয়ামিল ও আর্থিক বিবরণী</li><li>অংশীদারিত্ব হিসাব</li></ul></div>
+      <div class="ic purple"><div class="ico">🏢</div><h3>Management — 20 MCQs</h3><ul><li>ব্যবস্থাপনার নীতি ও কার্যাবলি</li><li>পরিকল্পনা ও সংগঠন</li><li>প্রেষণা (Maslow, Herzberg)</li><li>নেতৃত্ব ও নিয়ন্ত্রণ</li></ul></div>
+      <div class="ic green"><div class="ico">📊</div><h3>Merit List Formula</h3><ul><li>Admission Test = 100 marks</li><li>SSC GPA × 40% → marks</li><li>HSC GPA × 60% → marks</li><li><strong>Total = 200 marks</strong></li></ul></div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- 30-day plan -->
+    <div class="home-section-title">📅 <em>30-Day Preparation</em> Plan</div>
+    <div class="info-grid" style="margin-bottom:1.2rem">
+      <div class="ic gold"><div class="ico">1️⃣</div><h3>Week 1 — Foundation</h3><p>Accounting equations + Management principles. These are the most scoring subjects for commerce students — master the basics first.</p></div>
+      <div class="ic blue"><div class="ico">2️⃣</div><h3>Week 2 — Language</h3><p>Bangla literature (অপরিচিতা, কবিতা) + English grammar (Tense, Voice, Narration). Read chapter summaries daily.</p></div>
+      <div class="ic green"><div class="ico">3️⃣</div><h3>Week 3 — GK Blitz</h3><p>Liberation War dates, Bangladesh geography, mega-projects, international organizations. Use the GK chapter in this app.</p></div>
+      <div class="ic purple"><div class="ico">4️⃣</div><h3>Week 4 — Mock Tests</h3><p>Take one full Exam Mode (Competitive difficulty) daily. Review wrong answers. Focus only on weak areas.</p></div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Tips -->
+    <div class="home-section-title">⚡ <em>Top 10 Tips</em> to Ace NU BBA</div>
+    <div class="tips-list">
+      <div class="tip-row"><span class="tip-num">01</span><div class="tip-txt"><strong>No negative marking → attempt every question.</strong> In the real exam, never leave a question blank. Even a random guess has a 25% chance of being right.</div></div>
+      <div class="tip-row"><span class="tip-num">02</span><div class="tip-txt"><strong>মুক্তিযুদ্ধের তারিখগুলো সংখ্যায় মুখস্থ করুন:</strong> ২৫ মার্চ (সার্চলাইট), ২৬ মার্চ (স্বাধীনতা), ১৭ এপ্রিল (মুজিবনগর), ১৬ ডিসেম্বর (বিজয়) — প্রতিটি NU পরীক্ষায় ২টি প্রশ্ন আসে।</div></div>
+      <div class="tip-row"><span class="tip-num">03</span><div class="tip-txt"><strong>Accounting is your safest 20 marks.</strong> বাংলা ও ইংরেজি অনিশ্চিত, কিন্তু হিসাবের মূলনীতি মুখস্থ করলে Accounting-এ পুরো ২০ পাওয়া সম্ভব।</div></div>
+      <div class="tip-row"><span class="tip-num">04</span><div class="tip-txt"><strong>Use elimination.</strong> If 2 options are extreme (100%/never) or look similar, the correct answer is usually the moderate, nuanced option.</div></div>
+      <div class="tip-row"><span class="tip-num">05</span><div class="tip-txt"><strong>Focus on "Firsts" in Bangladesh:</strong> First president, first female Speaker, first Nobel laureate, first satellite — these appear in every NU test.</div></div>
+      <div class="tip-row"><span class="tip-num">06</span><div class="tip-txt"><strong>Mega-project numbers matter:</strong> Padma Bridge = 6.15 km, MRT-6 = 17 stations, Tunnel = 3,375 m. Memorize these exact figures — wrong numbers = wrong answer.</div></div>
+      <div class="tip-row"><span class="tip-num">07</span><div class="tip-txt"><strong>'অপরিচিতা' থেকে ৩-৪টি প্রশ্ন প্রায় নিশ্চিত।</strong> চরিত্রের নাম (অনুপম, কল্যাণী, শম্ভুনাথ সেন) ও গল্পের মূল থিম (যৌতুক বিরোধ) মুখস্থ রাখুন।</div></div>
+      <div class="tip-row"><span class="tip-num">08</span><div class="tip-txt"><strong>International org HQs — memorize as a list:</strong> UN=New York, IMF/WB=Washington DC, WHO/WTO=Geneva, OIC=Jeddah, SAARC=Kathmandu. JnU & DU ask 2–3 from this.</div></div>
+      <div class="tip-row"><span class="tip-num">09</span><div class="tip-txt"><strong>Management: Henri Fayol's 14 principles আর Maslow-এর চাহিদার ৫টি স্তর মুখস্থ করুন।</strong> এই দুটো থেকে প্রতিবছর ৩-৪টি প্রশ্ন আসে।</div></div>
+      <div class="tip-row"><span class="tip-num">10</span><div class="tip-txt"><strong>Exam day:</strong> Sleep 8 hours before. Eat light. Arrive 30 min early. Attempt known questions first, return to uncertain ones. Never stress over any single question.</div></div>
+    </div>
+
+    <div class="section-divider"></div>
+    <div class="start-reading-cta">
+      <button class="btn-start" onclick="goPanel('subjects')">Start Reading Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SUBJECTS PANEL ══ -->
+<div class="panel" id="panel-subjects">
+  <!-- Subject selection view -->
+  <div id="subj-selection" class="subjects-wrap">
+    <div class="subjects-welcome">Choose Your Subject</div>
+    <div class="subjects-sub">Select a subject to begin chapter-wise MCQ practice</div>
+    <div class="subject-cards" id="subjectCards"></div>
+  </div>
+  <!-- Subject reader view -->
+  <div class="subj-reader" id="subj-reader">
+    <div class="reader-topbar">
+      <button class="back-btn" onclick="backToSubjects()">← Back to Subjects</button>
+      <div>
+        <div class="reader-title" id="readerTitle">বাংলা</div>
+        <div class="reader-desc" id="readerDesc">Loading...</div>
+        <div class="reader-meta" id="readerMeta"></div>
+      </div>
+    </div>
+    <div class="tips-box" id="readerTips"></div>
+    <div class="chapter-list" id="readerChapters"></div>
+  </div>
+</div>
+
+<!-- ══ TEST PANEL ══ -->
+<div class="panel" id="panel-test">
+  <!-- Mode selection -->
+  <div class="test-tab-wrap" id="test-modes">
+    <div class="test-tab-title">🎯 Test Centre</div>
+    <div class="test-tab-sub">Choose between Practice Mode (custom timed quiz) or Exam Mode (simulated real exam)</div>
+    <div class="mode-cards">
+      <div class="mode-card practice" onclick="openPracticeSetup()">
+        <div class="mc-icon">📝</div>
+        <div class="mc-name">Practice Mode</div>
+        <div class="mc-desc">Customise your quiz — pick subject, chapters, question count & time. Full review with chapter breakdown and question-by-question timing.</div>
+        <div class="mc-features">
+          <div class="mc-feat">Choose any subject & chapters</div>
+          <div class="mc-feat">Set your own time limit</div>
+          <div class="mc-feat">+4 correct / −1 wrong scoring</div>
+          <div class="mc-feat">See time per question in review</div>
+        </div>
+        <button class="mc-btn b-blue">Start Practice →</button>
+      </div>
+      <div class="mode-card exam" onclick="openExamSetup()">
+        <div class="mc-icon">🏆</div>
+        <div class="mc-name">Exam Mode</div>
+        <div class="mc-desc">Simulated NU-style exam. Choose difficulty, individual subject or all. Random scrambled questions. Pass/Fail result with full review.</div>
+        <div class="mc-features">
+          <div class="mc-feat">Easy / Medium / Competitive difficulty</div>
+          <div class="mc-feat">All questions randomly scrambled</div>
+          <div class="mc-feat">Accurate pass/fail system</div>
+          <div class="mc-feat">Full review after exam</div>
+        </div>
+        <button class="mc-btn b-gold">Start Exam →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exam running screen -->
+  <div id="exam-screen">
+    <div class="exam-topbar">
+      <div class="ex-title" id="exTitle">Exam</div>
+      <div style="display:flex;flex-direction:column;gap:.2rem;flex:1;min-width:120px">
+        <div class="ex-prog-bar-w"><div class="ex-prog-bar-f" id="exProgBar" style="width:0%"></div></div>
+        <div class="ex-prog-txt" id="exProgTxt">Q 1 / 20</div>
+      </div>
+      <div class="ex-time-per-q" id="exTimePerQ">Avg: —</div>
+      <div class="ex-score-live" id="exScoreLive">Score: 0</div>
+      <div class="ex-timer" id="exTimer">00:00</div>
+    </div>
+    <div class="exam-body">
+      <div id="exQContainer"></div>
+      <div class="ex-nav">
+        <button class="btn-nav" id="exBtnPrev" onclick="examNav(-1)" disabled>← Prev</button>
+        <button class="btn-nav" id="exBtnNext" onclick="examNav(1)">Next →</button>
+        <button class="btn-submit" onclick="submitExam()">Submit ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results screen -->
+  <div id="results-screen">
+    <div class="result-wrap">
+      <div class="result-hero">
+        <div class="r-score-big" id="rScoreBig">0</div>
+        <div class="r-of">out of <span id="rMaxScore">0</span> marks</div>
+        <div class="r-grade" id="rGrade">—</div><br>
+        <div class="r-pass" id="rPass">—</div>
+      </div>
+      <div class="r-stats">
+        <div class="r-stat"><div class="r-sv rv-g" id="rCorrect">0</div><div class="r-sl">Correct</div></div>
+        <div class="r-stat"><div class="r-sv rv-r" id="rWrong">0</div><div class="r-sl">Wrong</div></div>
+        <div class="r-stat"><div class="r-sv rv-m" id="rSkip">0</div><div class="r-sl">Skipped</div></div>
+        <div class="r-stat"><div class="r-sv rv-gold" id="rAccuracy">0%</div><div class="r-sl">Accuracy</div></div>
+      </div>
+      <div class="r-stat" style="margin-bottom:1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:.6rem;text-align:center">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--muted)">⏱ Total Time Taken: <strong id="rTimeTaken" style="color:var(--cream)">—</strong> &nbsp;|&nbsp; Avg per Q: <strong id="rAvgTime" style="color:var(--gold)">—</strong></div>
+      </div>
+      <div class="r-chap"><h4>Chapter Breakdown</h4><div id="rChapBreak"></div></div>
+      <div class="r-review"><h4>Question Review</h4><div id="rReview"></div></div>
+      <div class="r-actions">
+        <button class="btn-pri" onclick="retryExam()">🔄 Try Again</button>
+        <button class="btn-sec" onclick="backToModes()">← Modes</button>
+        <button class="btn-sec" onclick="goPanel('history')">📜 History</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HISTORY PANEL ══ -->
+<div class="panel" id="panel-history">
+  <div class="hist-wrap">
+    <div class="hist-head">
+      <h2>📜 Test History</h2>
+      <button onclick="clearHistory()" style="background:none;border:1px solid var(--border);color:var(--muted);font-size:.75rem;padding:.22rem .6rem;border-radius:4px;cursor:pointer">Clear All</button>
+    </div>
+    <div id="histBody"></div>
+  </div>
+</div>
+
+<!-- ══ ABOUT PANEL ══ -->
+<div class="panel" id="panel-about">
+  <div class="about-wrap">
+    <div class="about-hero">
+      <div class="ab-avatar">🔥</div>
+      <div class="ab-name">Waterflame</div>
+      <div class="ab-title">Creator · Student · Dreamer</div>
+      <p class="ab-quote">"I built the tool I wished existed when I started preparing. If it helps even one student find their confidence — <strong>it was worth every line of code.</strong>"</p>
+    </div>
+
+    <div class="about-section">
+      <h3>🎓 Who is Waterflame?</h3>
+      <p>I'm a 19-year-old Commerce student from Dhaka, Bangladesh, preparing for NU BBA admission 2025–26. I love music (Liquid DnB — Liquicity is life 🎧), high-fidelity audio, and building things that matter.</p>
+      <p>I created this app because I couldn't find a single resource that was actually designed for how Bangladeshi students study — on mobile, in Bangla, with the exact syllabus we need. So I made one.</p>
+    </div>
+
+    <div class="about-section">
+      <h3>📱 About This App</h3>
+      <p>This is a fully offline, HTML-based MCQ preparation tool designed specifically for <strong>NU BBA Commerce Unit</strong> admissions. No login. No ads. No data collected. Everything runs in your browser.</p>
+      <p>It covers বাংলা and General Knowledge right now, with Accounting, Management, and English coming soon. The GK module has 279 verified questions based on NU, DU C-Unit, and JnU past papers (2015–2024).</p>
+      <div class="ab-stat-row">
+        <div class="ab-stat"><div class="ab-sv">479+</div><div class="ab-sl">MCQs</div></div>
+        <div class="ab-stat"><div class="ab-sv">2</div><div class="ab-sl">Subjects</div></div>
+        <div class="ab-stat"><div class="ab-sv">3</div><div class="ab-sl">Exam Modes</div></div>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <h3>🎵 Interests & Vibe</h3>
+      <p>When I'm not studying, I'm deep in Liquicity mixes, tuning my Tangzu Wan'er SG 2 IEMs through a JCALLY JM7 DAC, or grinding Mobile Legends ranked matches. Drop-shoulder fits only. 🫡</p>
+      <p>Long-term goal: <strong>BBA in Australia</strong> (Sydney or Perth), starting around February 2027. Until then — NU BBA is the plan, and this app is the weapon.</p>
+    </div>
+
+    <div class="about-section">
+      <h3>💌 A Message to Fellow Students</h3>
+      <p>If you're reading this, you're already doing better than the version of you that didn't start yet. The exam feels massive — but it's just 100 MCQs in 60 minutes. You've answered thousands of practice questions. You're ready.</p>
+      <p style="color:var(--gold);font-family:'Playfair Display',serif;font-size:.95rem;font-style:italic">"The only way to get better is to practice like it matters, even when it doesn't feel like it does."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODALS ══ -->
+<div id="modal">
+  <div class="modal-box">
+    <div class="modal-hd">
+      <h3 id="modalTitle">Setup</h3>
+      <button class="m-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-bd" id="modalBody"></div>
+  </div>
+</div>
+<script>
+// [question, [A,B,C,D], correctIndex, avgImportance(1-3 for chapter display only)]
+const SUBJECTS={
+bangla:{name:"বাংলা",icon:"📖",color:"#d4a843",
+  desc:"HSC 2025 Board Pattern — গদ্য, পদ্য, নাটক ও ব্যাকরণ",
+  importance:3,
+  tips:["অপরিচিতা থেকে প্রতিবার ৩-৪টি প্রশ্ন আসে — চরিত্রের নাম ও ঘটনা মুখস্থ রাখুন","ব্যাকরণে সন্ধি, সমাস ও কারক থেকে ৪-৫টি প্রশ্ন নিশ্চিত","কবিতার রচয়িতার নাম ও বিখ্যাত চরণ মুখস্থ করুন","নাটক 'সিরাজউদ্দৌলা' থেকে পলাশীর যুদ্ধ ও চরিত্র পড়ুন","বানান শুদ্ধিকরণ প্রশ্ন রাজশাহী ও যশোর বোর্ডে বেশি আসে"],
+  chapters:[
+  {name:"গদ্য — অপরিচিতা",imp:3,mcqs:[
+    ["'অপরিচিতা' গল্পের লেখক কে?",["শরৎচন্দ্র","রবীন্দ্রনাথ ঠাকুর","মানিক বন্দ্যোপাধ্যায়","বঙ্কিমচন্দ্র"],1],
+    ["গল্পের কেন্দ্রীয় পুরুষ চরিত্র কে?",["শম্ভুনাথ সেন","বিনুদা","অনুপম","হরিশচন্দ্র"],2],
+    ["অনুপমের অভিভাবক কে?",["তার পিতা","তার মামা","তার বড় ভাই","তার চাচা"],1],
+    ["অনুপমের মামার পেশা কী?",["ডাক্তার","শিক্ষক","উকিল (আইনজীবী)","ব্যবসায়ী"],2],
+    ["কল্যাণীর পিতার নাম কী?",["হরিনাথ","শম্ভুনাথ সেন","রামচন্দ্র","বিনোদবিহারী"],1],
+    ["বিবাহ কেন ভেঙে যায়?",["পাত্রীর অসম্মতি","মামা গহনা পরীক্ষার অপমান সহ্য না করে বিবাহ ভাঙেন","পাত্রের অমত","ধর্মীয় কারণে"],1],
+    ["কল্যাণীর বয়স গল্পে কত ছিল?",["পনেরো","ষোলো","সতেরো","আঠারো"],1],
+    ["গল্পের শেষে অনুপমের পরিণতি কী?",["কল্যাণীকে বিয়ে করে","অন্য মেয়েকে বিয়ে করে","চিরকুমার থাকে","বিদেশে যায়"],2],
+    ["'অপরিচিতা' কোন গ্রন্থে সংকলিত?",["চোখের বালি","গল্পগুচ্ছ","সোনার তরী","ঘরে বাইরে"],1],
+    ["অনুপমের চরিত্রের মূল দুর্বলতা কোনটি?",["লোভ","মামার প্রতি অন্ধ আনুগত্য","কাপুরুষতা","অহংকার"],1],
+    ["গল্পের মূল বিষয় কোন সমস্যাকে কেন্দ্র করে?",["বর্ণ বৈষম্য","যৌতুক প্রথা ও নারীর মর্যাদা","দারিদ্র্য","ধর্মীয় বিভেদ"],1],
+    ["মামা বিবাহে গহনার কী করেছিলেন?",["গহনা নষ্ট করেছিলেন","কষ্টিপাথর দিয়ে গহনা যাচাই করেছিলেন","গহনা চুরি করেছিলেন","গহনা ফেরত দিয়েছিলেন"],1],
+    ["গল্পে কল্যাণী কোন আদর্শ লালন করেন?",["বিবাহে অনিচ্ছা","নারীশিক্ষা ও সমাজসেবা","আধুনিক বিলাসিতা","ধর্মে বিশ্বাস"],1],
+    ["রবীন্দ্রনাথ ঠাকুর কত সালে নোবেল পুরস্কার পান?",["১৯১০","১৯১১","১৯১৩","১৯১৫"],2],
+    ["অনুপমকে 'মামার হাতের পুতুল' বলা হয় কারণ —",["সে মামার বাড়িতে থাকে","সে নিজের সিদ্ধান্ত নিতে পারে না","সে মামাকে ভয় পায়","সে মামার অর্থ নেয়"],1],
+  ]},
+  {name:"গদ্য — বিড়াল ও মাসি-পিসি",imp:2,mcqs:[
+    ["'বিড়াল' রচনার লেখক কে?",["রবীন্দ্রনাথ ঠাকুর","বঙ্কিমচন্দ্র চট্টোপাধ্যায়","মাইকেল মধুসূদন দত্ত","শরৎচন্দ্র"],1],
+    ["'বিড়াল' কোন গ্রন্থে সংকলিত?",["লোকরহস্য","কমলাকান্তের দপ্তর","মুচিরাম গুড়ের জীবনচরিত","দেবী চৌধুরাণী"],1],
+    ["'বিড়াল' রচনায় বিড়ালের কণ্ঠে কোন দর্শন?",["জাতীয়তাবাদ","আদর্শবাদ","সাম্যবাদ","ধর্মবাদ"],2],
+    ["'কমলাকান্ত' কার ছদ্মনাম?",["বঙ্কিমচন্দ্র নিজের","একজন বিড়ালপ্রেমীর","একজন দার্শনিকের","একজন পুলিশের"],0],
+    ["'বিড়াল' রচনায় কোন সমস্যার সমালোচনা?",["লিঙ্গ বৈষম্য","ধনী-গরিব বৈষম্য","জাতি বৈষম্য","ধর্মীয় বৈষম্য"],1],
+    ["'মাসি-পিসি' গল্পের লেখক কে?",["শরৎচন্দ্র","মানিক বন্দ্যোপাধ্যায়","তারাশঙ্কর","বিভূতিভূষণ"],1],
+    ["'মাসি-পিসি' গল্পের কেন্দ্রীয় চরিত্র কে?",["ময়না","আহ্লাদি","সুভাষিণী","রত্না"],1],
+    ["আহ্লাদির নির্যাতনকারী স্বামীর নাম কী?",["মতি","জগু","কান্তি","রাজু"],1],
+    ["'মাসি-পিসি' গল্পের মূল বিষয়?",["প্রেমকাহিনি","নারীর সংগ্রাম ও প্রতিরোধ","কৃষিজীবন","ধর্মীয় আচার"],1],
+    ["মানিক বন্দ্যোপাধ্যায়ের প্রকৃত নাম কী?",["প্রবোধকুমার বন্দ্যোপাধ্যায়","মানিককুমার বন্দ্যোপাধ্যায়","রবিকুমার বন্দ্যোপাধ্যায়","শরৎকুমার বন্দ্যোপাধ্যায়"],0],
+    ["'মাসি-পিসি' গল্পের শেষে কী ঘটে?",["আহ্লাদির বিয়ে হয়","মাসি-পিসি মিলে জগুকে প্রতিরোধ করে","আহ্লাদি মারা যায়","গ্রাম ছেড়ে যায়"],1],
+    ["বঙ্কিমচন্দ্রের প্রথম বাংলা উপন্যাস কোনটি?",["বিষবৃক্ষ","কপালকুণ্ডলা","দুর্গেশনন্দিনী","আনন্দমঠ"],2],
+    ["'নেকলেস' গল্পের মূল লেখক কে?",["চেখভ","তলস্তয়","গি দ্য মোপাসাঁ","বালজাক"],2],
+    ["'নেকলেস' গল্পে হারানো হারের পর দম্পতি কত বছর কষ্ট করেন?",["পাঁচ বছর","দশ বছর","পনেরো বছর","বিশ বছর"],1],
+    ["'নেকলেস' গল্পের শেষে কী জানা যায়?",["হার চুরি হয়েছিল","ফরেস্তিয়ে মারা গেছেন","হারটি আসলে নকল ছিল","হার ফিরে পাওয়া গেছে"],2],
+  ]},
+  {name:"পদ্য — সোনার তরী, তাহারেই পড়ে মনে, আঠারো বছর বয়স",imp:3,mcqs:[
+    ["'সোনার তরী' কবিতার রচয়িতা কে?",["কাজী নজরুল ইসলাম","রবীন্দ্রনাথ ঠাকুর","সুফিয়া কামাল","জীবনানন্দ দাশ"],1],
+    ["'সোনার তরী'-তে 'সোনার ধান' কীসের প্রতীক?",["প্রকৃতির দান","কবির সৃষ্টিকর্ম","সোনা রঙের ধান","সম্পদ"],1],
+    ["'ঠাঁই নাই, ঠাঁই নাই' — এটি কার কথা?",["কৃষকের","মাঝির","কবির","নৌকার"],2],
+    ["'সোনার তরী'-র মূল ভাব কী?",["সৃষ্টিকর্ম টিকে থাকলেও স্রষ্টা বিস্মৃত হন","নদীতে ভ্রমণ","প্রকৃতির সৌন্দর্য","কৃষকের জীবন"],0],
+    ["'তাহারেই পড়ে মনে' কবিতার রচয়িতা কে?",["মহাদেব সাহা","সুফিয়া কামাল","আসাদ চৌধুরী","নির্মলেন্দু গুণ"],1],
+    ["'তাহারেই পড়ে মনে' কোন ঋতুর পটভূমিতে?",["বর্ষা","শীত","বসন্ত","গ্রীষ্ম"],2],
+    ["'তাহার' বলতে কাকে বোঝানো হয়েছে?",["প্রিয় বান্ধবী","মৃত মা","মৃত স্বামী","হারানো সন্তান"],2],
+    ["'আঠারো বছর বয়স' কবিতার রচয়িতা কে?",["রবীন্দ্রনাথ","কাজী নজরুল ইসলাম","সুকান্ত ভট্টাচার্য","জীবনানন্দ দাশ"],2],
+    ["'আঠারো বছর বয়স'-কে কীভাবে চিত্রিত করা হয়েছে?",["নিস্পৃহ ও দুর্বল","সাহসী, অদম্য ও ঝুঁকিপ্রিয়","শান্ত ও মনোযোগী","অলস ও বেপরোয়া"],1],
+    ["'আঠারো বছর বয়স' কবিতায় কয়টি স্তবক?",["পাঁচটি","ছয়টি","সাতটি","আটটি"],1],
+    ["সুকান্ত ভট্টাচার্যকে কোন উপাধি দেওয়া হয়?",["বিদ্রোহী কবি","কিশোর কবি","মানবতার কবি","জাতীয় কবি"],1],
+    ["'সোনার তরী' কবিতার ছন্দ কোনটি?",["স্বরবৃত্ত","মাত্রাবৃত্ত","অক্ষরবৃত্ত","মুক্তক"],1],
+    ["'শিক্ষা ও মনুষ্যত্ব' প্রবন্ধের লেখক কে?",["আবুল ফজল","মুনীর চৌধুরী","মোতাহের হোসেন চৌধুরী","রশীদ করীম"],2],
+    ["প্রবন্ধে দুটি ক্ষুধার কথা বলা হয়েছে — এগুলো কী?",["অন্নের ক্ষুধা ও মনের ক্ষুধা","ঘুমের ও ভ্রমণের","জলের ও বায়ুর","সম্পদের ও ক্ষমতার"],0],
+    ["'শিক্ষা ও মনুষ্যত্ব'-এর মূল বক্তব্য কী?",["প্রযুক্তি শিক্ষার গুরুত্ব","মানবিক গুণাবলি অর্জনই প্রকৃত শিক্ষা","বিজ্ঞান শিক্ষার গুরুত্ব","ধর্মীয় শিক্ষার প্রয়োজন"],1],
+  ]},
+  {name:"পদ্য — বিভীষণের প্রতি মেঘনাদ, ফেব্রুয়ারি ১৯৬৯, আমার পরিচয়, সেই অস্ত্র",imp:3,mcqs:[
+    ["'বিভীষণের প্রতি মেঘনাদ' কবিতার রচয়িতা কে?",["রবীন্দ্রনাথ ঠাকুর","মাইকেল মধুসূদন দত্ত","কায়কোবাদ","হেমচন্দ্র বন্দ্যোপাধ্যায়"],1],
+    ["কবিতাটি কোন মহাকাব্যের অংশ?",["রামায়ণ","মহাভারত","মেঘনাদবধ কাব্য","পদ্মাবতী"],2],
+    ["মেঘনাদ কাকে বিশ্বাসঘাতক বলেছে?",["ইন্দ্রজিৎকে","লক্ষ্মণকে","বিভীষণকে","রাবণকে"],2],
+    ["মাইকেল মধুসূদন দত্তের জন্মসাল কত?",["১৮১৫","১৮২৪","১৮৩০","১৮৪০"],1],
+    ["মধুসূদন কোন ছন্দ বাংলায় প্রবর্তন করেন?",["স্বরবৃত্ত","মাত্রাবৃত্ত","অমিত্রাক্ষর ছন্দ","অক্ষরবৃত্ত"],2],
+    ["'ফেব্রুয়ারি ১৯৬৯' কবিতার রচয়িতা কে?",["সৈয়দ শামসুল হক","শামসুর রাহমান","আল মাহমুদ","আবুল হাসান"],1],
+    ["'ফেব্রুয়ারি ১৯৬৯' কোন ঘটনার পটভূমি?",["১৯৫২-এর ভাষা আন্দোলন","১৯৭১-এর মুক্তিযুদ্ধ","১৯৬৯-এর গণঅভ্যুত্থান","১৯৪৭-এর দেশভাগ"],2],
+    ["'ফেব্রুয়ারি ১৯৬৯'-তে কোন শহীদের নাম?",["বরকত","জব্বার","আসাদ","রফিক"],2],
+    ["শামসুর রাহমানকে কোন উপাধি?",["জাতীয় কবি","নাগরিক কবি","বিদ্রোহী কবি","মানবতার কবি"],1],
+    ["'আমার পরিচয়' কবিতার রচয়িতা কে?",["শামসুর রাহমান","আল মাহমুদ","সৈয়দ শামসুল হক","মহাদেব সাহা"],2],
+    ["'আমার পরিচয়'-তে কবি কীসের উত্তরাধিকার?",["বাংলার ইতিহাস ও ঐতিহ্যের","প্রকৃতির","মুক্তিযুদ্ধের","ভাষা আন্দোলনের"],0],
+    ["'সেই অস্ত্র' কবিতার রচয়িতা কে?",["আল মাহমুদ","শামসুর রাহমান","নির্মলেন্দু গুণ","হেলাল হাফিজ"],1],
+    ["'সেই অস্ত্র'-তে 'অস্ত্র' বলতে কী?",["তলোয়ার","বন্দুক","কলম ও ভাষা","বোমা"],2],
+    ["সৈয়দ শামসুল হককে কোন উপাধি?",["সব্যসাচী লেখক","কিশোর কবি","বিদ্রোহী কবি","নাগরিক কবি"],0],
+    ["'নূরলদীনের কথা মনে পড়ে যায়' কবিতার রচয়িতা কে?",["শামসুর রাহমান","আল মাহমুদ","সৈয়দ শামসুল হক","নির্মলেন্দু গুণ"],2],
+  ]},
+  {name:"নাটক — সিরাজউদ্দৌলা",imp:3,mcqs:[
+    ["'সিরাজউদ্দৌলা' নাটকের রচয়িতা কে?",["মুনীর চৌধুরী","সেলিম আল দীন","সিকান্দার আবু জাফর","আসকার ইবনে শাইখ"],2],
+    ["সিরাজউদ্দৌলা কত সালে বাংলার নবাব হন?",["১৭৫৪","১৭৫৫","১৭৫৬","১৭৫৭"],2],
+    ["পলাশীর যুদ্ধ কত সালে হয়?",["১৭৫৫","১৭৫৬","১৭৫৭","১৭৫৮"],2],
+    ["পলাশীর যুদ্ধে বিশ্বাসঘাতকতা করেন কে?",["মীর কাসিম","মীর জাফর","রাইদুর্লভ","মোহনলাল"],1],
+    ["'সিরাজউদ্দৌলা' নাটকে 'ঘসেটি বেগম' কে?",["সিরাজের স্ত্রী","সিরাজের মা","সিরাজের মামি","সিরাজের বোন"],2],
+    ["'লুৎফুন্নেসা' নাটকে কে?",["সিরাজের মামি","সিরাজের বোন","সিরাজের স্ত্রী","সিরাজের সেনাপতির স্ত্রী"],2],
+    ["পলাশী যুদ্ধে ইস্ট ইন্ডিয়া কোম্পানির সেনাপতি কে?",["ওয়ারেন হেস্টিংস","রবার্ট ক্লাইভ","লর্ড কর্নওয়ালিস","লর্ড ডালহৌসি"],1],
+    ["সিরাজউদ্দৌলার রাজধানী কোথায়?",["কলকাতা","ঢাকা","মুর্শিদাবাদ","পাটনা"],2],
+    ["নাটকের মূল বিষয় কী?",["প্রেমকাহিনি","বিশ্বাসঘাতকতা ও দেশপ্রেম","ধর্মীয় সংঘাত","অর্থনৈতিক সমস্যা"],1],
+    ["পলাশীর যুদ্ধের পর নবাব হন কে?",["মীর কাসিম","নজম উদ-দৌলা","মীর জাফর","রাইদুর্লভ"],2],
+    ["মুনীর চৌধুরীর বিখ্যাত নাটক কোনটি?",["কবর","রক্তাক্ত প্রান্তর","পায়ের আওয়াজ","সিরাজউদ্দৌলা"],0],
+    ["সিকান্দার আবু জাফর কোন পরিচয়ে বিখ্যাত?",["শুধু নাট্যকার","কবি, নাট্যকার ও সম্পাদক (সমকাল)","শুধু ঔপন্যাসিক","শুধু সম্পাদক"],1],
+    ["'সিরাজউদ্দৌলা' নাটকে ইংরেজ পক্ষের মুখ্য ষড়যন্ত্রকারী?",["ওয়াটস","ক্লাইভ","হলওয়েল","সিলেক্ট কমিটি"],0],
+    ["সিরাজউদ্দৌলার দাদা কে?",["মীর জাফর","মীর কাসিম","আলিবর্দি খান","নজম উদ-দৌলা"],2],
+    ["পলাশীর যুদ্ধ কোথায় হয়?",["মুর্শিদাবাদে","নদীয়ার পলাশীতে","বর্ধমানে","বীরভূমে"],1],
+  ]},
+  {name:"বাংলা ব্যাকরণ — সন্ধি, সমাস ও কারক",imp:3,mcqs:[
+    ["'মহর্ষি' শব্দের সন্ধিবিচ্ছেদ কোনটি?",["মহ+ঋষি","মহা+ঋষি","মহা+রষি","মহঃ+ঋষি"],1],
+    ["'পরীক্ষা' শব্দের সন্ধিবিচ্ছেদ?",["পরি+ক্ষা","পর+ইক্ষা","পরি+ইক্ষা","পর+ঈক্ষা"],0],
+    ["'দিগন্ত' শব্দের সন্ধিবিচ্ছেদ?",["দিক+অন্ত","দিগ+অন্ত","দিক্+অন্ত","দিঃ+অন্ত"],0],
+    ["'মনোহর' শব্দের সন্ধিবিচ্ছেদ?",["মনো+হর","মন+ওহর","মনঃ+হর","মন+হর"],2],
+    ["স্বরসন্ধির উদাহরণ কোনটি?",["দিগন্ত","পরিষ্কার","নরেন্দ্র","মহর্ষি"],2],
+    ["তৎপুরুষ সমাসের উদাহরণ?",["নীলকমল","দশানন","মাতাপিতা","রাজপুত্র"],3],
+    ["বহুব্রীহি সমাসের উদাহরণ?",["রাজপুত্র","নীলকমল","দশানন","মাতাপিতা"],2],
+    ["'দশানন' শব্দে কোন সমাস?",["তৎপুরুষ","কর্মধারয়","বহুব্রীহি","দ্বন্দ্ব"],2],
+    ["দ্বন্দ্ব সমাসের উদাহরণ?",["মাতাপিতা","রাজপুত্র","দশানন","হস্তীমূর্খ"],0],
+    ["কর্মধারয় সমাসের উদাহরণ?",["নীলকমল","মাতাপিতা","দশানন","রাজপুত্র"],0],
+    ["কর্তৃকারক কোন প্রশ্নের উত্তর?",["কাকে","কে / কারা","কার","কীভাবে"],1],
+    ["কর্মকারক কোন প্রশ্নের উত্তর?",["কে / কারা","কোথায়","কাকে / কী","কার"],2],
+    ["'হাতুড়ি দিয়ে পেরেক ঠোকে' — 'হাতুড়ি' কোন কারকে?",["কর্তৃ","কর্ম","করণ","অপাদান"],2],
+    ["'অপাদান কারক' কোন বিভক্তি?",["এ, তে","কে, রে","র, এর","থেকে, হতে"],3],
+    ["'অধিকরণ কারক' কোন প্রশ্নের উত্তর?",["কে","কাকে","কোথায় / কখন","কীভাবে"],2],
+  ]},
+  {name:"বাংলা ব্যাকরণ — পদ প্রকরণ, বাক্য ও বানান",imp:2,mcqs:[
+    ["বিশেষ্য পদের উদাহরণ?",["সুন্দর","দৌড়ায়","বই","তাড়াতাড়ি"],2],
+    ["বিশেষণ পদের উদাহরণ?",["বই","দৌড়ায়","সুন্দর","হঠাৎ"],2],
+    ["ক্রিয়া পদের উদাহরণ?",["বই","সুন্দর","ঘর","দৌড়ায়"],3],
+    ["ক্রিয়াবিশেষণের উদাহরণ?",["সুন্দর","বই","তাড়াতাড়ি","লাল"],2],
+    ["সরল বাক্যের উদাহরণ?",["রহিম এলে আমি যাব","সে সুন্দর কিন্তু অহংকারী","রাম বই পড়ে","যদি পড়ো তবে পাস"],2],
+    ["যৌগিক বাক্যের উদাহরণ?",["রাম বই পড়ে","রহিম এলে আমি যাব","সে সুন্দর কিন্তু অহংকারী","সে আসে"],2],
+    ["জটিল বাক্যের উদাহরণ?",["রাম পড়ে","সে গরিব কিন্তু সৎ","রহিম এলে আমি যাব","সে আসে এবং যায়"],2],
+    ["'তৎসম' শব্দ বলতে কী বোঝায়?",["আরবি থেকে আসা শব্দ","সংস্কৃত থেকে সরাসরি আসা শব্দ","ইংরেজি থেকে আসা শব্দ","পর্তুগিজ থেকে আসা শব্দ"],1],
+    ["'তদ্ভব' শব্দ বলতে কী?",["বিদেশি শব্দ","সংস্কৃত থেকে পরিবর্তিত হয়ে আসা শব্দ","তৎসম শব্দ","মিশ্র শব্দ"],1],
+    ["'আলু' শব্দ কোন ভাষা থেকে?",["আরবি","ইংরেজি","পর্তুগিজ","ফরাসি"],2],
+    ["'কলম' শব্দ কোন ভাষার?",["ফারসি","আরবি","তুর্কি","পর্তুগিজ"],1],
+    ["বাংলা স্বরবর্ণের সংখ্যা কত?",["১০","১১","১২","১৩"],1],
+    ["'মূর্ধন্য' বর্ণ কোনগুলো?",["চ, ছ, জ, ঝ, ঞ","ত, থ, দ, ধ, ন","ট, ঠ, ড, ঢ, ণ","ক, খ, গ, ঘ, ঙ"],2],
+    ["উপসর্গ শব্দের আগে বসে কী করে?",["অর্থ পরিবর্তন বা সম্প্রসারণ","শব্দ ছোট করে","অর্থহীন করে","শব্দ নষ্ট করে"],0],
+    ["শুদ্ধ বানান কোনটি?",["সহকারি","সহকারী","সহকারীয়","সহকারিয়"],1],
+  ]},
+]},// end bangla
+
+gk:{name:"General Knowledge",icon:"🌍",color:"#3ecf8e",
+  desc:"মুক্তিযুদ্ধ · ভূগোল · মেগাপ্রজেক্ট · আন্তর্জাতিক · সাম্প্রতিক",
+  importance:3,
+  tips:["মুক্তিযুদ্ধের ৪টি প্রধান তারিখ মুখস্থ করুন (২৫ মার্চ, ২৬ মার্চ, ১৭ এপ্রিল, ১৬ ডিসেম্বর)","জাতীয় প্রতীকগুলো (ফুল, পাখি, মাছ, ফল, পশু) একটি তালিকায় শিখুন","পদ্মা সেতু = ৬.১৫ কিমি, MRT-6 = ১৭ স্টেশন — সংখ্যা সঠিক মুখস্থ করুন","আন্তর্জাতিক সংস্থার সদর দপ্তর: জাতিসংঘ=নিউইয়র্ক, IMF/WB=ওয়াশিংটন, WHO/WTO=জেনেভা","২০২৩-২০২৫ সালের বাংলাদেশের বড় ঘটনাগুলো পড়ুন"],
+  chapters:[
+  {name:"মুক্তিযুদ্ধ ও বাংলাদেশের ইতিহাস",imp:3,mcqs:[
+    ["বাংলাদেশের স্বাধীনতা দিবস কোন তারিখে?",["১৬ ডিসেম্বর","২৬ মার্চ","৭ মার্চ","২১ ফেব্রুয়ারি"],1],
+    ["বাংলাদেশের বিজয় দিবস কোন তারিখে?",["২৬ মার্চ","৭ মার্চ","১৪ ডিসেম্বর","১৬ ডিসেম্বর"],3],
+    ["'অপারেশন সার্চলাইট' কত তারিখে?",["২৬ মার্চ ১৯৭১","৭ মার্চ ১৯৭১","২৫ মার্চ ১৯৭১","১৪ ডিসেম্বর ১৯৭১"],2],
+    ["ভাষা আন্দোলন কোন সালে?",["১৯৪৮","১৯৫০","১৯৫২","১৯৫৪"],2],
+    ["২১ ফেব্রুয়ারি আন্তর্জাতিক মাতৃভাষা দিবস ঘোষণা হয় কত সালে?",["১৯৯৭","১৯৯৮","১৯৯৯","২০০০"],2],
+    ["মুক্তিযুদ্ধে সেক্টর সংখ্যা কত?",["৯","১০","১১","১২"],2],
+    ["মুক্তিযুদ্ধের সর্বাধিনায়ক কে?",["জিয়াউর রহমান","খালেদ মোশাররফ","এম.এ.জি. ওসমানী","কে.এম. সফিউল্লাহ"],2],
+    ["পাকিস্তানি বাহিনী কোথায় আত্মসমর্পণ করে?",["ঢাকা ক্যান্টনমেন্ট","পল্টন ময়দান","রেসকোর্স ময়দান (সোহরাওয়ার্দী উদ্যান)","জাতীয় সংসদ ভবন"],2],
+    ["পাকিস্তানি বাহিনীর পক্ষে আত্মসমর্পণে স্বাক্ষর করেন কে?",["ইয়াহিয়া খান","জুলফিকার ভুট্টো","লেফটেন্যান্ট জেনারেল নিয়াজি","আমির আবদুল্লাহ"],2],
+    ["'মুজিবনগর সরকার' কবে গঠিত হয়?",["২৬ মার্চ ১৯৭১","১০ এপ্রিল ১৯৭১","১৭ এপ্রিল ১৯৭১","৭ মার্চ ১৯৭১"],2],
+    ["মুজিবনগর কোন জেলায়?",["কুষ্টিয়া","যশোর","মেহেরপুর","চুয়াডাঙ্গা"],2],
+    ["মুজিবনগর সরকারের প্রধানমন্ত্রী কে?",["শেখ মুজিবুর রহমান","সৈয়দ নজরুল ইসলাম","খন্দকার মোশতাক","তাজউদ্দীন আহমেদ"],3],
+    ["বাংলাদেশকে প্রথম স্বীকৃতি দেয় কোন দেশ?",["ভারত","সোভিয়েত ইউনিয়ন","ভুটান","মায়ানমার"],2],
+    ["মুক্তিযুদ্ধে 'অপারেশন জ্যাকপট' কী?",["স্থলপথে আক্রমণ","বিমান হামলা","নৌ-গেরিলাদের বন্দর ধ্বংস অভিযান","ঢাকা মুক্ত করার অভিযান"],2],
+    ["১৯৫২ সালে ভাষা আন্দোলনে প্রথম শহীদ?",["আবুল বরকত","রফিকউদ্দিন আহমেদ","মো. সালাম","মো. জব্বার"],1],
+    ["বঙ্গবন্ধুর ৭ মার্চের ভাষণ ইউনেস্কো স্বীকৃতি পায় কত সালে?",["২০১৫","২০১৬","২০১৭","২০১৮"],2],
+    ["মুক্তিযুদ্ধে বীরশ্রেষ্ঠ খেতাব পান কতজন?",["৫","৬","৭","৮"],2],
+    ["মুক্তিযুদ্ধে শহীদের সংখ্যা?",["১০ লক্ষ","২০ লক্ষ","৩০ লক্ষ","৪০ লক্ষ"],2],
+    ["'ছয় দফা' কর্মসূচি কত সালে ঘোষণা?",["১৯৬৩","১৯৬৪","১৯৬৬","১৯৬৮"],2],
+    ["বাংলাদেশ জাতিসংঘের সদস্যপদ পায় কত সালে?",["১৯৭২","১৯৭৩","১৯৭৪","১৯৭৫"],2],
+  ]},
+  {name:"বাংলাদেশের ভূগোল, প্রতীক ও সংবিধান",imp:3,mcqs:[
+    ["বাংলাদেশের মোট আয়তন কত বর্গকিমি?",["১৪৭,৫৭০","১৪৩,৯৯৮","১৩৫,৫৫০","১৫৬,০০০"],1],
+    ["বাংলাদেশের মোট বিভাগ কতটি?",["৬","৭","৮","৯"],2],
+    ["বাংলাদেশের মোট জেলা কতটি?",["৬১","৬২","৬৪","৬৬"],2],
+    ["সর্ববৃহৎ জেলা (আয়তনে)?",["ময়মনসিংহ","বান্দরবান","রাঙ্গামাটি","সিলেট"],2],
+    ["বাংলাদেশের সর্বোচ্চ পর্বতশৃঙ্গ?",["কেওক্রাডং","চিম্বুক","তাজিনডং (বিজয়)","গারো পাহাড়"],2],
+    ["কক্সবাজার সমুদ্র সৈকতের দৈর্ঘ্য?",["প্রায় ১২০ কিমি","প্রায় ১৫৫ কিমি","প্রায় ১৮০ কিমি","প্রায় ৯০ কিমি"],0],
+    ["বাংলাদেশের জাতীয় ফুল?",["পদ্ম","গোলাপ","শাপলা","চামেলি"],2],
+    ["বাংলাদেশের জাতীয় পাখি?",["ময়না","শালিক","ঈগল","দোয়েল"],3],
+    ["বাংলাদেশের জাতীয় মাছ?",["রুই","কাতলা","পাঙ্গাশ","ইলিশ"],3],
+    ["বাংলাদেশের জাতীয় ফল?",["আম","কলা","লিচু","কাঁঠাল"],3],
+    ["বাংলাদেশের জাতীয় পশু?",["হাতি","হরিণ","রয়েল বেঙ্গল টাইগার","গরু"],2],
+    ["সংবিধানের মূলনীতি কয়টি?",["৩","৪","৫","৬"],1],
+    ["সংবিধানের চারটি মূলনীতি?",["গণতন্ত্র, ইসলাম, সমাজতন্ত্র, জাতীয়তাবাদ","জাতীয়তাবাদ, গণতন্ত্র, ধর্মনিরপেক্ষতা, সমাজতন্ত্র","গণতন্ত্র, ন্যায়বিচার, স্বাধীনতা, সমতা","জাতীয়তাবাদ, ঐক্য, অগ্রগতি, স্বাধীনতা"],1],
+    ["জাতীয় সংসদে মোট আসন কত?",["৩০০","৩৫০","৩৫৩","৩০৩"],0],
+    ["সংবিধানের কোন অনুচ্ছেদে বাংলা রাষ্ট্রভাষা?",["২","৩","৪","৫"],1],
+    ["ভোট দেওয়ার ন্যূনতম বয়স কত?",["১৬","১৭","১৮","২১"],2],
+    ["জাতীয় সংসদ ভবনের স্থপতি কে?",["মাজহারুল ইসলাম","লুই আই. কান","ফ্রাঙ্ক লয়েড রাইট","রফিক আজম"],1],
+    ["বাংলাদেশের একমাত্র প্রবাল দ্বীপ?",["মহেশখালী","সন্দ্বীপ","হাতিয়া","সেন্ট মার্টিন"],3],
+    ["বাংলাদেশের জাতীয় স্মৃতিসৌধ কোথায়?",["মিরপুরে","আজিমপুরে","সাভারে","ধানমন্ডিতে"],2],
+    ["বাংলাদেশের মোট জনসংখ্যা (২০২৩)?",["১৫ কোটি","১৬.৫১ কোটি","১৭ কোটি","১৮ কোটি"],1],
+  ]},
+  {name:"মেগাপ্রজেক্ট ও অবকাঠামো (২০২৪–২০২৫)",imp:3,mcqs:[
+    ["পদ্মা সেতুর দৈর্ঘ্য কত কিমি?",["৪.৮","৫.৫","৬.১৫","৭.০"],2],
+    ["পদ্মা সেতু উদ্বোধন হয় কত তারিখে?",["২৬ মার্চ ২০২২","২৫ জুন ২০২২","১৬ ডিসেম্বর ২০২২","৭ জানুয়ারি ২০২৩"],1],
+    ["পদ্মা সেতুতে রেল লাইন কোন স্তরে?",["উপরে","মধ্যে","নিচে","পাশে"],2],
+    ["পদ্মা সেতু নির্মাণকারী প্রতিষ্ঠান কোন দেশের?",["চীন","জাপান","দক্ষিণ কোরিয়া","ভারত"],0],
+    ["বঙ্গবন্ধু টানেল কোন নদীর তলদেশে?",["পদ্মা","মেঘনা","বুড়িগঙ্গা","কর্ণফুলী"],3],
+    ["বঙ্গবন্ধু টানেলের দৈর্ঘ্য কত মিটার?",["৩,১০০","৩,৩৭৫","৪,০০০","৫,০০০"],1],
+    ["বঙ্গবন্ধু টানেল উদ্বোধন হয় কত সালে?",["২০২১","২০২২","২০২৩","২০২৪"],2],
+    ["ঢাকা মেট্রোরেল (MRT-6) উদ্বোধন কত সালে?",["২০২১","২০২২","২০২৩","২০২৪"],1],
+    ["MRT-6 এ মোট স্টেশন সংখ্যা?",["১৬","১৭","২০","১৮"],1],
+    ["MRT মানে কী?",["Main Road Transit","Metro Rail Transit","Mass Rapid Transit","Modern Rail Transport"],2],
+    ["মাতারবাড়ী গভীর সমুদ্রবন্দর কোথায়?",["চট্টগ্রাম","পটুয়াখালী","কক্সবাজার জেলার মহেশখালী","খুলনা"],2],
+    ["মাতারবাড়ী বন্দরে সহায়তা করছে কোন দেশ?",["চীন","ভারত","জাপান","যুক্তরাষ্ট্র"],2],
+    ["হযরত শাহজালাল বিমানবন্দরের তৃতীয় টার্মিনাল উদ্বোধন কত সালে?",["২০২২","২০২৩","২০২৪","২০২৫"],1],
+    ["রূপপুর পারমাণবিক কেন্দ্রের মোট ক্ষমতা কত মেগাওয়াট?",["৮০০","১,২০০","২,৪০০","৩,৬০০"],2],
+    ["রূপপুর পারমাণবিক কেন্দ্রে সহায়তাকারী দেশ?",["চীন","ভারত","রাশিয়া","যুক্তরাষ্ট্র"],2],
+    ["বঙ্গবন্ধু স্যাটেলাইট-১ উৎক্ষেপণ হয় কত সালে?",["২০১৭","২০১৮","২০১৯","২০২০"],1],
+    ["বঙ্গবন্ধু স্যাটেলাইট উৎক্ষেপণ কোথা থেকে?",["ভারত","রাশিয়া","চীন","মার্কিন যুক্তরাষ্ট্রের ফ্লোরিডা"],3],
+    ["মিরসরাই অর্থনৈতিক অঞ্চলের নাম?",["মিরসরাই ইপিজেড","বঙ্গবন্ধু শিল্পনগর","চট্টগ্রাম ইকোনমিক জোন","বে অব বেঙ্গল জোন"],1],
+    ["বাংলাদেশে ৪জি চালু হয় কত সালে?",["২০১৬","২০১৭","২০১৮","২০১৯"],2],
+    ["বাংলাদেশে বিদ্যুৎ সংযোগের হার (২০২৪)?",["৮০%","৯০%","৯৫%","১০০% (সর্বজনীন)"],3],
+  ]},
+  {name:"আন্তর্জাতিক বিষয়াবলি ও অর্থনীতি",imp:3,mcqs:[
+    ["জাতিসংঘের সদর দপ্তর?",["লন্ডন","জেনেভা","প্যারিস","নিউইয়র্ক"],3],
+    ["জাতিসংঘ প্রতিষ্ঠা কত সালে?",["১৯৪৩","১৯৪৪","১৯৪৫","১৯৪৬"],2],
+    ["জাতিসংঘের সদস্যদেশ কতটি?",["১৯১","১৯২","১৯৩","১৯৫"],2],
+    ["নিরাপত্তা পরিষদের স্থায়ী সদস্য কতটি?",["৩","৪","৫","৬"],2],
+    ["স্থায়ী সদস্যরা কোন কোন দেশ?",["যুক্তরাষ্ট্র, যুক্তরাজ্য, ফ্রান্স, রাশিয়া, চীন","যুক্তরাষ্ট্র, যুক্তরাজ্য, রাশিয়া, ভারত, চীন","যুক্তরাষ্ট্র, ফ্রান্স, জার্মানি, রাশিয়া, চীন","যুক্তরাষ্ট্র, যুক্তরাজ্য, ফ্রান্স, জার্মানি, জাপান"],0],
+    ["WHO-র সদর দপ্তর?",["নিউইয়র্ক","লন্ডন","জেনেভা","প্যারিস"],2],
+    ["IMF-এর সদর দপ্তর?",["নিউইয়র্ক","ওয়াশিংটন ডিসি","লন্ডন","জেনেভা"],1],
+    ["বিশ্বব্যাংকের সদর দপ্তর?",["নিউইয়র্ক","লন্ডন","ওয়াশিংটন ডিসি","টোকিও"],2],
+    ["WTO-র সদর দপ্তর?",["নিউইয়র্ক","ব্রাসেলস","লন্ডন","জেনেভা"],3],
+    ["OIC-র সদর দপ্তর?",["রিয়াদ","মক্কা","আঙ্কারা","জেদ্দা"],3],
+    ["SAARC-এর সদর দপ্তর?",["নয়াদিল্লি","ঢাকা","ইসলামাবাদ","কাঠমান্ডু"],3],
+    ["SAARC-এর সদস্যদেশ কতটি?",["৬","৭","৮","৯"],2],
+    ["বিশ্বে তৈরি পোশাক রপ্তানিতে বাংলাদেশ কততম?",["প্রথম","দ্বিতীয়","তৃতীয়","চতুর্থ"],1],
+    ["বাংলাদেশ কোন দেশে সবচেয়ে বেশি রপ্তানি করে?",["জার্মানি","যুক্তরাজ্য","যুক্তরাষ্ট্র","ফ্রান্স"],2],
+    ["SDG-এর লক্ষ্যমাত্রা কতটি?",["১৫","১৭","১৯","২১"],1],
+    ["SDG বাস্তবায়নের সময়সীমা?",["২০২৫","২০৩০","২০৩৫","২০৫০"],1],
+    ["ড. মুহাম্মদ ইউনূস নোবেল পুরস্কার পান কত সালে?",["২০০৪","২০০৫","২০০৬","২০০৭"],2],
+    ["প্যারিস জলবায়ু চুক্তি স্বাক্ষর হয় কত সালে?",["২০১৩","২০১৪","২০১৫","২০১৬"],2],
+    ["G-20 কী?",["২০টি দেশের সামরিক জোট","বিশ্বের ২০টি বৃহৎ অর্থনীতির ফোরাম","জাতিসংঘের উপসংস্থা","ওপেকের বিকল্প"],1],
+    ["বাংলাদেশ LDC থেকে উত্তরণ করবে কত সালে?",["২০২৫","২০২৬","২০২৭","২০২৮"],2],
+  ]},
+  {name:"সাম্প্রতিক বাংলাদেশ ২০২৩–২০২৫",imp:3,mcqs:[
+    ["জুলাই ২০২৪-এর আন্দোলন কোনটি?",["শ্রমিক আন্দোলন","কোটা সংস্কার আন্দোলন","কৃষক আন্দোলন","শিক্ষা সংস্কার আন্দোলন"],1],
+    ["অন্তর্বর্তী সরকারের প্রধান উপদেষ্টা কে?",["তারেক রহমান","খালেদা জিয়া","ড. মুহাম্মদ ইউনূস","মাহমুদুর রহমান মান্না"],2],
+    ["অন্তর্বর্তী সরকার কখন দায়িত্ব নেয়?",["৫ আগস্ট ২০২৪","৮ আগস্ট ২০২৪","১৫ আগস্ট ২০২৪","১ সেপ্টেম্বর ২০২৪"],1],
+    ["জুলাই-আগস্ট ২০২৪ অভ্যুত্থানে কোন নেত্রী দেশ ছেড়ে যান?",["খালেদা জিয়া","রওশন এরশাদ","শেখ হাসিনা","দিলারা চৌধুরী"],2],
+    ["১২তম জাতীয় সংসদ নির্বাচন কত তারিখে?",["৭ ডিসেম্বর ২০২৩","৭ জানুয়ারি ২০২৪","৭ ফেব্রুয়ারি ২০২৪","২৮ জানুয়ারি ২০২৪"],1],
+    ["জুলাই ২০২৪ আন্দোলনে সবচেয়ে আলোচিত শহীদ?",["মুগ্ধ","নাঈম","রিফাত","আবু সাঈদ"],3],
+    ["বাংলাদেশ ব্যাংকের গভর্নর (২০২৪-২৫)?",["আব্দুর রউফ তালুকদার","ফজলে কবির","আতিউর রহমান","আহসান এইচ মনসুর"],3],
+    ["২০২৩ SAFF চ্যাম্পিয়নশিপে ফুটবলে চ্যাম্পিয়ন?",["বাংলাদেশ","পাকিস্তান","নেপাল","ভারত"],3],
+    ["২০২৪ T20 বিশ্বকাপ কোথায় অনুষ্ঠিত হয়?",["অস্ট্রেলিয়া","ওয়েস্ট ইন্ডিজ ও যুক্তরাষ্ট্র","ইংল্যান্ড","ভারত"],1],
+    ["২০২৪ T20 বিশ্বকাপ কে জিতেছে?",["ওয়েস্ট ইন্ডিজ","অস্ট্রেলিয়া","ইংল্যান্ড","ভারত"],3],
+    ["২০২৩ একদিনের বিশ্বকাপ কে জিতেছে?",["ভারত","ইংল্যান্ড","দক্ষিণ আফ্রিকা","অস্ট্রেলিয়া"],3],
+    ["২০২৪-২৫ জাতীয় বাজেটের আকার কত?",["৫ লক্ষ কোটি","৭ লক্ষ ৯৭ হাজার কোটি টাকা","৯ লক্ষ কোটি","৪ লক্ষ কোটি"],1],
+    ["বাংলাদেশের মাথাপিছু আয় (২০২৪-২৫)?",["$১,৫০০","$২,০০০","$২,৭৬৪","$৩,৫০০"],2],
+    ["বাংলাদেশের বর্তমান রাষ্ট্রপতি (২০২৫)?",["আবদুল হামিদ","শেখ হাসিনা","মোঃ সাহাবুদ্দিন","মির্জা ফখরুল ইসলাম"],2],
+    ["গ্রামীণ ব্যাংকের প্রতিষ্ঠাতা কে?",["ড. ফজলে হাসান আবেদ","ড. মুহাম্মদ ইউনূস","ড. আতিউর রহমান","ড. ওয়াহিদউদ্দিন মাহমুদ"],1],
+    ["বাংলাদেশে ই-পাসপোর্ট চালু হয় কত সালে?",["২০১৮","২০২০","২০২১","২০২২"],1],
+    ["২০২৩-২৪ সালে বাংলাদেশের রেমিট্যান্স কত?",["$১৬ বিলিয়ন","$২১.৯ বিলিয়ন","$২৫ বিলিয়ন","$৩০ বিলিয়ন"],1],
+    ["বাংলাদেশে গার্মেন্টস ন্যূনতম মজুরি (২০২৩-২৪)?",["৮,০০০ টাকা","১০,০০০ টাকা","১২,৫০০ টাকা","১৫,০০০ টাকা"],2],
+    ["বাংলাদেশ T20 বিশ্বকাপ ২০২৪-এ কোন পর্যায়ে বিদায়?",["প্রথম রাউন্ডে","সুপার ৮-এ","সেমিফাইনালে","ফাইনালে"],1],
+    ["বাংলাদেশ টেস্ট দলের অধিনায়ক (২০২৫)?",["শাকিব আল হাসান","মুশফিকুর রহিম","নজমুল হোসেন শান্ত","মেহেদী হাসান মিরাজ"],2],
+  ]},
+]},// end gk
+};// end SUBJECTS
+</script>
+<script>
+// ══ CONSTANTS ══
+const EXAM_CONFIG={
+  easy:  {q:20,secPerQ:15,posScore:1,negScore:0, negLabel:'No negative marking'},
+  medium:{q:25,secPerQ:12,posScore:1,negScore:0.5,negLabel:'−0.5 per wrong'},
+  hard:  {q:30,secPerQ:8, posScore:1,negScore:1,  negLabel:'−1 per wrong'}
+};
+const EXAM_DATE=new Date('2026-04-25T11:00:00');
+const MOTIVATIONS=[
+  {q:"The expert in anything was once a beginner.",a:"Helen Hayes"},
+  {q:"Dream big. Start small. Act now.",a:"Robin Sharma"},
+  {q:"Discipline is choosing between what you want now and what you want most.",a:"Unknown"},
+  {q:"You don't have to be great to start, but you have to start to be great.",a:"Zig Ziglar"},
+  {q:"Every hour you put in now is one less hour of regret on exam day.",a:"Waterflame"},
+  {q:"Comfort is the enemy of achievement.",a:"Farrah Gray"},
+  {q:"Small daily improvements are the key to staggering long-term results.",a:"Robin Sharma"},
+  {q:"Your future self is watching you right now through your memories.",a:"Aubrey de Grey"},
+];
+const OL=['A','B','C','D'];
+
+// ══ STATE ══
+let examState=null;
+let testHistory=JSON.parse(localStorage.getItem('nu_history_v3')||'[]');
+let currentSubject=null;
+let practiceSetupCfg=null;
+
+// ══ INIT ══
+window.addEventListener('DOMContentLoaded',()=>{
+  // Countdown
+  const updateCountdown=()=>{
+    const diff=EXAM_DATE-new Date();
+    const d=Math.max(0,Math.ceil(diff/86400000));
+    document.getElementById('daysLeft').textContent=d;
+    document.getElementById('ecDays').textContent=d;
+  };
+  updateCountdown();setInterval(updateCountdown,60000);
+  // Motivation
+  const m=MOTIVATIONS[Math.floor(Math.random()*MOTIVATIONS.length)];
+  document.getElementById('motivQ').textContent=`"${m.q}"`;
+  document.getElementById('motivSrc').textContent=m.a;
+  // Build subject cards
+  buildSubjectCards();
+});
+
+// ══ NAV ══
+function goPanel(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('panel-'+name).classList.add('on');
+  document.getElementById('nb-'+name)?.classList.add('on');
+  if(name==='history') renderHistory();
+  if(name==='subjects'){
+    document.getElementById('subj-selection').style.display='block';
+    document.getElementById('subj-reader').classList.remove('on');
+  }
+  if(name==='test'){
+    document.getElementById('exam-screen').style.display='none';
+    document.getElementById('results-screen').style.display='none';
+    document.getElementById('test-modes').style.display='block';
+  }
+  window.scrollTo(0,0);
+}
+
+// ══ SUBJECT CARDS ══
+function buildSubjectCards(){
+  const grid=document.getElementById('subjectCards');
+  grid.innerHTML=Object.entries(SUBJECTS).map(([key,s])=>`
+    <div class="subj-card" onclick="openSubject('${key}')">
+      <div class="sc-icon">${s.icon}</div>
+      <div class="sc-name">${s.name}</div>
+      <div class="sc-desc">${s.desc}</div>
+      <div class="sc-stats">
+        <div class="sc-stat"><strong>${s.chapters.length}</strong> Chapters</div>
+        <div class="sc-stat"><strong>${s.chapters.reduce((a,c)=>a+c.mcqs.length,0)}</strong> MCQs</div>
+        <div class="sc-stat"><strong>20</strong> Exam Marks</div>
+      </div>
+      <div class="sc-enter">Start Reading →</div>
+    </div>`).join('');
+}
+function openSubject(key){
+  currentSubject=key;
+  const s=SUBJECTS[key];
+  document.getElementById('subj-selection').style.display='none';
+  const reader=document.getElementById('subj-reader');
+  reader.classList.add('on');
+  document.getElementById('readerTitle').textContent=`${s.icon} ${s.name}`;
+  document.getElementById('readerDesc').textContent=s.desc;
+  document.getElementById('readerMeta').innerHTML=`
+    <div class="r-pill"><strong>${s.chapters.length}</strong> Chapters</div>
+    <div class="r-pill"><strong>${s.chapters.reduce((a,c)=>a+c.mcqs.length,0)}</strong> MCQs</div>
+    <div class="r-pill">Reading Mode — No Points</div>`;
+  document.getElementById('readerTips').innerHTML=`
+    <h4>💡 Tips for ${s.name}</h4>
+    <ol>${s.tips.map(t=>`<li>${t}</li>`).join('')}</ol>`;
+  buildReaderChapters(key);
+}
+function backToSubjects(){
+  document.getElementById('subj-selection').style.display='block';
+  document.getElementById('subj-reader').classList.remove('on');
+}
+
+// ══ READER CHAPTERS ══
+function buildReaderChapters(key){
+  const s=SUBJECTS[key];
+  const list=document.getElementById('readerChapters');
+  list.innerHTML=s.chapters.map((ch,i)=>`
+    <div class="chapter" id="rch_${key}_${i}">
+      <div class="ch-head" onclick="toggleReader('${key}',${i})">
+        <span class="ch-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="ch-name">${ch.name}</span>
+        <div class="ch-meta">
+          <span class="ch-stars">${chStars(ch.imp)}</span>
+          <span class="ch-cnt">${ch.mcqs.length} MCQs</span>
+          <div class="ch-prog-w"><div class="ch-prog-f" id="rprog_${key}_${i}" style="width:0%"></div></div>
+          <span class="ch-arrow">▼</span>
+        </div>
+      </div>
+      <div class="ch-body">
+        <div class="mcq-list" id="rmcqs_${key}_${i}"></div>
+        <div class="ans-key" id="rkey_${key}_${i}"></div>
+      </div>
+    </div>`).join('');
+}
+function chStars(n){
+  if(n===3) return '<span style="color:#f59e0b">★★★</span>';
+  if(n===2) return '<span style="color:#60a5fa">★★</span>';
+  return '<span style="color:#8a9ab5">★</span>';
+}
+function toggleReader(key,i){
+  const ch=document.getElementById(`rch_${key}_${i}`);
+  const wasOpen=ch.classList.contains('open');
+  ch.classList.toggle('open');
+  if(!wasOpen) renderReaderMCQs(key,i);
+}
+function renderReaderMCQs(key,i){
+  const ch=SUBJECTS[key].chapters[i];
+  const cont=document.getElementById(`rmcqs_${key}_${i}`);
+  const keyCont=document.getElementById(`rkey_${key}_${i}`);
+  if(!cont||cont.innerHTML!=='') return;
+  let html='',kh='<h5>📋 Answer Key</h5><div class="ans-key-grid">';
+  ch.mcqs.forEach(([q,opts,corr],qi)=>{
+    const qid=`r_${key}_${i}_${qi}`;
+    html+=`<div class="mcq" id="mcq_${qid}">
+      <div class="mcq-top">
+        <span class="mcq-qn">Q${qi+1}</span>
+        <span class="mcq-q">${q}</span>
+      </div>
+      <div class="mcq-opts">
+        ${opts.map((o,oi)=>`<button class="opt" data-qid="${qid}" data-oi="${oi}" data-corr="${corr}" onclick="pickReader(this)">${OL[oi]}) ${o}</button>`).join('')}
+      </div>
+      <div class="mcq-foot">
+        <button class="show-btn" onclick="showReaderAns('${qid}',${corr})">Show Answer</button>
+        <span class="ans-txt" id="at_${qid}">✓ ${opts[corr]}</span>
+      </div>
+    </div>`;
+    kh+=`<div class="ak-pill">Q${qi+1}: <span>${OL[corr]}</span></div>`;
+  });
+  kh+='</div>';
+  cont.innerHTML=html;keyCont.innerHTML=kh;
+}
+function pickReader(btn){
+  const qid=btn.dataset.qid;
+  const oi=parseInt(btn.dataset.oi);
+  const corr=parseInt(btn.dataset.corr);
+  const box=document.getElementById('mcq_'+qid);
+  if(box.dataset.done) return;
+  box.dataset.done='1';
+  box.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  if(oi===corr){btn.classList.add('c-right');box.classList.add('r-correct');}
+  else{btn.classList.add('c-wrong');box.querySelectorAll('.opt')[corr].classList.add('c-show');box.classList.add('r-wrong');}
+  updateReaderProg(qid);
+}
+function showReaderAns(qid,corr){
+  const box=document.getElementById('mcq_'+qid);
+  if(box.dataset.done) return;
+  box.dataset.done='1';
+  box.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  box.querySelectorAll('.opt')[corr].classList.add('c-show');
+  document.getElementById('at_'+qid).classList.add('show');
+  updateReaderProg(qid);
+}
+function updateReaderProg(qid){
+  const parts=qid.split('_');// r_key_i_qi
+  const key=parts[1],i=parts[2];
+  const all=document.querySelectorAll(`[data-qid^="r_${key}_${i}_"]`);
+  let done=0; all.forEach(b=>{const bx=document.getElementById('mcq_'+b.dataset.qid);if(bx?.dataset.done) done++;});
+  const total=all.length/4;// 4 opts per question
+  const pct=total?Math.round(done/total*100):0;
+  const prog=document.getElementById(`rprog_${key}_${i}`);
+  if(prog) prog.style.width=pct+'%';
+}
+
+// ══ PRACTICE SETUP ══
+function openPracticeSetup(){
+  practiceSetupCfg={mode:'practice'};
+  const subjOpts=Object.entries(SUBJECTS).map(([k,s])=>`<option value="${k}">${s.icon} ${s.name}</option>`).join('');
+  document.getElementById('modalTitle').textContent='📝 Configure Practice';
+  document.getElementById('modalBody').innerHTML=`
+    <div class="form-row">
+      <div class="form-group"><label>Subject</label>
+        <select class="form-sel" id="pSubj" onchange="updatePracticeChaps()">${subjOpts}</select></div>
+      <div class="form-group"><label>Questions</label>
+        <input class="form-inp" type="number" id="pQCount" value="20" min="5" max="80"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Time Limit (minutes)</label>
+        <input class="form-inp" type="number" id="pTime" value="30" min="5" max="120"></div>
+      <div class="form-group"><label>Order</label>
+        <select class="form-sel" id="pOrder"><option value="random">🔀 Random</option><option value="chapter">📖 By Chapter</option></select></div>
+    </div>
+    <label style="font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:.35rem">Chapters</label>
+    <div class="chap-checks" id="pChaps"></div>
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+      <button class="btn-pri" style="flex:1;min-width:110px" onclick="startPractice()">Begin →</button>
+      <button class="btn-sec" onclick="closeModal()">Cancel</button>
+    </div>`;
+  document.getElementById('modal').classList.add('on');
+  updatePracticeChaps();
+}
+function updatePracticeChaps(){
+  const key=document.getElementById('pSubj').value;
+  const grid=document.getElementById('pChaps');
+  grid.innerHTML=SUBJECTS[key].chapters.map((ch,i)=>`
+    <label class="cc-lbl ck" id="cclbl_${i}" onclick="this.classList.toggle('ck')">
+      <input type="checkbox" value="${i}" checked> ${ch.name.substring(0,42)}${ch.name.length>42?'...':''}</label>`).join('');
+}
+function startPractice(){
+  const key=document.getElementById('pSubj').value;
+  const qCount=Math.max(5,Math.min(80,parseInt(document.getElementById('pQCount').value)||20));
+  const timeSec=Math.max(60,parseInt(document.getElementById('pTime').value||30)*60);
+  const order=document.getElementById('pOrder').value;
+  const selChaps=[...document.querySelectorAll('#pChaps input:checked')].map(i=>parseInt(i.value));
+  if(!selChaps.length){alert('Please select at least one chapter.');return;}
+  let pool=[];
+  selChaps.forEach(ci=>{
+    SUBJECTS[key].chapters[ci].mcqs.forEach(([q,opts,corr],qi)=>{
+      pool.push({q,opts,corr,ci,chapName:SUBJECTS[key].chapters[ci].name.substring(0,32),subj:key});
+    });
+  });
+  if(order==='random') pool.sort(()=>Math.random()-.5);
+  closeModal();
+  launchExam({
+    mode:'practice',subject:key,subjectName:SUBJECTS[key].name,
+    questions:pool.slice(0,qCount),totalTime:timeSec,
+    posScore:4,negScore:1,passPercent:60
+  });
+}
+
+// ══ EXAM SETUP ══
+function openExamSetup(){
+  const subjOpts=Object.entries(SUBJECTS).map(([k,s])=>`<option value="${k}">${s.icon} ${s.name}</option>`).join('');
+  document.getElementById('modalTitle').textContent='🏆 Configure Exam Mode';
+  document.getElementById('modalBody').innerHTML=`
+    <label style="font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:.45rem">Difficulty</label>
+    <div class="diff-grid">
+      <div class="diff-card easy sel" id="dcard-easy" onclick="selDiff('easy')">
+        <div class="diff-icon">🟢</div>
+        <div class="diff-name">Easy</div>
+        <div class="diff-info">20Q · +1 per correct<br>No negative marking<br>15 sec/Q allocation</div>
+      </div>
+      <div class="diff-card medium" id="dcard-medium" onclick="selDiff('medium')">
+        <div class="diff-icon">🟡</div>
+        <div class="diff-name">Medium</div>
+        <div class="diff-info">25Q · +1 per correct<br>−0.5 wrong<br>12 sec/Q allocation</div>
+      </div>
+      <div class="diff-card hard" id="dcard-hard" onclick="selDiff('hard')">
+        <div class="diff-icon">🔴</div>
+        <div class="diff-name">Competitive</div>
+        <div class="diff-info">30Q · +1 per correct<br>−1 wrong<br>8 sec/Q allocation</div>
+      </div>
+    </div>
+    <div class="form-row" style="margin-top:.3rem">
+      <div class="form-group"><label>Subject</label>
+        <select class="form-sel" id="eSubj">${subjOpts}<option value="all">🌟 All Subjects</option></select></div>
+    </div>
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+      <button class="btn-pri" style="flex:1;min-width:110px" onclick="startExam()">Begin Exam →</button>
+      <button class="btn-sec" onclick="closeModal()">Cancel</button>
+    </div>`;
+  window._selDiff='easy';
+  document.getElementById('modal').classList.add('on');
+}
+function selDiff(d){
+  ['easy','medium','hard'].forEach(x=>{
+    document.getElementById('dcard-'+x).classList.toggle('sel',x===d);
+  });
+  window._selDiff=d;
+}
+function startExam(){
+  const diff=window._selDiff||'easy';
+  const cfg=EXAM_CONFIG[diff];
+  const subjKey=document.getElementById('eSubj').value;
+  let questions=[];
+  const doSubj=(key)=>{
+    let pool=[];
+    SUBJECTS[key].chapters.forEach((ch,ci)=>{
+      ch.mcqs.forEach(([q,opts,corr])=>{
+        pool.push({q,opts,corr,ci,chapName:ch.name.substring(0,32),subj:key});
+      });
+    });
+    pool.sort(()=>Math.random()-.5);
+    questions=questions.concat(pool.slice(0,cfg.q));
+  };
+  if(subjKey==='all'){Object.keys(SUBJECTS).forEach(k=>doSubj(k));}
+  else doSubj(subjKey);
+  questions.sort(()=>Math.random()-.5);
+  const numSubjs=subjKey==='all'?Object.keys(SUBJECTS).length:1;
+  const totalTime=cfg.q*cfg.secPerQ*numSubjs;
+  closeModal();
+  launchExam({
+    mode:'exam',diff,subject:subjKey,
+    subjectName:subjKey==='all'?'All Subjects':SUBJECTS[subjKey].name,
+    questions,totalTime,
+    posScore:cfg.posScore,negScore:cfg.negScore,
+    passPercent:60
+  });
+}
+
+// ══ LAUNCH EXAM ══
+function launchExam(cfg){
+  examState={
+    ...cfg,
+    answers:new Array(cfg.questions.length).fill(null),
+    qTimes:new Array(cfg.questions.length).fill(0),
+    current:0,timeLeft:cfg.totalTime,
+    startTime:Date.now(),qStartTime:Date.now(),
+    timerInterval:null,totalElapsed:0
+  };
+  document.getElementById('test-modes').style.display='none';
+  document.getElementById('exam-screen').style.display='block';
+  document.getElementById('results-screen').style.display='none';
+  examState.timerInterval=setInterval(tickExam,1000);
+  renderExamQ();
+}
+function tickExam(){
+  if(!examState) return;
+  examState.timeLeft--;
+  examState.totalElapsed++;
+  const el=document.getElementById('exTimer');
+  if(el){
+    el.textContent=formatTime(examState.timeLeft);
+    el.className='ex-timer'+(examState.timeLeft<=60?' urgent':examState.timeLeft<=120?' warn':'');
+  }
+  if(examState.timeLeft<=0){clearInterval(examState.timerInterval);finishExam();}
+}
+function renderExamQ(){
+  if(!examState) return;
+  examState.qStartTime=Date.now();
+  const {questions,answers,current}=examState;
+  const total=questions.length;
+  const {q,opts,corr,chapName}=questions[current];
+  const ans=answers[current];
+  document.getElementById('exTitle').textContent=`${examState.subjectName} · ${examState.mode==='exam'?'Exam Mode':'Practice Mode'}`;
+  document.getElementById('exProgTxt').textContent=`Q ${current+1} / ${total}`;
+  document.getElementById('exProgBar').style.width=`${((current+1)/total*100)}%`;
+  let liveScore=0;
+  answers.forEach((a,i)=>{
+    if(a===null) return;
+    if(a===questions[i].corr) liveScore+=examState.posScore;
+    else liveScore-=examState.negScore;
+  });
+  document.getElementById('exScoreLive').textContent=`Score: ${liveScore.toFixed(1)}`;
+  const avgT=examState.totalElapsed>0?Math.round(examState.totalElapsed/Math.max(1,current)):0;
+  document.getElementById('exTimePerQ').textContent=`Avg: ${avgT}s/Q`;
+  document.getElementById('exBtnPrev').disabled=current===0;
+  document.getElementById('exBtnNext').textContent=current===total-1?'Last →':'Next →';
+  document.getElementById('exQContainer').innerHTML=`
+    <div class="ex-q-card">
+      <div class="ex-q-info">Q${current+1} · ${chapName}</div>
+      <div class="ex-q-txt">${q}</div>
+      <div class="ex-opts">
+        ${opts.map((o,oi)=>`
+          <button class="ex-opt ${ans===oi?'sel':''}" onclick="pickExamOpt(${oi})">${OL[oi]}) ${o}</button>
+        `).join('')}
+      </div>
+    </div>`;
+}
+function pickExamOpt(oi){
+  if(!examState) return;
+  // Save time on current question
+  const elapsed=Math.round((Date.now()-examState.qStartTime)/1000);
+  examState.qTimes[examState.current]=elapsed;
+  examState.answers[examState.current]=oi;
+  renderExamQ();
+}
+function examNav(dir){
+  if(!examState) return;
+  const next=examState.current+dir;
+  if(next<0||next>=examState.questions.length) return;
+  // Save time
+  const elapsed=Math.round((Date.now()-examState.qStartTime)/1000);
+  examState.qTimes[examState.current]=(examState.qTimes[examState.current]||0)+elapsed;
+  examState.current=next;
+  renderExamQ();
+}
+function submitExam(){
+  if(!examState) return;
+  const elapsed=Math.round((Date.now()-examState.qStartTime)/1000);
+  examState.qTimes[examState.current]=(examState.qTimes[examState.current]||0)+elapsed;
+  finishExam();
+}
+function finishExam(){
+  if(!examState) return;
+  clearInterval(examState.timerInterval);
+  const {questions,answers,posScore,negScore,subjectName,mode,diff,qTimes,totalElapsed}=examState;
+  let correct=0,wrong=0,skip=0,score=0;
+  const chapStats={};
+  questions.forEach(({corr,chapName},i)=>{
+    const a=answers[i];
+    if(!chapStats[chapName]) chapStats[chapName]={c:0,w:0,s:0,t:0};
+    chapStats[chapName].t++;
+    if(a===null){skip++;chapStats[chapName].s++;}
+    else if(a===corr){correct++;score+=posScore;chapStats[chapName].c++;}
+    else{wrong++;score-=negScore;chapStats[chapName].w++;}
+  });
+  score=Math.max(0,parseFloat(score.toFixed(1)));
+  const maxScore=questions.length*posScore;
+  const accuracy=correct+wrong>0?Math.round(correct/(correct+wrong)*100):0;
+  const passScore=Math.ceil(maxScore*examState.passPercent/100);
+  const passed=score>=passScore;
+  const totalSecs=examState.totalTime-examState.timeLeft;
+  const avgPerQ=questions.length?Math.round(totalSecs/questions.length):0;
+  // Grade
+  const pct=maxScore?Math.round(score/maxScore*100):0;
+  const grade=pct>=85?{t:'A+ Excellent!',c:'rg-a'}:pct>=70?{t:'A Good',c:'rg-a'}:pct>=55?{t:'B Average',c:'rg-b'}:pct>=40?{t:'C Below Average',c:'rg-c'}:{t:'D Keep Practising',c:'rg-d'};
+  // Render results
+  document.getElementById('exam-screen').style.display='none';
+  document.getElementById('results-screen').style.display='block';
+  document.getElementById('rScoreBig').textContent=score;
+  document.getElementById('rMaxScore').textContent=maxScore;
+  document.getElementById('rCorrect').textContent=correct;
+  document.getElementById('rWrong').textContent=wrong;
+  document.getElementById('rSkip').textContent=skip;
+  document.getElementById('rAccuracy').textContent=accuracy+'%';
+  document.getElementById('rTimeTaken').textContent=formatTime(totalSecs);
+  document.getElementById('rAvgTime').textContent=avgPerQ+'s / Q';
+  const grEl=document.getElementById('rGrade');grEl.textContent=grade.t;grEl.className='r-grade '+grade.c;
+  const passEl=document.getElementById('rPass');
+  passEl.textContent=passed?`✓ PASSED (Pass mark: ${passScore}/${maxScore})`:`✗ FAILED (Pass mark: ${passScore}/${maxScore})`;
+  passEl.className='r-pass '+(passed?'pass':'fail');
+  // Chap breakdown
+  let bh='';
+  Object.entries(chapStats).forEach(([name,s])=>{
+    const p=s.t?Math.round(s.c/s.t*100):0;
+    const col=p>=70?'var(--green)':p>=40?'var(--gold)':'var(--red)';
+    bh+=`<div class="rc-row"><span class="rc-name">${name}</span>
+      <div class="rc-bar-w"><div class="rc-bar-f" style="width:${p}%;background:${col}"></div></div>
+      <span class="rc-pct">${p}%</span>
+      <span class="rc-c">✓${s.c}</span><span class="rc-w">✗${s.w}</span></div>`;
+  });
+  document.getElementById('rChapBreak').innerHTML=bh;
+  // Q Review
+  let rh='';
+  questions.forEach(({q,opts,corr,chapName},i)=>{
+    const a=answers[i];const t=qTimes[i]||0;
+    const status=a===null?'skip':a===corr?'right':'wrong';
+    const col=status==='right'?'#3ecf8e':status==='wrong'?'#f87171':'#7a8fa8';
+    rh+=`<div class="rv-item">
+      <div class="rv-qnum" style="color:${col}">
+        ${status==='right'?'✓ Correct':status==='wrong'?'✗ Wrong':'— Skipped'}
+        <span class="q-time-tag">${t}s</span>
+        <span style="color:var(--muted)">${chapName}</span>
+      </div>
+      <div class="rv-qtxt">${q}</div>
+      <div class="rv-ans">
+        <span class="rv-cor">✓ ${opts[corr]}</span>
+        ${a!==null&&a!==corr?`<span class="rv-usr">✗ Your ans: ${opts[a]}</span>`:''}
+        ${a===null?'<span class="rv-skip">Not answered</span>':''}
+      </div>
+    </div>`;
+  });
+  document.getElementById('rReview').innerHTML=rh;
+  // Save history
+  const entry={
+    date:new Date().toLocaleString('en-BD',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}),
+    mode,diff:diff||'custom',subject:subjectName,total:questions.length,
+    correct,wrong,skip,score,maxScore,accuracy,passed,
+    totalTime:formatTime(totalSecs),avgPerQ:avgPerQ+'s',chapStats
+  };
+  testHistory.unshift(entry);
+  if(testHistory.length>80) testHistory=testHistory.slice(0,80);
+  localStorage.setItem('nu_history_v3',JSON.stringify(testHistory));
+}
+function retryExam(){
+  document.getElementById('results-screen').style.display='none';
+  openExamSetup();
+}
+function backToModes(){
+  document.getElementById('results-screen').style.display='none';
+  document.getElementById('exam-screen').style.display='none';
+  document.getElementById('test-modes').style.display='block';
+  if(examState?.timerInterval) clearInterval(examState.timerInterval);
+  examState=null;
+}
+
+// ══ HISTORY ══
+function renderHistory(){
+  const body=document.getElementById('histBody');
+  if(!testHistory.length){body.innerHTML='<div class="hist-empty">No tests yet. Go to <strong>🎯 Test</strong> to start!</div>';return;}
+  let html='<div class="hist-list">';
+  testHistory.forEach((h,idx)=>{
+    const cls=h.accuracy>=70?'g':h.accuracy>=45?'a':'b';
+    const badge=`${h.score}/${h.maxScore} · ${h.accuracy}%`;
+    const diffTag=h.diff&&h.diff!=='custom'?`${h.diff}`:'practice';
+    html+=`<div class="hi" id="hi_${idx}">
+      <div class="hi-head" onclick="document.getElementById('hi_${idx}').classList.toggle('open')">
+        <span class="hi-date">${h.date}</span>
+        <span class="hi-name">${h.subject} (${h.total}Q)</span>
+        <span class="hi-mode">${h.mode==='exam'?'Exam':'Practice'} · ${diffTag}</span>
+        <span class="hi-score ${cls}">${badge}</span>
+      </div>
+      <div class="hi-body">
+        <div class="hi-row">
+          <span style="color:var(--green)">✓ ${h.correct} correct</span>
+          <span style="color:var(--red)">✗ ${h.wrong} wrong</span>
+          <span style="color:var(--muted)">— ${h.skip} skipped</span>
+          <span style="color:var(--muted2)">⏱ ${h.totalTime||'—'}</span>
+          <span style="color:var(--${h.passed?'green':'red'})">${h.passed?'PASSED':'FAILED'}</span>
+        </div>
+        ${Object.entries(h.chapStats||{}).map(([name,s])=>`
+          <div class="hi-chap-r">
+            <span class="hi-cr">${name.substring(0,40)}</span>
+            <span class="hi-cc">✓${s.c}</span><span class="hi-cw">✗${s.w}</span>
+            <span style="color:var(--muted)">/${s.t}</span>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  });
+  html+='</div>';
+  body.innerHTML=html;
+}
+function clearHistory(){
+  if(confirm('Clear all test history?')){testHistory=[];localStorage.removeItem('nu_history_v3');renderHistory();}
+}
+
+// ══ MODAL ══
+function closeModal(){document.getElementById('modal').classList.remove('on');}
+
+// ══ UTIL ══
+function formatTime(s){const m=Math.floor(s/60);const sec=Math.abs(s)%60;return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`}
+</script>
+</body>
+</html>
