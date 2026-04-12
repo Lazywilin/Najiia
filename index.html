@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>NU BBA Prep — by Waterflame v5</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -121,6 +122,16 @@ body::after {
   overflow-x: auto;
   scrollbar-width: none;
 }
+@media(min-width: 768px) {
+  #topnav {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+  }
+  #topnav .nav-logo {
+    margin-right: 0;
+    margin-left: auto;
+  }
+}
 #topnav::-webkit-scrollbar { display: none; }
 
 .nav-logo {
@@ -150,11 +161,12 @@ body::after {
 .nb.on { background: var(--goldg); border-color: rgba(212,168,67,.3); color: var(--gold); font-weight: 600; }
 .nb-test {
   background: linear-gradient(135deg, var(--gold), var(--gold2));
-  color: #0a0a0a !important;
+  color: #fff !important;
   border: none !important;
   font-weight: 700 !important;
   padding: .3rem .9rem;
   border-radius: 6px;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
 }
 .nb-test:hover { opacity: .88; transform: translateY(-1px); }
 .nb-about { color: var(--purple); }
@@ -995,9 +1007,266 @@ option { background: var(--bg3); }
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-</style>
+/* ══ MEDAL & ACHIEVEMENT CSS ══ */
+.achieve-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.3rem 1.4rem;margin:1.4rem 0}
+.achieve-title{font-family:'DM Serif Display',serif;font-size:1rem;color:#fff;margin-bottom:.22rem;display:flex;align-items:center;gap:.5rem}
+.achieve-sub{color:var(--muted);font-size:.76rem;margin-bottom:1rem;line-height:1.5}
+.medal-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-bottom:.9rem}
+@media(max-width:480px){.medal-row{grid-template-columns:repeat(2,1fr)}}
+.medal-slot{background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;padding:.9rem .5rem .75rem;text-align:center;position:relative;transition:all .35s;overflow:hidden}
+.medal-slot.earned{border-width:1.5px}
+.medal-icon-wrap{font-size:2.2rem;display:block;margin-bottom:.3rem;transition:filter .4s,transform .4s;line-height:1}
+.medal-slot:not(.earned) .medal-icon-wrap{filter:grayscale(1) opacity(.35)}
+.medal-slot.earned .medal-icon-wrap{animation:medalFloat 3.5s ease-in-out infinite}
+.medal-cnt{position:absolute;top:6px;right:7px;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;padding:.1rem .34rem;border-radius:100px;line-height:1.3}
+.m-gold .medal-cnt{background:var(--gold);color:#0a0a0a}
+.m-silver .medal-cnt{background:#b0b8c8;color:#0a0a0a}
+.m-bronze .medal-cnt{background:#c07832;color:#0a0a0a}
+.m-plat .medal-cnt{background:var(--purple);color:#0a0a0a}
+.medal-name{font-size:.72rem;font-weight:700;margin-bottom:.15rem;letter-spacing:.04em}
+.medal-how{font-size:.63rem;color:var(--muted);line-height:1.4}
+.m-gold.earned{background:linear-gradient(160deg,rgba(212,168,67,.12),rgba(240,200,74,.04));border-color:rgba(212,168,67,.45)!important;animation:goldGlow 2.5s ease-in-out infinite}
+.m-silver.earned{background:linear-gradient(160deg,rgba(180,190,205,.1),rgba(200,210,225,.03));border-color:rgba(180,190,205,.4)!important;animation:silverGlow 2.8s ease-in-out infinite}
+.m-bronze.earned{background:linear-gradient(160deg,rgba(205,127,50,.1),rgba(215,140,60,.04));border-color:rgba(205,127,50,.4)!important;animation:bronzeGlow 2.6s ease-in-out infinite}
+.m-plat.earned{background:linear-gradient(160deg,rgba(167,139,250,.14),rgba(139,92,246,.06));border-color:rgba(167,139,250,.55)!important;animation:platGlow 2s ease-in-out infinite}
+.m-plat-slot{display:none}.m-plat-slot.earned{display:block}
+@keyframes medalFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.06)}}
+@keyframes goldGlow{0%,100%{box-shadow:0 0 6px 0 rgba(212,168,67,.15)}50%{box-shadow:0 0 22px 5px rgba(212,168,67,.35)}}
+@keyframes silverGlow{0%,100%{box-shadow:0 0 4px 0 rgba(180,190,205,.1)}50%{box-shadow:0 0 18px 4px rgba(180,190,205,.3)}}
+@keyframes bronzeGlow{0%,100%{box-shadow:0 0 4px 0 rgba(205,127,50,.1)}50%{box-shadow:0 0 16px 4px rgba(205,127,50,.3)}}
+@keyframes platGlow{0%,100%{box-shadow:0 0 10px 3px rgba(167,139,250,.25),0 0 2px rgba(167,139,250,.4)}50%{box-shadow:0 0 30px 8px rgba(167,139,250,.5),0 0 60px 16px rgba(167,139,250,.18)}}
+.tier-row{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+.tier-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:.5rem .75rem;font-size:.75rem;display:flex;align-items:center;gap:.45rem}
+.tier-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.tier-d .tier-dot{background:#8fbc8f}.tier-f .tier-dot{background:var(--muted)}
+.tier-label{color:var(--text2);font-weight:600}.tier-count{font-family:'JetBrains Mono',monospace;color:var(--muted2);margin-left:auto;font-size:.72rem}
+/* ══ RESULT OVERLAY ══ */
+#resultOverlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:800;display:none;align-items:center;justify-content:center;backdrop-filter:blur(14px);padding:1rem;overflow-y:auto}
+#resultOverlay.on{display:flex}
+.ro-box{background:var(--card2);border:1px solid var(--border2);border-radius:16px;max-width:460px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.7);overflow:hidden;position:relative;margin:auto;animation:rmPop .45s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes rmPop{from{opacity:0;transform:translateY(30px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+.ro-head{padding:1.5rem 1.4rem 1rem;text-align:center}
+.ro-medal{font-size:5rem;display:block;margin-bottom:.4rem;animation:medalBounce .6s .15s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes medalBounce{from{opacity:0;transform:scale(.2) rotate(-30deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+.ro-congrats{font-family:'DM Serif Display',serif;font-size:1.55rem;color:#fff;line-height:1.15;margin-bottom:.35rem}
+.ro-msg{font-size:.86rem;color:var(--muted2);line-height:1.65;max-width:340px;margin:0 auto}
+.ro-grade-b{display:inline-block;padding:.28rem 1rem;border-radius:100px;font-size:.8rem;font-weight:700;letter-spacing:.06em;margin:.55rem 0}
+.ro-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem;padding:.8rem 1.3rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ro-stat{text-align:center}.ro-sv{font-family:'DM Serif Display',serif;font-size:1.3rem;font-weight:700}
+.ro-sl{font-size:.6rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.ro-sv.g{color:var(--green)}.ro-sv.r{color:var(--red)}.ro-sv.gold{color:var(--gold)}
+.ro-actions{display:flex;gap:.55rem;padding:.9rem 1.3rem;flex-wrap:wrap}
+.ro-close{position:absolute;top:.75rem;right:.85rem;background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;transition:color .18s;padding:.18rem}
+.ro-close:hover{color:var(--red)}
+.ro-pass{font-size:.75rem;padding:.2rem .75rem;border-radius:100px;margin:.2rem auto;display:inline-block}
+.ro-pass.pass{background:var(--green2);color:var(--green);border:1px solid rgba(52,211,153,.3)}.ro-pass.fail{background:var(--red2);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+/* ══ FOCUS MODE ══ */
+#focusWarn {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.92);
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+}
+#focusWarn.on { display: flex; }
+.fw-box {
+  background: var(--card2);
+  border: 2px solid rgba(248,113,113,.5);
+  border-radius: 16px;
+  padding: 2.2rem 2rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(248,113,113,.25);
+  animation: rmPop .4s var(--spring) both;
+}
+.fw-icon { font-size: 3.5rem; margin-bottom: .6rem; display: block; animation: pulse-urgency 1.5s infinite; }
+.fw-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--red); margin-bottom: .4rem; }
+.fw-msg { color: var(--muted2); font-size: .88rem; line-height: 1.7; margin-bottom: 1.2rem; }
+.fw-count { font-family: 'JetBrains Mono', monospace; font-size: .78rem; color: var(--amber); background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.2); padding: .25rem .8rem; border-radius: 100px; display: inline-block; margin-bottom: 1rem; }
+.fw-btn { background: linear-gradient(135deg,var(--red),#f43f5e); color: #fff; border: none; padding: .65rem 2rem; border-radius: 100px; font-weight: 700; font-size: .9rem; cursor: pointer; transition: opacity .16s; width: 100%; }
+.fw-btn:hover { opacity: .88; }
+
+/* ══ SAVE PROGRESS (Practice Only) ══ */
+.save-prog-btn {
+  background: var(--blue2);
+  color: var(--blue);
+  border: 1px solid rgba(96,165,250,.3);
+  padding: .32rem .85rem;
+  border-radius: var(--rs);
+  font-size: .75rem;
+  font-weight: 600;
+  transition: all .16s;
+  white-space: nowrap;
+}
+.save-prog-btn:hover { background: rgba(96,165,250,.2); border-color: rgba(96,165,250,.5); }
+.save-prog-btn.saved { background: var(--green2); color: var(--green); border-color: rgba(52,211,153,.35); }
+.save-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  background: var(--card2);
+  border: 1px solid var(--green);
+  color: var(--green);
+  padding: .55rem 1.4rem;
+  border-radius: 100px;
+  font-size: .83rem;
+  font-weight: 600;
+  z-index: 8000;
+  box-shadow: 0 0 20px rgba(52,211,153,.2);
+  pointer-events: none;
+  animation: saveToast .3s var(--spring) both;
+}
+@keyframes saveToast {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ══ UI SHOWCASE PANEL ══ */
+#panel-ui {
+  min-height: 100vh;
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99,102,241,.18) 0%, transparent 65%),
+              radial-gradient(ellipse 50% 40% at 85% 80%, rgba(99,102,241,.12) 0%, transparent 55%),
+              #020617;
+}
+.ui-showcase-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+.ui-showcase-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: #fff; margin-bottom: .3rem; }
+.ui-showcase-sub { color: var(--muted); font-size: .86rem; margin-bottom: 2rem; }
+.glass-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+
+/* Glass card */
+.glass-card {
+  background: rgba(255,255,255,.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 24px;
+  padding: 1.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(99,102,241,.18);
+}
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
+}
+.gc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  background: rgba(99,102,241,.15);
+  border: 1px solid rgba(99,102,241,.3);
+  border-radius: 100px;
+  padding: .22rem .75rem;
+  font-size: .66rem;
+  color: #818cf8;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.gc-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.55rem;
+  color: #fff;
+  margin-bottom: .5rem;
+  line-height: 1.15;
+}
+.gc-desc { color: rgba(255,255,255,.45); font-size: .82rem; line-height: 1.7; margin-bottom: 1.4rem; }
+.gc-meta { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.gc-tag { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 100px; padding: .16rem .62rem; font-size: .68rem; color: rgba(255,255,255,.4); }
+.gc-btn {
+  display: block;
+  width: 100%;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  padding: .72rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: .88rem;
+  letter-spacing: .02em;
+  cursor: pointer;
+  transition: all .22s var(--ease);
+  box-shadow: 0 0 0 0 rgba(99,102,241,.5);
+  position: relative;
+  overflow: hidden;
+}
+.gc-btn::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 14px;
+  background: transparent;
+  border: 2px solid rgba(99,102,241,.4);
+  pointer-events: none;
+  box-shadow: 0 0 24px 4px rgba(99,102,241,.35);
+}
+.gc-btn:hover { background: #4f46e5; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.4); }
+
+/* ACE CARD ICON */
+.ace-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.ace-svg-container {
+  filter: drop-shadow(0 8px 32px rgba(255,255,255,.15));
+  transition: transform .3s var(--spring), filter .3s;
+}
+.ace-svg-container:hover {
+  transform: scale(1.06) rotate(-3deg);
+  filter: drop-shadow(0 16px 48px rgba(255,255,255,.25));
+}
+
 </head>
 <body>
+
+<!-- ══ CONFETTI & RESULT OVERLAY ══ -->
+<canvas id="confettiCanvas"></canvas>
+
+<!-- ══ FOCUS MODE WARNING ══ -->
+<div id="focusWarn">
+  <div class="fw-box">
+    <span class="fw-icon">🚨</span>
+    <div class="fw-title">Focus Mode Active!</div>
+    <div class="fw-msg">You left the exam tab. <strong style="color:var(--red)">Tab switching is not allowed</strong> during an active exam. Return to your exam immediately.</div>
+    <div class="fw-count" id="fwViolationCount">Violation: 1</div>
+    <button class="fw-btn" onclick="FocusMode.dismiss()">↩ Return to Exam</button>
+  </div>
+</div>
+<div id="resultOverlay">
+  <div class="ro-box">
+    <button class="ro-close" onclick="Achievements.closeOverlay()">✕</button>
+    <div class="ro-head">
+      <span class="ro-medal" id="roMedal">🏅</span>
+      <div class="ro-congrats" id="roCongrats">Well Done!</div>
+      <div class="ro-msg" id="roMsg"></div>
+      <div class="ro-grade-b" id="roGradeBadge"></div><br>
+      <span class="ro-pass" id="roPass"></span>
+    </div>
+    <div class="ro-stats">
+      <div class="ro-stat"><div class="ro-sv gold" id="roScore">0</div><div class="ro-sl">Score</div></div>
+      <div class="ro-stat"><div class="ro-sv g" id="roCorrect">0</div><div class="ro-sl">Correct</div></div>
+      <div class="ro-stat"><div class="ro-sv r" id="roWrong">0</div><div class="ro-sl">Wrong</div></div>
+    </div>
+    <div class="ro-actions">
+      <button class="btn-pri" style="flex:1;min-width:100px" onclick="Achievements.closeOverlay();ExamEngine.retry()">🔄 Retry</button>
+      <button class="btn-sec" onclick="Achievements.closeOverlay();ExamEngine.backToModes()">← Modes</button>
+      <button class="btn-sec" onclick="Achievements.closeOverlay();App.nav('test')">View Results</button>
+    </div>
+  </div>
+</div>
 
 <!-- ══ NAVIGATION ══ -->
 <nav id="topnav">
@@ -1007,6 +1276,7 @@ option { background: var(--bg3); }
   <button class="nb nb-test" id="nb-test" onclick="App.nav('test')">🎯 Test</button>
   <button class="nb" id="nb-history" onclick="App.nav('history')">History</button>
   <button class="nb nb-about" id="nb-about" onclick="App.nav('about')">About</button>
+  <button class="nb" id="nb-ui" onclick="App.nav('ui')" style="color:var(--purple)">✦ UI</button>
 </nav>
 
 <!-- ══ HOME PANEL ══ -->
@@ -1148,6 +1418,29 @@ option { background: var(--bg3); }
         <button class="mc-btn b-gold">Start Exam →</button>
       </div>
     </div>
+
+    <!-- ACHIEVEMENTS BOX -->
+    <div class="achieve-box" id="achieveBox">
+      <div class="achieve-title">🏅 Achievements</div>
+      <div class="achieve-sub">Medals earned from Exam Mode. Stackable — earn the same medal multiple times!</div>
+      <div class="medal-row" id="medalRow">
+        <!-- Built by JS -->
+      </div>
+      <div class="tier-row">
+        <div class="tier-item tier-d">
+          <div class="tier-dot"></div>
+          <span class="tier-label">D Tier</span>
+          <span style="font-size:.72rem;color:var(--muted)">40–54% score</span>
+          <span class="tier-count" id="tierDCount">0x</span>
+        </div>
+        <div class="tier-item tier-f">
+          <div class="tier-dot"></div>
+          <span class="tier-label">F Tier</span>
+          <span style="font-size:.72rem;color:var(--muted)">Below 40%</span>
+          <span class="tier-count" id="tierFCount">0x</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Active exam screen -->
@@ -1161,6 +1454,7 @@ option { background: var(--bg3); }
       <div class="ex-time-per-q" id="exTimePerQ">Avg: —</div>
       <div class="ex-score-live" id="exScoreLive">Score: 0</div>
       <div class="ex-timer" id="exTimer">00:00</div>
+      <button class="save-prog-btn" id="saveProgBtn" onclick="SaveProgress.save()" style="display:none">💾 Save</button>
     </div>
     <div class="exam-body">
       <div id="exQContainer"></div>
@@ -1237,10 +1531,99 @@ option { background: var(--bg3); }
       </div>
     </div>
     <div class="about-section">
-      <h3>🛠️ How to Use This App</h3>
-      <p><strong>Subjects tab</strong> — Browse all 5 subjects chapter by chapter. Click any chapter to expand MCQs. Pick an option to check your answer instantly. Progress bar tracks completion per chapter.</p>
-      <p><strong>Test tab</strong> — Choose Practice Mode (fully customisable) or Exam Mode (simulated NU-style with per-question timers and pass/fail grading). Results show chapter breakdown, accuracy, and full question review.</p>
-      <p><strong>History tab</strong> — Every completed test is saved locally. Review past scores, accuracy, and chapter performance to track improvement over time.</p>
+      <h3>👤 Who is Waterflame?</h3>
+      <p>A 19-year-old Commerce student from Bonosree, Dhaka, preparing for NU BBA admission 2025–26. Into Liquid DnB (Liquicity is life 🎧), high-fi audio — Tangzu Wan'er SG 2 IEMs through a JCALLY JM7 DAC — and Mobile Legends ranked grind.</p>
+      <p>Long-term plan: BBA in Australia (Sydney or Perth), starting February 2027. Until then, NU BBA is the mission.</p>
+    </div>
+    <div class="about-section">
+      <h3>💌 A Message to You</h3>
+      <p style="color:var(--gold);font-family:'DM Serif Display',serif;font-size:.95rem;font-style:italic;line-height:1.7">"The only way to get better is to practice like it matters, even when it doesn't feel like it does. You're already ahead of who you were yesterday."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ UI SHOWCASE PANEL ══ -->
+<div class="panel" id="panel-ui">
+  <div class="ui-showcase-wrap">
+    <div class="ui-showcase-title">✦ UI Showcase</div>
+    <div class="ui-showcase-sub">Glassmorphism Study Cards · Ace Icon Design</div>
+
+    <div class="glass-grid">
+
+      <!-- Card 1 -->
+      <div class="glass-card">
+        <span class="gc-badge">✦ Accounting</span>
+        <div class="gc-title">Financial<br>Statements</div>
+        <div class="gc-desc">Balance sheets, income statements, and the language of business money.</div>
+        <div class="gc-meta">
+          <span class="gc-tag">30 MCQs</span>
+          <span class="gc-tag">★★★</span>
+          <span class="gc-tag">High Priority</span>
+        </div>
+        <button class="gc-btn" onclick="App.nav('subjects')">→ Start Studying</button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="glass-card">
+        <span class="gc-badge">✦ Management</span>
+        <div class="gc-title">Henri Fayol's<br>14 Principles</div>
+        <div class="gc-desc">The foundational pillars of modern management theory and organizational design.</div>
+        <div class="gc-meta">
+          <span class="gc-tag">20 MCQs</span>
+          <span class="gc-tag">★★★</span>
+          <span class="gc-tag">Exam Favourite</span>
+        </div>
+        <button class="gc-btn" onclick="App.nav('subjects')">→ Start Studying</button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="glass-card">
+        <span class="gc-badge">✦ English</span>
+        <div class="gc-title">Grammar<br>Mastery</div>
+        <div class="gc-desc">Tenses, prepositions, and sentence correction — score full marks on language.</div>
+        <div class="gc-meta">
+          <span class="gc-tag">25 MCQs</span>
+          <span class="gc-tag">★★</span>
+          <span class="gc-tag">Medium</span>
+        </div>
+        <button class="gc-btn" onclick="App.nav('subjects')">→ Start Studying</button>
+      </div>
+
+      <!-- Card 4: Ace Icon -->
+      <div class="glass-card" style="grid-column: span 1;">
+        <span class="gc-badge">✦ App Icon</span>
+        <div class="gc-title">The Ace</div>
+        <div class="gc-desc">Symbol of mastery — the top card. Play your hand wisely.</div>
+        <div class="ace-icon-wrap">
+          <div class="ace-svg-container">
+            <svg width="120" height="160" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Card body -->
+              <rect x="2" y="2" width="116" height="156" rx="12" fill="white" stroke="black" stroke-width="3"/>
+              <!-- Inner border -->
+              <rect x="8" y="8" width="104" height="144" rx="8" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4 3" opacity="0.25"/>
+              <!-- Top-left small A -->
+              <text x="14" y="30" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="black">A</text>
+              <!-- Top-left small spade -->
+              <path d="M18 36 C18 33 15 30 15 27 C15 24.5 18 23 18 23 C18 23 21 24.5 21 27 C21 30 18 33 18 36Z" fill="black"/>
+              <path d="M16 36 L20 36 L19 39 L17 39 Z" fill="black"/>
+              <!-- Bottom-right small A (rotated) -->
+              <g transform="rotate(180 60 80)">
+                <text x="14" y="30" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="black">A</text>
+                <path d="M18 36 C18 33 15 30 15 27 C15 24.5 18 23 18 23 C18 23 21 24.5 21 27 C21 30 18 33 18 36Z" fill="black"/>
+                <path d="M16 36 L20 36 L19 39 L17 39 Z" fill="black"/>
+              </g>
+              <!-- Center large spade -->
+              <g transform="translate(60 80)">
+                <!-- Main spade shape -->
+                <path d="M0 -28 C0 -28 -22 -8 -22 8 C-22 20 -12 26 0 20 C12 26 22 20 22 8 C22 -8 0 -28 0 -28Z" fill="black"/>
+                <!-- Spade handle -->
+                <path d="M-10 20 L10 20 L7 34 L-7 34 Z" fill="black"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1292,6 +1675,27 @@ bangla: {
       ["অনুপমের মায়ের মনোভাব কেমন ছিল?", ["উদার ও সহানুভূতিশীল","সংকীর্ণ ও যৌতুকপ্রিয়","নিস্পৃহ","বিদ্রোহী"], 1, 2],
       ["'অপরিচিতা' গল্পে মূল নৈতিক বার্তা কী?", ["প্রেম অপরাজেয়","নারীর আত্মসম্মান ও সিদ্ধান্তের স্বাধীনতা","ধনসম্পদ সবকিছু","বিবাহ অনিবার্য"], 1, 3],
       ["'অপরিচিতা' কোন গল্পগ্রন্থে আছে?", ["গল্পগুচ্ছ","চোখের বালি","নষ্টনীড়","ছোটগল্প সংকলন"], 0, 3],
+      ["অনুপমের পেশা কী ছিল?", ["শিক্ষক","ডাক্তার","উকিল","সরকারি কর্মকর্তা"], 2, 2],
+      ["'অপরিচিতা' গল্পে ট্রেনে অনুপম কাকে দেখতে পায়?", ["শম্ভুনাথ সেনকে","কল্যাণীকে","হরিশ মামাকে","তার মাকে"], 1, 2],
+      ["কল্যাণী বিবাহে রাজি না হওয়ার মূল কারণ কী?", ["পাত্রকে পছন্দ না হওয়া","অপমানিত হওয়ার কারণে বাবার সিদ্ধান্ত মেনে নেওয়া","দারিদ্র্য","ধর্মীয় কারণ"], 1, 3],
+      ["'অপরিচিতা' গল্পে অনুপমের চরিত্রের সবচেয়ে বড় দুর্বলতা কোনটি?", ["লোভ","ভীরুতা","মামার ওপর অতিনির্ভরশীলতা","অহংকার"], 2, 3],
+      ["অনুপমের মামা গহনা পরীক্ষা করিয়েছিলেন কেন?", ["পুরনো অভ্যাসে","সন্দেহবশত গহনা খাঁটি কিনা যাচাই করতে","শম্ভুনাথকে অপমান করতে","সোনার দাম জানতে"], 1, 2],
+      ["রবীন্দ্রনাথ ঠাকুর কত সালে নোবেল পুরস্কার পান?", ["১৯১০","১৯১১","১৯১৩","১৯১৫"], 2, 1],
+      ["'অপরিচিতা' গল্পে কল্যাণীর বয়স কত ছিল?", ["পনেরো","ষোলো","সতেরো","আঠারো"], 1, 2],
+      ["অনুপম গল্পের শেষে কী করে?", ["কল্যাণীকে ভুলে যায়","অন্য বিয়ে করে","অবিবাহিত থেকে যায় এবং অনুতাপ করে","বিদেশে চলে যায়"], 2, 3],
+      ["'অপরিচিতা' গল্পে 'আমার মন ভরে গেল' — কার উক্তি?", ["কল্যাণীর","অনুপমের","হরিশ মামার","শম্ভুনাথ সেনের"], 1, 2],
+      ["অনুপমের মামার চরিত্রে কোন বৈশিষ্ট্য প্রধান?", ["উদারতা","অর্থলিপ্সা ও কৌশলী স্বভাব","সাহস","পরোপকার"], 1, 3],
+      ["'অপরিচিতা' গল্পটি কোন পত্রিকায় প্রথম প্রকাশিত হয়?", ["সবুজপত্র","প্রবাসী","ভারতী","বঙ্গদর্শন"], 1, 2],
+      ["গল্পে অনুপমের মামা যৌতুকে কতটি সোনার গহনা চেয়েছিল?", ["নির্দিষ্ট তালিকা ছিল না, শুধু খাঁটি সোনা পরীক্ষা করিয়েছিল","বিশ ভরি","দশ ভরি","পঞ্চাশ ভরি"], 0, 3],
+      ["'অপরিচিতা' গল্পে অনুপম সমাজের কোন দিকের প্রতিনিধি?", ["নতুন চেতনার","মধ্যবিত্ত পুরুষের দুর্বলতার প্রতীক","বিদ্রোহী মানুষের","উচ্চবর্গের নিষ্ঠুরতার"], 1, 3],
+      ["কল্যাণী গল্পের শেষে কী করেন?", ["বিয়ে করেন","দেশত্যাগ করেন","সমাজসেবায় নিয়োজিত হন","মারা যান"], 2, 2],
+      ["'অপরিচিতা' গল্পে মামার গহনা যাচাইয়ের ঘটনাটি কোথায় ঘটে?", ["হলঘরে","বাসরঘরে","বিবাহমণ্ডপে","শম্ভুনাথের বাড়িতে"], 2, 2],
+      ["রবীন্দ্রনাথ ঠাকুরের জন্মসাল কত?", ["১৮৫৯","১৮৬১","১৮৬৩","১৮৫৫"], 1, 1],
+      ["'গীতাঞ্জলি' কাব্যের জন্য রবীন্দ্রনাথ নোবেল পুরস্কার পান — এটি কোন ভাষায় ছিল?", ["বাংলা","হিন্দি","ইংরেজি অনুবাদে","সংস্কৃত"], 2, 2],
+      ["অনুপমের মামা শম্ভুনাথের সাথে ব্যবহারে কোন বিষয়টি সবচেয়ে আপত্তিজনক ছিল?", ["কথা না বলা","বিবাহমণ্ডপে গহনা পরীক্ষা করানো","দেরিতে আসা","কনের দিক না দেখা"], 1, 3],
+      ["'অপরিচিতা' গল্পের ভাষার বৈশিষ্ট্য কোনটি?", ["কঠিন ও দুর্বোধ্য","সহজ সাবলীল প্রথম পুরুষে বর্ণিত","কাব্যিক ও ছন্দময়","আঞ্চলিক ভাষায় রচিত"], 1, 2],
+      ["অনুপম ট্রেনে কল্যাণীকে চিনতে পেরেছিল কারণ —", ["তারা আগে পরিচিত ছিল","কল্যাণীর বাবা পাশে ছিলেন","তাদের চোখাচোখি হয়েছিল","অন্য যাত্রী বলে দেয়"], 1, 2],
+      ["'অপরিচিতা' গল্পের রচনাকাল কত সাল?", ["১৯০৮","১৯০৯","১৯১৪","১৯২০"], 1, 3],
     ]},
     { name: 'বিড়াল — মাইকেল মধুসূদন দত্ত / প্রমথ চৌধুরী', imp: 2, mcqs: [
       ["'বিড়াল' রচনার লেখক কে?", ["রবীন্দ্রনাথ ঠাকুর","বঙ্কিমচন্দ্র চট্টোপাধ্যায়","প্রমথ চৌধুরী","মাইকেল মধুসূদন দত্ত"], 2, 1],
@@ -1299,6 +1703,16 @@ bangla: {
       ["'বিড়াল' প্রবন্ধে বিড়াল কার প্রতীক?", ["শাসকশ্রেণির","সাধারণ মানুষের বা অবহেলিত শ্রেণির","সুবিধাভোগীদের","বুদ্ধিজীবীদের"], 1, 2],
       ["'বিড়াল' রচনার ধরন কী?", ["কবিতা","উপন্যাস","রম্যরচনা / ব্যঙ্গ প্রবন্ধ","নাটক"], 2, 1],
       ["'বিড়াল' প্রবন্ধে 'সবলের ধর্ম ও দুর্বলের ধর্ম' বলতে কী বোঝানো হয়েছে?", ["শারীরিক শক্তি","ক্ষমতাসীন ও অধীন শ্রেণির ভিন্ন নিয়ম","ধার্মিকতার মাত্রা","পশু-মানুষ পার্থক্য"], 1, 3],
+      ["'বিড়াল' রচনাটি কোন গ্রন্থে সংকলিত?", ["কমলাকান্তের দপ্তর","বিচিত্র প্রবন্ধ","তেল নুন লকড়ি","লোকরহস্য"], 2, 2],
+      ["প্রমথ চৌধুরীর ছদ্মনাম কী?", ["কমলাকান্ত","বীরবল","পরশু রাম","হুতোম পেঁচা"], 1, 2],
+      ["'বিড়াল' প্রবন্ধে সমাজের কোন বৈষম্যের চিত্র আঁকা হয়েছে?", ["লিঙ্গ বৈষম্য","ধনী-গরিব শ্রেণিবৈষম্য","জাতি বৈষম্য","শিক্ষা বৈষম্য"], 1, 2],
+      ["প্রমথ চৌধুরী কোন পত্রিকার সম্পাদক ছিলেন?", ["বঙ্গদর্শন","প্রবাসী","সবুজপত্র","ভারতী"], 2, 2],
+      ["'বিড়াল' রচনায় চুরির নৈতিকতা নিয়ে কী বলা হয়েছে?", ["চুরি সবসময় পাপ","ক্ষুধার্ত মানুষের চুরি প্রকৃত চুরি নয়","চুরি সমাজে স্বাভাবিক","চুরি প্রতিরোধযোগ্য নয়"], 1, 3],
+      ["প্রমথ চৌধুরীর লেখার বিশেষত্ব কী?", ["গুরুগম্ভীর ভাষা","ব্যঙ্গাত্মক ও রম্যরসপূর্ণ চলিত ভাষা","কাব্যিক ছন্দ","আঞ্চলিক উপভাষা"], 1, 2],
+      ["'বিড়াল' প্রবন্ধের মূল দার্শনিক বক্তব্য কী?", ["সব মানুষ সমান","শক্তিশালীরাই নিয়ম তৈরি করে, দুর্বলরা মানতে বাধ্য","নৈরাজ্যই স্বাধীনতা","পশু মানুষের চেয়ে উত্তম"], 1, 3],
+      ["'বিড়াল' রচনায় কথকের ভূমিকা কে পালন করেছে?", ["একজন চাষি","একজন বিড়াল","লেখক নিজে","একজন দার্শনিক"], 1, 2],
+      ["বঙ্কিমচন্দ্রের 'কমলাকান্তের দপ্তর' কোন ধরনের রচনা?", ["উপন্যাস","নাটক","ব্যঙ্গাত্মক প্রবন্ধ সংকলন","কবিতাগ্রন্থ"], 2, 2],
+      ["'বিড়াল' রচনায় লেখক পরোক্ষে কোন সামাজিক সত্য তুলে ধরেছেন?", ["সম্পদ বণ্টনে অসাম্য","নারীর অধিকার","শিক্ষার অভাব","রাজনৈতিক দুর্নীতি"], 0, 3],
     ]},
     { name: 'সোনার তরী — রবীন্দ্রনাথ ঠাকুর', imp: 3, mcqs: [
       ["'সোনার তরী' কবিতার লেখক কে?", ["কাজী নজরুল ইসলাম","জীবনানন্দ দাশ","রবীন্দ্রনাথ ঠাকুর","মাইকেল মধুসূদন দত্ত"], 2, 1],
@@ -1306,6 +1720,19 @@ bangla: {
       ["'সোনার তরী' কবিতায় তরী কী নিয়ে যায়?", ["কৃষককেও","শুধু ধান","শুধু কবিকে","কাউকেই না"], 1, 2],
       ["'সোনার তরী' কবিতার মূল বিষয়বস্তু কী?", ["কৃষির প্রশংসা","কর্মই ঈশ্বর","সৃষ্টি টিকে থাকে, স্রষ্টা হারিয়ে যায়","নদীর প্রকৃতি"], 2, 3],
       ["'সোনার তরী' কবিতায় 'শূন্য নদীর তীরে' কে থাকে?", ["মাঝি","ধানকাটা কৃষক / কবির প্রতীক","নারী","শিশু"], 1, 2],
+      ["'সোনার তরী' কবিতায় 'সোনার ধান' কীসের রূপক?", ["প্রকৃত ধান","কবির সৃষ্টিকর্ম ও জীবনের অর্জন","সম্পদ","ফসলের প্রতীক"], 1, 3],
+      ["'সোনার তরী' কবিতায় 'ভরা নদী' কীসের প্রতীক?", ["সময় বা কাল প্রবাহ","আনন্দ","বন্ধুত্ব","কৃষির সমৃদ্ধি"], 0, 3],
+      ["'সোনার তরী' কবিতার ছন্দ কোনটি?", ["স্বরবৃত্ত","মাত্রাবৃত্ত","অক্ষরবৃত্ত","মুক্তক"], 1, 2],
+      ["'সোনার তরী' কোন কাব্যগ্রন্থে রয়েছে?", ["গীতাঞ্জলি","সোনার তরী (কাব্যগ্রন্থ)","মানসী","চিত্রা"], 1, 2],
+      ["'সোনার তরী' কবিতায় মাঝি কী উত্তর দেয়?", ["সে কবিকেও নেবে","তরীতে ঠাঁই নেই","সে ধান নেবে না","সে পরে আসবে"], 1, 2],
+      ["'সোনার তরী' কবিতায় কবি কীসের সাথে তুলনীয়?", ["মাঝির সাথে","নৌকার সাথে","বিস্মৃত শিল্পীর সাথে","প্রকৃতির সাথে"], 2, 3],
+      ["'সোনার তরী' কবিতায় মেঘ করে আসার তাৎপর্য কী?", ["বৃষ্টির আভাস","সংকট বা বিপদের আগমন","আনন্দের পরিবেশ","প্রকৃতির বর্ণনা"], 1, 2],
+      ["'সোনার তরী' কবিতায় কত স্তবক আছে?", ["তিনটি","চারটি","পাঁচটি","ছয়টি"], 0, 2],
+      ["রবীন্দ্রনাথের 'সোনার তরী' কাব্যগ্রন্থ প্রকাশিত হয় কত সালে?", ["১৮৯৪","১৮৯৩","১৮৯০","১৮৯৮"], 1, 2],
+      ["'সোনার তরী' কবিতার ইংরেজি অনুবাদ কার করা?", ["রবীন্দ্রনাথ নিজে","বুদ্ধদেব বসু","অ্যান্ড্রুজ","ডব্লিউ.বি. ইয়েটস"], 0, 2],
+      ["'সোনার তরী' কবিতায় 'ভরা পালের নৌকা' কীসের প্রতীক?", ["সুখের জীবন","মৃত্যুর দূত","কাল / সময়","বন্ধু"], 2, 3],
+      ["'ঠাঁই নাই ঠাঁই নাই ছোটো সে তরী' — এই লাইনে কবির কোন অনুভূতি প্রকাশিত?", ["আনন্দ","বিষণ্নতা ও প্রত্যাখ্যানের বেদনা","রাগ","নিরুদ্বেগ"], 1, 3],
+      ["'সোনার তরী' কবিতায় স্রষ্টার ভাগ্য কী?", ["সে পুরস্কৃত হয়","সে বিখ্যাত হয়","সৃষ্টি নিয়ে যাওয়া হয় কিন্তু স্রষ্টা পড়ে থাকে","সে তরীতে উঠে যায়"], 2, 3],
     ]},
     { name: 'আঠারো বছর বয়স — সুকান্ত ভট্টাচার্য', imp: 3, mcqs: [
       ["'আঠারো বছর বয়স' কবিতার লেখক কে?", ["রবীন্দ্রনাথ ঠাকুর","কাজী নজরুল ইসলাম","জীবনানন্দ দাশ","সুকান্ত ভট্টাচার্য"], 3, 1],
@@ -1313,6 +1740,16 @@ bangla: {
       ["সুকান্ত ভট্টাচার্যকে কী বলা হয়?", ["ছন্দের জাদুকর","বিদ্রোহী কবি","কিশোর কবি বা সর্বহারার কবি","প্রকৃতির কবি"], 2, 2],
       ["'আঠারো বছর বয়স' কবিতায় 'এ বয়সে কেউ মাথা নোয়াবার নয়' — এই বক্তব্যের মর্ম কী?", ["বয়সের অহংকার","তরুণ বয়সে আপোষহীনতা ও প্রতিবাদী চেতনা","বয়স্কদের বিরুদ্ধে বিদ্রোহ","শারীরিক শক্তির গর্ব"], 1, 3],
       ["সুকান্ত ভট্টাচার্যের কোন কাব্যগ্রন্থ সবচেয়ে বিখ্যাত?", ["সঞ্চিতা","অগ্নিবীণা","ছাড়পত্র","সোনার তরী"], 2, 2],
+      ["'আঠারো বছর বয়স' কবিতায় এই বয়সকে কীভাবে চিত্রিত করা হয়েছে?", ["দুর্বল ও অনিশ্চিত","দুঃসাহসী ও বিপদ-উপেক্ষী","শান্তিপ্রিয়","ভোগবিলাসী"], 1, 2],
+      ["সুকান্ত ভট্টাচার্য কত বছর বয়সে মারা যান?", ["২০","২১","২৫","১৮"], 1, 2],
+      ["'আঠারো বছর বয়স' কবিতায় কয়টি স্তবক আছে?", ["পাঁচটি","ছয়টি","সাতটি","আটটি"], 1, 2],
+      ["'আঠারো বছর বয়স' কবিতায় 'বিপদের মুখে' এই বয়স কেমন?", ["পিছিয়ে যায়","অগ্রণী ও সাহসী","ভয় পায়","চুপ করে থাকে"], 1, 3],
+      ["সুকান্ত ভট্টাচার্যের জন্মসাল কত?", ["১৯২৫","১৯২৬","১৯২৮","১৯২০"], 1, 2],
+      ["'আঠারো বছর বয়স' কবিতায় 'এ বয়স জানে না ভয়' — এটি কোন দর্শন প্রকাশ করে?", ["নির্বুদ্ধিতা","যৌবনের অজেয় মনোভাব ও সাহস","জড়তা","আত্মহত্যার প্রবণতা"], 1, 3],
+      ["সুকান্ত ভট্টাচার্যের কবিতায় কোন শ্রেণির কথা বেশি আসে?", ["ধনীশ্রেণি","শ্রমজীবী মানুষ ও সর্বহারা","মধ্যবিত্ত","উচ্চবর্গ"], 1, 2],
+      ["'আঠারো বছর বয়স' কবিতার ছন্দ কোনটি?", ["মাত্রাবৃত্ত","স্বরবৃত্ত","অক্ষরবৃত্ত","মুক্তক"], 0, 2],
+      ["'আঠারো বছর বয়স' কবিতায় 'পদক্ষেপে এ বয়স ভাঙতে জানে' — এখানে কী ভাঙার কথা বলা হয়েছে?", ["ঘর","শৃঙ্খল ও বাধা","পাথর","নিয়ম-কানুন"], 1, 3],
+      ["'আঠারো বছর বয়স' কবিতায় তরুণের 'বুকে আগুন' জ্বলে কেন?", ["রাগে","অন্যায়ের বিরুদ্ধে বিক্ষোভ ও চেতনায়","তৃষ্ণায়","ক্ষুধায়"], 1, 3],
     ]},
     { name: 'সিরাজউদ্দৌলা — সিকান্দার আবু জাফর', imp: 3, mcqs: [
       ["'সিরাজউদ্দৌলা' নাটকের লেখক কে?", ["রবীন্দ্রনাথ ঠাকুর","শহীদুল্লাহ কায়সার","সিকান্দার আবু জাফর","নূরুল মোমেন"], 2, 1],
@@ -1322,6 +1759,18 @@ bangla: {
       ["'সিরাজউদ্দৌলা' নাটকের মূল বিষয় কী?", ["প্রেমকাহিনী","স্বাধীনতার জন্য সংগ্রাম ও বিশ্বাসঘাতকতা","ধর্মীয় দ্বন্দ্ব","পারিবারিক কলহ"], 1, 2],
       ["সিরাজউদ্দৌলার মৃত্যুর পর বাংলায় কার শাসন প্রতিষ্ঠিত হয়?", ["মীরকাসিমের","ইংরেজ ইস্ট ইন্ডিয়া কোম্পানির","মীরজাফরের","ঘসেটি বেগমের"], 1, 3],
       ["সিরাজউদ্দৌলা কত সালে নবাব হন?", ["১৭৫৬","১৭৫৭","১৭৫৫","১৭৫৪"], 0, 2],
+      ["'সিরাজউদ্দৌলা' নাটকে ঘসেটি বেগম কে?", ["সিরাজের মা","সিরাজের মামি ও প্রতিদ্বন্দ্বী","সিরাজের বোন","সিরাজের স্ত্রী"], 1, 2],
+      ["নাটকে মীরজাফরের চরিত্র কী প্রকাশ করে?", ["বীরত্ব","দেশপ্রেম","স্বার্থপরতা ও বিশ্বাসঘাতকতা","ন্যায়বিচার"], 2, 2],
+      ["সিকান্দার আবু জাফর কে ছিলেন?", ["শুধু নাট্যকার","কবি, নাট্যকার ও সমকাল পত্রিকার সম্পাদক","চিত্রশিল্পী","রাজনীতিবিদ"], 1, 2],
+      ["'সিরাজউদ্দৌলা' নাটকে রবার্ট ক্লাইভ কোন পক্ষের প্রতিনিধি?", ["বাংলার নবাব","ইংরেজ ইস্ট ইন্ডিয়া কোম্পানি","ফরাসি বাহিনী","ডাচ বাণিজ্য কোম্পানি"], 1, 1],
+      ["পলাশীর যুদ্ধের পর বাংলার ইতিহাসে কী ঘটে?", ["স্বাধীনতা অর্জন হয়","ব্রিটিশ ঔপনিবেশিক শাসনের ভিত্তি স্থাপিত হয়","দেশ দুই ভাগ হয়","মুঘল শাসন শুরু হয়"], 1, 3],
+      ["'সিরাজউদ্দৌলা' নাটকে নবাবের কোন বৈশিষ্ট্য ফুটিয়ে তোলা হয়েছে?", ["কাপুরুষতা","দেশপ্রেম ও বীরত্ব","হিংসা","অবিচার"], 1, 2],
+      ["পলাশীর যুদ্ধে ইস্ট ইন্ডিয়া কোম্পানির প্রধান সেনাপতি কে ছিলেন?", ["ওয়ারেন হেস্টিংস","লর্ড ডালহৌসি","রবার্ট ক্লাইভ","লর্ড কর্নওয়ালিস"], 2, 2],
+      ["নাটকে 'লুৎফুন্নিসা' কে?", ["সিরাজের মা","সিরাজের বোন","সিরাজের স্ত্রী","সিরাজের সেনাপতির স্ত্রী"], 2, 2],
+      ["'সিরাজউদ্দৌলা' নাটকে উমিচাঁদ কে?", ["বাংলার ধনী ব্যবসায়ী যে ইংরেজদের সাথে ষড়যন্ত্রে যোগ দিয়েছিল","একজন সৈনিক","একজন কবি","সিরাজের বন্ধু"], 0, 2],
+      ["'সিরাজউদ্দৌলা' নাটকটি কত সালে প্রকাশিত হয়?", ["১৯৬০","১৯৬৫","১৯৬৫ সালে প্রথম মঞ্চায়ন","১৯৬৫"], 2, 2],
+      ["সিরাজউদ্দৌলার দাদার নাম কী?", ["আলিবর্দি খান","মুর্শিদকুলি খান","মীরজাফর","সরফরাজ খান"], 0, 2],
+      ["পলাশীর যুদ্ধ কোথায় সংঘটিত হয়?", ["মুর্শিদাবাদে","পলাশী গ্রামে, ভাগীরথী নদীর তীরে","ঢাকায়","কলকাতায়"], 1, 2],
     ]},
     { name: 'বাংলা ব্যাকরণ — সন্ধি, সমাস, কারক, ক্রিয়া', imp: 3, mcqs: [
       ["বাংলা ব্যাকরণে কারক কয় প্রকার?", ["৪","৫","৬","৭"], 2, 1],
@@ -1451,6 +1900,31 @@ gk: {
       ["মুক্তিযুদ্ধে শহীদের সংখ্যা?", ["১০ লক্ষ","২০ লক্ষ","৩০ লক্ষ","৪০ লক্ষ"], 2, 1],
       ["বাংলাদেশ জাতিসংঘের সদস্যপদ পায় কত সালে?", ["১৯৭২","১৯৭৩","১৯৭৪","১৯৭৫"], 2, 1],
       ["'ছয় দফা' কর্মসূচি কত সালে ঘোষণা?", ["১৯৬৩","১৯৬৪","১৯৬৬","১৯৬৮"], 2, 2],
+      ["মুজিবনগর কোন জেলায় অবস্থিত?", ["কুষ্টিয়া","যশোর","মেহেরপুর","চুয়াডাঙ্গা"], 2, 2],
+      ["মুক্তিযুদ্ধে ভারতীয় বাহিনীর সাথে যৌথ কমান্ড গঠিত হয় কত তারিখে?", ["৩ ডিসেম্বর ১৯৭১","৪ ডিসেম্বর ১৯৭১","১০ ডিসেম্বর ১৯৭১","১৫ ডিসেম্বর ১৯৭১"], 0, 2],
+      ["১৯৫২ সালের ভাষা আন্দোলনে প্রথম শহীদ কে?", ["আবুল বরকত","রফিকউদ্দিন আহমেদ","মো. সালাম","মো. জব্বার"], 1, 2],
+      ["২১ ফেব্রুয়ারি আন্তর্জাতিক মাতৃভাষা দিবস হিসেবে ঘোষিত হয় কত সালে?", ["১৯৯৭","১৯৯৮","১৯৯৯","২০০০"], 2, 2],
+      ["মুক্তিযুদ্ধে 'অপারেশন জ্যাকপট' কী?", ["স্থলপথে আক্রমণ","বিমান হামলা","নৌ কমান্ডোদের বন্দর ধ্বংস অভিযান","চট্টগ্রাম দখলের অভিযান"], 2, 2],
+      ["মুক্তিযুদ্ধকালীন স্বাধীন বাংলা বেতার কেন্দ্র কোথায় স্থাপিত হয়?", ["ঢাকায়","কলকাতায়","চট্টগ্রামে","আগরতলায়"], 2, 2],
+      ["পাকিস্তানি বাহিনীর আত্মসমর্পণ দলিলে পাকিস্তানের পক্ষে স্বাক্ষর করেন কে?", ["ইয়াহিয়া খান","জুলফিকার ভুট্টো","লেফটেন্যান্ট জেনারেল নিয়াজি","রহিম খান"], 2, 2],
+      ["বাংলাদেশের প্রথম সংবিধান কবে প্রণীত হয়?", ["১৯৭১","১৯৭২","১৯৭৩","১৯৭৪"], 1, 2],
+      ["মুক্তিযুদ্ধে বীরশ্রেষ্ঠ মতিউর রহমান কোন বাহিনীতে ছিলেন?", ["সেনাবাহিনী","নৌবাহিনী","বিমানবাহিনী","পুলিশ"], 2, 2],
+      ["মুক্তিযুদ্ধে বীরশ্রেষ্ঠ মুন্সী আব্দুর রউফ কোন বাহিনীতে ছিলেন?", ["সেনাবাহিনী","পুলিশ","ইপিআর (পূর্ব পাকিস্তান রাইফেলস)","নৌবাহিনী"], 2, 2],
+      ["'শহীদ বুদ্ধিজীবী দিবস' কোন তারিখে?", ["১৩ ডিসেম্বর","১৪ ডিসেম্বর","১৫ ডিসেম্বর","১৬ ডিসেম্বর"], 1, 2],
+      ["মুক্তিযুদ্ধে আগরতলা ষড়যন্ত্র মামলা কত সালে হয়?", ["১৯৬৬","১৯৬৭","১৯৬৮","১৯৬৯"], 2, 2],
+      ["১৯৬৯-এর গণঅভ্যুত্থানে শহীদ ছাত্রনেতার নাম কী?", ["বরকত","রফিক","আসাদ","জব্বার"], 2, 2],
+      ["মুক্তিযুদ্ধে বাংলাদেশ সেক্টর ১ কোথায় ছিল?", ["চট্টগ্রাম ও পার্বত্য চট্টগ্রাম","ঢাকা","সিলেট","রাজশাহী"], 0, 2],
+      ["বাংলাদেশের জাতীয় স্মৃতিসৌধ কোথায়?", ["মিরপুরে","আজিমপুরে","সাভারে","মুন্সীগঞ্জে"], 2, 2],
+      ["জাতীয় স্মৃতিসৌধের স্থপতি কে?", ["মাজহারুল ইসলাম","সৈয়দ মইনুল হোসেন","লুই কান","রফিক আজম"], 1, 2],
+      ["বঙ্গবন্ধু শেখ মুজিবুর রহমানকে 'জাতির পিতা' ঘোষণা করা হয় কত সালে?", ["১৯৭১","১৯৭২","১৯৭৩","১৯৭৪"], 1, 2],
+      ["বাংলাদেশের প্রথম রাষ্ট্রপতি কে ছিলেন?", ["তাজউদ্দীন আহমেদ","সৈয়দ নজরুল ইসলাম","শেখ মুজিবুর রহমান","আবু সাঈদ চৌধুরী"], 2, 2],
+      ["পলাশীর যুদ্ধ কত সালে হয়?", ["১৭৫৫","১৭৫৬","১৭৫৭","১৭৫৮"], 2, 2],
+      ["মুক্তিযুদ্ধে মুক্তিবাহিনীর কয়টি ব্রিগেড ছিল?", ["৩","৪","৫","৬"], 0, 2],
+      ["বঙ্গবন্ধু শেখ মুজিবুর রহমানকে 'বঙ্গবন্ধু' উপাধি দেওয়া হয় কত সালে?", ["১৯৬৮","১৯৬৯","১৯৭০","১৯৭১"], 1, 2],
+      ["মুক্তিযুদ্ধে 'Z Force' কে গঠন করেন?", ["খালেদ মোশাররফ","কে.এম. সফিউল্লাহ","জিয়াউর রহমান","ওসমানী"], 2, 2],
+      ["মুক্তিযুদ্ধে 'K Force' কে গঠন করেন?", ["জিয়াউর রহমান","খালেদ মোশাররফ","কে.এম. সফিউল্লাহ","ওসমানী"], 1, 2],
+      ["মুক্তিযুদ্ধে 'S Force' কে গঠন করেন?", ["জিয়াউর রহমান","খালেদ মোশাররফ","কে.এম. সফিউল্লাহ","ওসমানী"], 2, 2],
+      ["বাংলাদেশকে দ্বিতীয় স্বীকৃতি দেয় কোন দেশ?", ["সোভিয়েত ইউনিয়ন","পোল্যান্ড","ভারত","যুক্তরাষ্ট্র"], 0, 2],
     ]},
     { name: 'বাংলাদেশের ভূগোল, প্রতীক ও সংবিধান', imp: 3, mcqs: [
       ["বাংলাদেশের মোট আয়তন কত বর্গকিমি?", ["১৪৭,৫৭০","১৪৩,৯৯৮","১৩৫,৫৫০","১৫৬,০০০"], 0, 1],
@@ -1530,6 +2004,21 @@ accounting: {
       ["'Matching Principle' মানে কী?", ["রাজস্ব ও ব্যয় একই সময়ের জন্য মেলানো","সম্পদ ও দায় মেলানো","ডেবিট ও ক্রেডিট মেলানো","পুরনো ও নতুন হিসাব মেলানো"], 0, 2],
       ["Depreciation হিসাব করার সবচেয়ে প্রচলিত পদ্ধতি?", ["FIFO","Straight Line Method (SLM)","LIFO","Reducing Balance"], 1, 1],
       ["হিসাববিজ্ঞানের জনক কাকে বলা হয়?", ["Adam Smith","Luca Pacioli","John Keynes","Alfred Marshall"], 1, 2],
+      ["Accounting Equation কোনটি?", ["Assets = Liabilities","Assets = Liabilities + Owner's Equity","Assets + Liabilities = Equity","Equity = Assets + Liabilities"], 1, 1],
+      ["'Going Concern' ধারণা কী?", ["ব্যবসায় সীমিত সময়ের জন্য পরিচালিত হবে","ব্যবসায় অনির্দিষ্টকাল চলতে থাকবে","ব্যবসায় এক বছরের জন্য হিসাব করা হয়","ব্যবসায় নগদ ভিত্তিতে হিসাব করা হয়"], 1, 2],
+      ["'Accrual Basis' হিসাব পদ্ধতিতে কী ধরা হয়?", ["শুধু নগদ লেনদেন","আয় ও ব্যয় যখন সংঘটিত হয় তখন","শুধু ক্রেডিট লেনদেন","শুধু ব্যয় ধরা হয়"], 1, 2],
+      ["Debit কোন পক্ষকে বোঝায়?", ["ডান পক্ষ","বাম পক্ষ","উভয় পক্ষ","কোনোটিই না"], 1, 1],
+      ["Credit কোন পক্ষকে বোঝায়?", ["বাম পক্ষ","ডান পক্ষ","উপরের পক্ষ","নিচের পক্ষ"], 1, 1],
+      ["'Matching Principle' বলতে কী বোঝায়?", ["আয় ও ব্যয় আলাদা করা","একই সময়কালে আয়ের সাথে সংশ্লিষ্ট ব্যয় মেলানো","সম্পদ ও দায় মেলানো","নগদ ও ক্রেডিট মেলানো"], 1, 3],
+      ["Double Entry System-এ প্রতিটি লেনদেনে কয়টি পক্ষ থাকে?", ["একটি","দুটি","তিনটি","চারটি"], 1, 1],
+      ["Fixed Assets-এর উদাহরণ কোনটি?", ["Stock","Debtors","Land & Building","Cash"], 2, 1],
+      ["Working Capital কীভাবে হিসাব করা হয়?", ["Fixed Assets − Current Liabilities","Current Assets − Current Liabilities","Total Assets − Total Liabilities","Revenue − Expenses"], 1, 2],
+      ["Revenue Expenditure কোনটি?", ["মেশিন ক্রয়","বিদ্যুৎ বিল পরিশোধ","জমি ক্রয়","পেটেন্ট ক্রয়"], 1, 1],
+      ["Capital Expenditure কোনটি?", ["বেতন প্রদান","বিজ্ঞাপন ব্যয়","যন্ত্রপাতি ক্রয়","ভাড়া পরিশোধ"], 2, 1],
+      ["Provision for Bad Debts তৈরি করা হয় কেন?", ["মুনাফা বাড়াতে","সম্ভাব্য অনাদায়ী পাওনার জন্য সংস্থান রাখতে","কর কমাতে","মূলধন বাড়াতে"], 1, 2],
+      ["Inventory Valuation-এ FIFO মানে?", ["First In First Out","Final In First Out","Fast In Free Out","Fixed Input First Out"], 0, 1],
+      ["Net Profit কীভাবে হিসাব করা হয়?", ["Revenue + Expenses","Revenue − All Expenses","Assets − Liabilities","Sales − COGS only"], 1, 1],
+      ["Gross Profit = ?", ["Net Sales − Total Expenses","Net Sales − Cost of Goods Sold","Net Sales − Operating Expenses","Revenue − Interest"], 1, 1],
     ]},
     { name: 'জাবেদা ও খতিয়ান', imp: 3, mcqs: [
       ["জাবেদা (Journal) কী?", ["লেনদেনের চূড়ান্ত হিসাব","লেনদেন প্রথমে যে বইতে লেখা হয় (দৈনিক হিসাব)","ব্যালেন্স শিট","আয়-ব্যয় বিবরণী"], 1, 1],
@@ -1538,6 +2027,19 @@ accounting: {
       ["পাওনাদারকে নগদ পরিশোধ করলে এন্ট্রি হবে?", ["Cash Dr, Creditor Cr","Creditor Dr, Cash Cr","Purchase Dr, Cash Cr","Expense Dr, Cash Cr"], 1, 2],
       ["'Posting' মানে কী?", ["নতুন লেনদেন লেখা","জাবেদা থেকে খতিয়ানে স্থানান্তর","খতিয়ান থেকে রেওয়ামিলে স্থানান্তর","ব্যালেন্স শিট তৈরি"], 1, 2],
       ["'Trial Balance' এর উদ্দেশ্য কী?", ["লাভ-ক্ষতি হিসাব","ডেবিট ও ক্রেডিট সমতা যাচাই","সম্পদের মূল্যায়ন","নগদ প্রবাহ নিরীক্ষা"], 1, 1],
+      ["সম্পদ হিসাব সাধারণত কোন পক্ষে ব্যালেন্স দেখায়?", ["ক্রেডিট পক্ষে","ডেবিট পক্ষে","উভয় পক্ষে","কোনো ব্যালেন্স নেই"], 1, 1],
+      ["দায় হিসাব সাধারণত কোন পক্ষে ব্যালেন্স দেখায়?", ["ডেবিট পক্ষে","ক্রেডিট পক্ষে","উভয় পক্ষে","কোনো ব্যালেন্স নেই"], 1, 1],
+      ["আয় হিসাবে ক্রেডিট ব্যালেন্স থাকলে তা কীসের ইঙ্গিত দেয়?", ["ক্ষতির","লাভের","সম্পদ বৃদ্ধির","দায় হ্রাসের"], 1, 2],
+      ["ক্রয় (Purchases) হিসাবে কোন পক্ষে এন্ট্রি হয়?", ["ক্রেডিট পক্ষে","ডেবিট পক্ষে","উভয় পক্ষে","নিরপেক্ষ"], 1, 1],
+      ["বিক্রয় ফেরত (Sales Return) হিসাবে কোন পক্ষে এন্ট্রি হয়?", ["ক্রেডিট পক্ষে","ডেবিট পক্ষে","উভয় পক্ষে","কোনোটিই না"], 1, 2],
+      ["জাবেদা থেকে খতিয়ানে তোলার প্রক্রিয়াকে কী বলে?", ["Journalizing","Posting","Balancing","Closing"], 1, 1],
+      ["'Folio Column' কোন বইতে থাকে?", ["শুধু খতিয়ানে","শুধু জাবেদায়","জাবেদা ও খতিয়ান উভয়তেই","শুধু ক্যাশ বুকে"], 2, 2],
+      ["নমুনা জাবেদায় Narration কী?", ["প্রতিটি এন্ট্রির সংক্ষিপ্ত ব্যাখ্যা","টাকার পরিমাণ","তারিখ","অ্যাকাউন্টের নাম"], 0, 2],
+      ["খতিয়ানের ব্যালেন্স বের করা হয় কীভাবে?", ["ডেবিট যোগফল থেকে ক্রেডিট যোগফল বিয়োগ করে","ক্রেডিট যোগফল দিয়ে","শুধু ডেবিট দিয়ে","যেকোনো একটি দিয়ে"], 0, 2],
+      ["Opening Entry জাবেদায় কেন দেওয়া হয়?", ["নতুন লেনদেন শুরু করতে","নতুন হিসাব বছরের শুরুতে পূর্ববর্তী ব্যালেন্স আনতে","ব্যাংক ব্যালেন্স মেলাতে","বার্ষিক মুনাফা হিসাব করতে"], 1, 2],
+      ["Closing Entry কেন দেওয়া হয়?", ["নতুন হিসাব বছর শুরু করতে","সাময়িক হিসাবগুলো বন্ধ করে স্থায়ী হিসাবে স্থানান্তর করতে","ব্যাংক হিসাব মেলাতে","সম্পদ বৃদ্ধি করতে"], 1, 3],
+      ["Compound Journal Entry কী?", ["একটি ডেবিট ও একটি ক্রেডিট","একাধিক ডেবিট বা ক্রেডিট একসাথে","শুধু নগদ লেনদেন","শুধু বাকি লেনদেন"], 1, 2],
+      ["Contra Entry কী?", ["ব্যাংক ও নগদের মধ্যে লেনদেন","শুধু ক্রেডিট লেনদেন","শুধু ডেবিট লেনদেন","দুটি সম্পদের মধ্যে বিনিময়"], 0, 3],
     ]},
     { name: 'নগদান বই ও ব্যাংক সমন্বয়', imp: 3, mcqs: [
       ["ব্যাংক সমন্বয় বিবরণী কেন তৈরি করা হয়?", ["নতুন ব্যাংক অ্যাকাউন্ট খুলতে","ক্যাশ বুক ও ব্যাংক স্টেটমেন্টের পার্থক্য মেলাতে","লাভ-ক্ষতি হিসাব করতে","ঋণ পরিশোধ করতে"], 1, 1],
@@ -1545,6 +2047,16 @@ accounting: {
       ["Petty Cash Book কী?", ["বড় লেনদেনের বই","ছোট নগদ ব্যয়ের হিসাব বই","ব্যাংক লেনদেনের বই","আমদানি-রপ্তানির হিসাব"], 1, 1],
       ["Single Column Cash Book-এ কয়টি কলাম থাকে?", ["১","২","৩","৪"], 1, 1],
       ["Bank Overdraft মানে কী?", ["ব্যাংকে জমা অর্থ","ব্যাংক ঋণ বা ব্যাংক ব্যালেন্স ঋণাত্মক","সুদের আয়","ডেবিট কার্ড ব্যালেন্স"], 1, 2],
+      ["Double Column Cash Book-এ কয়টি কলাম থাকে?", ["১","২","৩","৪"], 1, 1],
+      ["Triple Column Cash Book-এ কোন বাড়তি কলাম থাকে?", ["Petty Cash","Bank","Discount","Interest"], 2, 2],
+      ["Deposit in Transit কী?", ["ব্যাংকে জমা দেওয়া কিন্তু এখনো ব্যাংক স্টেটমেন্টে আসেনি","ব্যাংক থেকে উত্তোলিত অর্থ","ব্যাংকে পাঠানো চেক","বাতিল চেক"], 0, 2],
+      ["Bank Reconciliation Statement তৈরিতে কোন দুটির মধ্যে পার্থক্য মেলানো হয়?", ["Cash Book ও Journal","Bank Statement ও Cash Book","Ledger ও Trial Balance","Journal ও Ledger"], 1, 1],
+      ["Cash Book-এর ডেবিট পক্ষে কী লেখা হয়?", ["সমস্ত প্রাপ্তি (Receipts)","সমস্ত পরিশোধ (Payments)","ব্যয় মাত্র","আয় মাত্র"], 0, 1],
+      ["Imprest System Petty Cash কী?", ["প্রতি মাসে নির্দিষ্ট পরিমাণ অগ্রিম দিয়ে ছোট ব্যয় মেটানো","ব্যাংক থেকে ঋণ নেওয়া","বড় ব্যয়ের জন্য বিশেষ তহবিল","কর্মীদের বেতনের ব্যবস্থা"], 0, 3],
+      ["ক্যাশ বুকে সাধারণত কতটি কলাম থাকে (Single Column)?", ["২","৪","৬","৮"], 1, 1],
+      ["Bank Error কোথায় সংশোধন করা হয়?", ["Cash Book-এ","Bank Reconciliation Statement-এ","Journal-এ","Ledger-এ"], 1, 2],
+      ["NSF Cheque মানে কী?", ["New Safe Fund","Not Sufficient Funds চেক (বাউন্স)","National Security Fund","Net Standard Form"], 1, 2],
+      ["Dishonoured Cheque হলে প্রাপকের ক্যাশ বুকে কী এন্ট্রি হবে?", ["ক্রেডিট পক্ষে বাদ দেওয়া হবে","ডেবিট পক্ষে যোগ করা হবে","কোনো এন্ট্রি হবে না","ব্যাংক হিসাবে যোগ হবে"], 0, 3],
     ]},
     { name: 'রেওয়ামিল ও আর্থিক বিবরণী', imp: 3, mcqs: [
       ["আর্থিক বিবরণী কয়টি অংশ নিয়ে গঠিত?", ["২","৩","৪","৫"], 0, 2],
@@ -1552,13 +2064,39 @@ accounting: {
       ["Income Statement (আয় বিবরণী) থেকে কী জানা যায়?", ["সম্পদের পরিমাণ","নির্দিষ্ট সময়ের নিট আয় বা নিট ক্ষতি","মূলধনের পরিমাণ","নগদ উদ্বৃত্ত"], 1, 1],
       ["Current Assets মানে কী?", ["স্থায়ী সম্পদ","১ বছরের মধ্যে নগদে রূপান্তরযোগ্য সম্পদ","দীর্ঘমেয়াদি বিনিয়োগ","অদৃশ্য সম্পদ"], 1, 1],
       ["Goodwill কোন ধরনের সম্পদ?", ["চলতি সম্পদ","অদৃশ্য সম্পদ (Intangible Asset)","স্থায়ী দৃশ্যমান সম্পদ","নগদ সম্পদ"], 1, 2],
+      ["Trial Balance কখন তৈরি করা হয়?", ["মাসের শেষে","আর্থিক বিবরণী তৈরির আগে","লেনদেনের সময়","বছরের শুরুতে"], 1, 1],
+      ["Adjusted Trial Balance কী?", ["সাধারণ রেওয়ামিল","সমন্বয় এন্ট্রির পরে তৈরি রেওয়ামিল","ব্যাংক সমন্বয় বিবরণী","খতিয়ানের সারাংশ"], 1, 3],
+      ["Non-current Liabilities-এর উদাহরণ কোনটি?", ["Accounts Payable","Bank Overdraft","Long-term Loans","Accrued Expenses"], 2, 2],
+      ["Retained Earnings কী?", ["বিনিয়োগকারীদের মূলধন","ব্যবসায়ে পুনরায় বিনিয়োগ করা নিট মুনাফার সঞ্চিতি","ঋণের সুদ","নগদ মজুদ"], 1, 2],
+      ["Statement of Cash Flows-এ Operating Activities-এ কী থাকে?", ["শুধু বিনিয়োগ","মূল ব্যবসায়িক কার্যক্রম থেকে নগদ প্রবাহ","লভ্যাংশ পরিশোধ","ঋণ গ্রহণ ও পরিশোধ"], 1, 2],
+      ["Prepaid Expenses কোন ধরনের সম্পদ?", ["Fixed Asset","Current Asset","Intangible Asset","Investment"], 1, 2],
+      ["Accrued Income কীসের উদাহরণ?", ["Current Liability","Current Asset","Fixed Asset","Capital Reserve"], 1, 2],
+      ["Net Assets = ?", ["Total Assets + Total Liabilities","Total Assets − Total Liabilities","Fixed Assets − Current Assets","Revenue − Expenses"], 1, 1],
+      ["Owner's Equity = ?", ["Assets + Liabilities","Assets − Liabilities","Liabilities − Assets","Revenue + Assets"], 1, 1],
+      ["Accumulated Depreciation কোন পক্ষে দেখানো হয়?", ["Assets-এর পাশে ঋণাত্মক (Contra Asset)","Liabilities-এর মধ্যে","Owner's Equity-তে","Revenue-তে"], 0, 3],
+      ["'Conservatism Principle' বলে কী?", ["সর্বদা আশাবাদী হিসাব করা","সম্ভাব্য ক্ষতি স্বীকার করা, কিন্তু অনিশ্চিত আয় নয়","আয় সর্বদা বেশি দেখানো","ব্যয় বেশি দেখানো"], 1, 3],
+      ["Materiality Concept কী বলে?", ["ছোট অঙ্কের তথ্যও সম্পূর্ণ প্রকাশ করতে হবে","গুরুত্বহীন ক্ষুদ্র তথ্য আলাদাভাবে দেখানো বাধ্যতামূলক নয়","সব সম্পদ বাজারমূল্যে দেখাতে হবে","শুধু সম্পদের হিসাব করতে হবে"], 1, 3],
+      ["Historical Cost Concept মানে কী?", ["সম্পদ বাজারমূল্যে দেখানো","সম্পদ ক্রয়মূল্যে দেখানো","সম্পদ বর্তমান মূল্যে দেখানো","সম্পদ নিলামমূল্যে দেখানো"], 1, 2],
+      ["Unearned Revenue কোথায় দেখানো হয়?", ["আয় বিবরণীতে সরাসরি আয় হিসেবে","ব্যালেন্স শিটে Current Liability হিসেবে","Fixed Assets-এ","Owner's Equity-তে"], 1, 2],
+      ["Net Realizable Value (NRV) কী?", ["সম্পদের ক্রয়মূল্য","আনুমানিক বিক্রয়মূল্য বিয়োগ বিক্রয় ব্যয়","সম্পদের বাজারমূল্য","সম্পদের বইমূল্য"], 1, 3],
     ]},
     { name: 'অংশীদারিত্ব হিসাব', imp: 2, mcqs: [
       ["অংশীদারিত্ব ব্যবসায় লাভ-ক্ষতির ডিফল্ট বণ্টন অনুপাত কী (চুক্তি না থাকলে)?", ["মূলধন অনুপাতে","সমান অনুপাতে","সিনিয়রিটি অনুসারে","ব্যবস্থাপনা অনুযায়ী"], 1, 2],
       ["নতুন অংশীদার প্রবেশের সময় পুরানো অংশীদারদের কাছ থেকে কী নেওয়া হয়?", ["মূলধন","লাভের অংশ","গুডউইলের অংশ (Sacrifice Ratio)","সম্পদের অংশ"], 2, 2],
       ["অংশীদারের মৃত্যুতে তার প্রতিনিধিকে কী দিতে হয়?", ["শুধু মূলধন","মূলধন + লাভের অংশ + গুডউইলের অংশ","শুধু লাভের অংশ","কিছুই না"], 1, 3],
       ["Profit & Loss Appropriation Account কী?", ["সাধারণ ব্যয়ের হিসাব","অংশীদারদের মধ্যে লাভ বণ্টনের হিসাব","উৎপাদন ব্যয়ের হিসাব","কর হিসাব"], 1, 2],
-    ]}
+      ["অংশীদারদের মূলধন হিসাব কত ধরনের?", ["১","২","৩","৪"], 1, 2],
+      ["Fixed Capital Method-এ মূলধন হিসাব কখন পরিবর্তন হয়?", ["প্রতি মাসে","লাভ-ক্ষতির সময়","শুধু নতুন মূলধন যোগ বা উত্তোলনে","কখনো না"], 2, 3],
+      ["অংশীদারের বেতন ভাতা (Salary) কোথায় দেখানো হয়?", ["P&L Account-এ সরাসরি","P&L Appropriation Account-এ","Capital Account-এ সরাসরি","Cash Book-এ"], 1, 2],
+      ["Goodwill of Partnership কখন হিসাবে আনা হয়?", ["প্রতি বছর","শুধু নতুন অংশীদার প্রবেশে বা কেউ বের হলে","সবসময়","শুধু ক্ষতির সময়"], 1, 2],
+      ["Gaining Ratio কী?", ["পুরানো অংশীদারের লাভের অনুপাত","নতুন অংশীদার প্রবেশের পর যে অনুপাতে পুরানোরা লাভ বেশি পায়","সকল অংশীদারের সমান অনুপাত","ক্ষতির অনুপাত"], 1, 3],
+      ["Sacrificing Ratio কী?", ["নতুন অংশীদারের অনুপাত","পুরানো অংশীদাররা যে অনুপাতে লাভের অংশ ছেড়ে দেয়","মোট লাভের অনুপাত","ক্ষতির বণ্টন অনুপাত"], 1, 3],
+      ["Revaluation Account কেন তৈরি করা হয়?", ["নতুন মূলধন যোগ করতে","নতুন অংশীদার প্রবেশ বা বের হওয়ার সময় সম্পদ ও দায়ের পুনর্মূল্যায়ন করতে","লাভ বণ্টন করতে","ব্যাংক লেনদেন মেলাতে"], 1, 3],
+      ["অংশীদারিত্বের সর্বোচ্চ সদস্য সংখ্যা (সাধারণ ব্যবসায়) কত?", ["১০","২০","৫০","অসীম"], 1, 2],
+      ["Partnership Deed না থাকলে কোন আইন প্রযোজ্য হয়?", ["Company Act","Partnership Act","Contract Act","Income Tax Act"], 1, 1],
+      ["Interest on Capital পরিশোধ করা হয় কেন?", ["কর্মীদের উৎসাহিত করতে","অংশীদারদের বিনিয়োগের উপর ন্যায্য পুরস্কার দিতে","দায় কমাতে","ব্যাংক সুবিধা পেতে"], 1, 2],
+      ["Interest on Drawings কে বহন করে?", ["অংশীদারি প্রতিষ্ঠান","উত্তোলনকারী অংশীদার","সকল অংশীদার সমানভাবে","সিনিয়র অংশীদার"], 1, 2],
+    ]},
   ]
 },
 
@@ -1635,10 +2173,18 @@ management: {
 // CONSTANTS
 // ══════════════════════════════
 const EXAM_CONFIG = {
-  easy:   { q: 20, totalMinutes: 5,  perQSec: 15, posScore: 1, negScore: 0,   negLabel: 'No negative marking' },
+  easy:   { q: 20, totalMinutes: 10, perQSec: 30, posScore: 1, negScore: 0,   negLabel: 'No negative marking' },
   medium: { q: 25, totalMinutes: 8,  perQSec: 20, posScore: 1, negScore: 0.5, negLabel: '−0.5 per wrong' },
-  hard:   { q: 30, totalMinutes: 12, perQSec: 30, posScore: 1, negScore: 1,   negLabel: '−1 per wrong' }
+  hard:   { q: 30, totalMinutes: 8,  perQSec: 15, posScore: 1, negScore: 1,   negLabel: '−1 per wrong' }
 };
+const STORAGE_KEY_MEDALS = 'nu_bba_medals_v6';
+const MEDALS_STATE = (() => {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY_MEDALS) || '{"gold":0,"silver":0,"bronze":0,"platinum":0,"d":0,"f":0,"streakA":0}'); }
+  catch { return {gold:0,silver:0,bronze:0,platinum:0,d:0,f:0,streakA:0}; }
+})();
+function saveMedals() {
+  try { localStorage.setItem(STORAGE_KEY_MEDALS, JSON.stringify(MEDALS_STATE)); } catch {}
+}
 
 const EXAM_DATE = new Date('2026-04-25T11:00:00');
 const OL = ['A', 'B', 'C', 'D'];
@@ -1745,6 +2291,92 @@ const App = {
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+};
+
+// ══════════════════════════════
+// FOCUS MODE (Exam only — all difficulties)
+// ══════════════════════════════
+const FocusMode = {
+  _violations: 0,
+  _active: false,
+
+  activate() {
+    this._violations = 0;
+    this._active = true;
+    document.addEventListener('visibilitychange', this._onVisibilityChange.bind(this));
+  },
+
+  deactivate() {
+    this._active = false;
+    document.removeEventListener('visibilitychange', this._onVisibilityChange.bind(this));
+    document.getElementById('focusWarn').classList.remove('on');
+  },
+
+  _onVisibilityChange() {
+    if (!this._active) return;
+    if (document.hidden) {
+      this._violations++;
+      document.getElementById('fwViolationCount').textContent = `Violation #${this._violations} — ${this._violations >= 3 ? '⚠️ Final warning!' : 'Stop switching tabs!'}`;
+      document.getElementById('focusWarn').classList.add('on');
+    }
+  },
+
+  dismiss() {
+    document.getElementById('focusWarn').classList.remove('on');
+  }
+};
+
+// ══════════════════════════════
+// SAVE PROGRESS (Practice only)
+// ══════════════════════════════
+const SAVE_KEY = 'nu_bba_saved_practice_v7';
+const SaveProgress = {
+  save() {
+    if (!ExamEngine._state || ExamEngine._state.mode !== 'practice') return;
+    const s = ExamEngine._state;
+    const saveData = {
+      ts: Date.now(),
+      mode: s.mode,
+      subject: s.subject,
+      subjectName: s.subjectName,
+      questions: s.questions,
+      answers: s.answers,
+      current: s.current,
+      timeLeft: s.timeLeft,
+      totalTime: s.totalTime,
+      posScore: s.posScore,
+      negScore: s.negScore,
+      passPercent: s.passPercent,
+      perQSec: s.perQSec || 0,
+    };
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
+    } catch (e) { alert('Could not save: storage full.'); return; }
+    const btn = document.getElementById('saveProgBtn');
+    if (btn) { btn.classList.add('saved'); btn.textContent = '✓ Saved!'; setTimeout(() => { btn.classList.remove('saved'); btn.textContent = '💾 Save'; }, 2200); }
+    // Toast
+    const t = document.createElement('div');
+    t.className = 'save-toast';
+    t.textContent = '✓ Progress saved!';
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2500);
+  },
+
+  hasSave() {
+    try { return !!localStorage.getItem(SAVE_KEY); } catch { return false; }
+  },
+
+  load() {
+    try {
+      const d = JSON.parse(localStorage.getItem(SAVE_KEY));
+      if (!d) return null;
+      return d;
+    } catch { return null; }
+  },
+
+  clear() {
+    try { localStorage.removeItem(SAVE_KEY); } catch {}
   }
 };
 
@@ -1976,7 +2608,7 @@ const TestSetup = {
         <div class="diff-card easy sel" id="dcard-easy" onclick="TestSetup.selDiff('easy')">
           <div class="diff-icon">🟢</div>
           <div class="diff-name">Easy</div>
-          <div class="diff-info">20Q · +1 score<br>No negatives<br>15s/Q timer</div>
+          <div class="diff-info">20Q · +1 score<br>No negatives<br>30s/Q timer</div>
         </div>
         <div class="diff-card medium" id="dcard-medium" onclick="TestSetup.selDiff('medium')">
           <div class="diff-icon">🟡</div>
@@ -1986,7 +2618,7 @@ const TestSetup = {
         <div class="diff-card hard" id="dcard-hard" onclick="TestSetup.selDiff('hard')">
           <div class="diff-icon">🔴</div>
           <div class="diff-name">Competitive</div>
-          <div class="diff-info">30Q · +1 score<br>−1 wrong<br>30s/Q timer</div>
+          <div class="diff-info">30Q · +1 score<br>−1 wrong<br>15s/Q timer</div>
         </div>
       </div>
       <div class="form-row">
@@ -2068,6 +2700,14 @@ const ExamEngine = {
     document.getElementById('exam-screen').style.display = 'block';
     document.getElementById('results-screen').style.display = 'none';
     this._paletteVisible = false;
+
+    // Focus Mode — activate for exam mode (all difficulties)
+    FocusMode.deactivate();
+    if (cfg.mode === 'exam') FocusMode.activate();
+
+    // Save button — only for practice mode
+    const saveBtn = document.getElementById('saveProgBtn');
+    if (saveBtn) saveBtn.style.display = cfg.mode === 'practice' ? 'inline-flex' : 'none';
 
     // Start total timer
     this._totalTimer = setInterval(() => this._tickTotal(), 1000);
@@ -2279,6 +2919,7 @@ const ExamEngine = {
   finish() {
     if (!this._state) return;
     this._clearTimers();
+    FocusMode.deactivate();
     const { questions, answers, posScore, negScore, subjectName, mode, diff, qTimes, totalTime, timeLeft } = this._state;
     let correct = 0, wrong = 0, skip = 0, score = 0;
     const chapStats = {};
@@ -2389,6 +3030,7 @@ const ExamEngine = {
 
   backToModes() {
     this._clearTimers();
+    FocusMode.deactivate();
     this._state = null;
     document.getElementById('results-screen').style.display = 'none';
     document.getElementById('exam-screen').style.display = 'none';
@@ -2521,7 +3163,277 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // ── Build subject cards ──
   SubjectUI.build();
+
+  // ── Build achievements on test tab open ──
+  Achievements.render();
 });
+
+// ══════════════════════════════
+// ACHIEVEMENTS & MEDALS
+// ══════════════════════════════
+const Achievements = {
+  VARIATIONS: {
+    gold: [
+      { congrats: "Outstanding!", msg: "You've earned Gold — you're among the top scorers. The exam day will remember your name. 🏆" },
+      { congrats: "Absolutely Brilliant!", msg: "Gold medal secured! Your consistency is paying off. Keep this momentum into the real exam. ✨" },
+      { congrats: "Elite Performance!", msg: "That's Gold-tier work, Flame. You didn't just pass — you dominated. 🔥" },
+    ],
+    silver: [
+      { congrats: "Great Job!", msg: "Silver medal earned! You're above average and improving. Push a little harder for Gold next time. 🥈" },
+      { congrats: "Solid Work!", msg: "Silver is real progress. You know your material — now sharpen those weak chapters. 💪" },
+      { congrats: "Well Done!", msg: "A Silver medal — that's the sign of someone who's genuinely preparing. Keep going! 🌟" },
+    ],
+    bronze: [
+      { congrats: "Good Effort!", msg: "Bronze earned — you showed up and fought through. Every attempt is a step forward. 🥉" },
+      { congrats: "Keep Going!", msg: "Bronze today, Gold tomorrow. Identify your weak spots from the review below and drill them. 📚" },
+    ],
+    platinum: [
+      { congrats: "LEGENDARY! 🌌", msg: "Platinum unlocked — 3 consecutive scores above 90%. You are in a class of your own. History will remember this. ✨🏆✨" },
+    ],
+    d: [
+      { congrats: "Almost There", msg: "D-tier this time — but you finished the exam, and that already puts you ahead of everyone who didn't try. Review your mistakes and go again. 📖" },
+    ],
+    f: [
+      { congrats: "Don't Give Up", msg: "This one didn't go well — but every expert was once a beginner. Review the answers, rest, and come back stronger. 🔁" },
+    ],
+  },
+
+  getMedal(pct) {
+    if (pct >= 90) return 'gold_plat_check'; // special — check streak
+    if (pct >= 70) return 'gold';
+    if (pct >= 55) return 'silver';
+    if (pct >= 40) return 'bronze';
+    if (pct >= 25) return 'd';
+    return 'f';
+  },
+
+  award(pct, mode) {
+    if (mode !== 'exam') return null; // medals only for exam mode
+    let tier = this.getMedal(pct);
+    let platUnlocked = false;
+
+    if (tier === 'gold_plat_check') {
+      tier = 'gold';
+      MEDALS_STATE.streakA = (MEDALS_STATE.streakA || 0) + 1;
+      if (MEDALS_STATE.streakA >= 3) {
+        MEDALS_STATE.platinum++;
+        platUnlocked = true;
+      }
+    } else {
+      MEDALS_STATE.streakA = 0; // reset streak
+    }
+
+    if (tier === 'gold') MEDALS_STATE.gold++;
+    else if (tier === 'silver') MEDALS_STATE.silver++;
+    else if (tier === 'bronze') MEDALS_STATE.bronze++;
+    else if (tier === 'd') MEDALS_STATE.d++;
+    else if (tier === 'f') MEDALS_STATE.f++;
+
+    saveMedals();
+    return { tier, platUnlocked };
+  },
+
+  render() {
+    const row = document.getElementById('medalRow');
+    if (!row) return;
+    const M = MEDALS_STATE;
+
+    const makeSlot = (cls, icon, name, how, count, extra='') => {
+      const hasCount = count > 0;
+      return `<div class="medal-slot ${cls} ${hasCount ? 'earned' : ''}">
+        ${hasCount ? `<span class="medal-cnt">${count}x</span>` : ''}
+        <span class="medal-icon-wrap">${icon}</span>
+        <div class="medal-name">${name}</div>
+        <div class="medal-how">${how}</div>
+        ${extra}
+      </div>`;
+    };
+
+    row.innerHTML =
+      makeSlot('m-gold', '🥇', 'GOLD', 'Score A (70%+) in Exam Mode', M.gold) +
+      makeSlot('m-silver', '🥈', 'SILVER', 'Score B (55–69%) in Exam Mode', M.silver) +
+      makeSlot('m-bronze', '🥉', 'BRONZE', 'Score C (40–54%) in Exam Mode', M.bronze) +
+      (M.platinum > 0 ? makeSlot('m-plat m-plat-slot', '💎', 'PLATINUM', '???', M.platinum) : '');
+
+    document.getElementById('tierDCount').textContent = M.d + 'x';
+    document.getElementById('tierFCount').textContent = M.f + 'x';
+  },
+
+  showOverlay(result) {
+    const { tier, platUnlocked, score, maxScore, correct, wrong, pct, passed, passScore, mode } = result;
+    if (mode !== 'exam') return;
+
+    const MEDAL_ICONS = { gold:'🥇', silver:'🥈', bronze:'🥉', platinum:'💎', d:'📊', f:'📉' };
+    const GRADE_STYLES = {
+      gold:    { badge:'A', cls:'rg-a' },
+      silver:  { badge:'B', cls:'rg-b' },
+      bronze:  { badge:'C', cls:'rg-c' },
+      d:       { badge:'D', cls:'rg-d' },
+      f:       { badge:'F', cls:'rg-d' },
+      platinum:{ badge:'A+', cls:'rg-a' },
+    };
+
+    const useTier = platUnlocked ? 'platinum' : tier;
+    const vars = this.VARIATIONS[useTier] || this.VARIATIONS.d;
+    const v = vars[Math.floor(Math.random() * vars.length)];
+    const gs = GRADE_STYLES[useTier] || GRADE_STYLES.d;
+
+    document.getElementById('roMedal').textContent = MEDAL_ICONS[useTier] || '📊';
+    document.getElementById('roCongrats').textContent = v.congrats;
+    document.getElementById('roMsg').textContent = v.msg;
+    document.getElementById('roScore').textContent = score;
+    document.getElementById('roCorrect').textContent = correct;
+    document.getElementById('roWrong').textContent = wrong;
+
+    const grB = document.getElementById('roGradeBadge');
+    grB.textContent = `Grade ${gs.badge} · ${pct}%`;
+    grB.className = 'ro-grade-b ' + gs.cls;
+
+    const passEl = document.getElementById('roPass');
+    passEl.textContent = passed ? `✓ PASSED (${passScore}/${maxScore})` : `✗ FAILED (${passScore}/${maxScore})`;
+    passEl.className = 'ro-pass ' + (passed ? 'pass' : 'fail');
+
+    document.getElementById('resultOverlay').classList.add('on');
+
+    // Trigger effects
+    if (['gold','silver','bronze','platinum'].includes(useTier)) {
+      this._launchConfetti(useTier, platUnlocked);
+    }
+    if (platUnlocked) this._platinumEffect();
+  },
+
+  closeOverlay() {
+    document.getElementById('resultOverlay').classList.remove('on');
+    this._stopConfetti();
+  },
+
+  // ── CONFETTI ENGINE (vanilla JS + GSAP) ──
+  _confettiActive: false,
+  _confettiRAF: null,
+
+  _launchConfetti(tier, isPlat) {
+    const canvas = document.getElementById('confettiCanvas');
+    if (!canvas) return;
+    canvas.style.display = 'block';
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    this._confettiActive = true;
+
+    const COLORS = {
+      gold:     ['#d4a843','#f0c84a','#fff8e0','#ffe066','#c49530'],
+      silver:   ['#b0b8c8','#d8dde8','#a0b0c0','#ffffff','#8090a8'],
+      bronze:   ['#c07832','#d4944a','#a06020','#e0a870','#886030'],
+      platinum: ['#a78bfa','#818cf8','#c4b5fd','#fff','#60a5fa','#f0c84a'],
+    };
+    const cols = COLORS[isPlat ? 'platinum' : tier] || COLORS.gold;
+    const particles = [];
+
+    for (let i = 0; i < (isPlat ? 200 : 120); i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        r: Math.random() * 7 + 3,
+        d: Math.random() * 80 + 40,
+        color: cols[Math.floor(Math.random() * cols.length)],
+        tilt: Math.random() * 10 - 10,
+        tiltAngle: 0,
+        tiltAngleInc: (Math.random() * 0.07) + 0.05,
+        spin: Math.random() * 0.3 - 0.15,
+        opacity: Math.random() * 0.5 + 0.5,
+        shape: Math.random() > 0.5 ? 'rect' : 'circle',
+        vy: Math.random() * 2.5 + 1.5,
+        vx: Math.random() * 1.5 - 0.75,
+      });
+    }
+
+    let frame = 0;
+    const draw = () => {
+      if (!this._confettiActive) { ctx.clearRect(0, 0, canvas.width, canvas.height); return; }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      frame++;
+      particles.forEach((p, i) => {
+        ctx.save();
+        ctx.globalAlpha = p.opacity * (frame < 60 ? frame/60 : frame > 280 ? Math.max(0, 1-(frame-280)/60) : 1);
+        ctx.fillStyle = p.color;
+        ctx.translate(p.x + p.tilt, p.y);
+        ctx.rotate(p.tiltAngle);
+        if (p.shape === 'circle') {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillRect(-p.r, -p.r * 0.5, p.r * 2, p.r);
+        }
+        ctx.restore();
+        p.tiltAngle += p.tiltAngleInc;
+        p.y += p.vy;
+        p.x += p.vx + Math.sin(frame * 0.02 + i) * 0.4;
+        p.tilt = Math.sin(p.tiltAngle) * 12;
+        if (p.y > canvas.height + 20) {
+          if (frame < 200) { p.y = -10; p.x = Math.random() * canvas.width; }
+        }
+      });
+      if (frame < 360) {
+        this._confettiRAF = requestAnimationFrame(draw);
+      } else {
+        this._stopConfetti();
+      }
+    };
+    this._confettiRAF = requestAnimationFrame(draw);
+  },
+
+  _stopConfetti() {
+    this._confettiActive = false;
+    if (this._confettiRAF) { cancelAnimationFrame(this._confettiRAF); this._confettiRAF = null; }
+    const canvas = document.getElementById('confettiCanvas');
+    if (canvas) { canvas.style.display = 'none'; const ctx = canvas.getContext('2d'); ctx.clearRect(0,0,canvas.width,canvas.height); }
+  },
+
+  _platinumEffect() {
+    if (typeof gsap === 'undefined') return;
+    // Pulse the overlay medal icon with GSAP spring
+    gsap.fromTo('#roMedal', { scale: 0, rotation: -30 }, {
+      scale: 1.2, rotation: 10, duration: .5, ease: 'back.out(2)',
+      onComplete: () => gsap.to('#roMedal', { scale: 1, rotation: 0, duration: .3, ease: 'power2.out' })
+    });
+    // Pulsing glow on overlay box
+    gsap.fromTo('.ro-box', { boxShadow: '0 0 0px rgba(167,139,250,0)' }, {
+      boxShadow: '0 0 60px 20px rgba(167,139,250,.45)',
+      duration: .7, yoyo: true, repeat: 3, ease: 'sine.inOut'
+    });
+  }
+};
+
+// Patch ExamEngine.finish to trigger Achievements overlay
+const _origFinish = ExamEngine.finish.bind(ExamEngine);
+ExamEngine.finish = function() {
+  _origFinish();
+  // After original finish renders results, trigger overlay
+  if (!this._state) return;
+  const { questions, answers, posScore, negScore, mode, diff, totalTime, timeLeft } = this._state;
+  if (mode !== 'exam') return;
+
+  let correct = 0, wrong = 0, score = 0;
+  questions.forEach(({ corr }, i) => {
+    const a = answers[i];
+    if (a === corr) { correct++; score += posScore; }
+    else if (a !== null) { wrong++; score -= negScore; }
+  });
+  score = Math.max(0, parseFloat(score.toFixed(1)));
+  const maxScore = questions.length * posScore;
+  const pct = maxScore > 0 ? Math.round(score / maxScore * 100) : 0;
+  const passScore = Math.ceil(maxScore * this._state.passPercent / 100);
+  const passed = score >= passScore;
+  const result = Achievements.award(pct, mode);
+  if (!result) return;
+  const { tier, platUnlocked } = result;
+
+  setTimeout(() => {
+    Achievements.render();
+    Achievements.showOverlay({ tier, platUnlocked, score, maxScore, correct, wrong, pct, passed, passScore, mode });
+  }, 600);
+};
 </script>
 </body>
 </html>
