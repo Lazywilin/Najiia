@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>NU BBA Prep — by Waterflame</title>
+<title>NU BBA Prep — by Waterflame v5</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -762,6 +762,7 @@ option { background: var(--bg3); }
    RESULTS SCREEN
 ══════════════════════════════════════════════ */
 #results-screen { display: none; }
+#results-screen[style*="block"] .result-wrap { animation: panelIn .3s var(--spring) both; }
 .result-wrap { max-width: 700px; margin: 0 auto; padding: 1.2rem 1rem 3rem; }
 .result-hero {
   text-align: center;
@@ -879,14 +880,92 @@ option { background: var(--bg3); }
 .ab-sv { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--gold); }
 .ab-sl { font-size: .62rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-top: .1rem; }
 
-/* APK recommendation section */
-.apk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .75rem; margin-top: .75rem; }
-.apk-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--rs); padding: .9rem 1rem; }
-.apk-card.recommended { border-color: rgba(52,211,153,.3); background: var(--green2); }
-.apk-name { font-weight: 600; font-size: .84rem; color: var(--text); margin-bottom: .3rem; }
-.apk-name .badge { font-size: .65rem; background: var(--green); color: #000; padding: .1rem .4rem; border-radius: 100px; margin-left: .4rem; font-weight: 700; }
-.apk-pros { font-size: .75rem; color: var(--muted2); line-height: 1.6; }
-.apk-verdict { font-size: .72rem; color: var(--muted); font-style: italic; margin-top: .35rem; }
+/* Countdown redesign */
+.exam-countdown {
+  background: var(--card);
+  border: 1px solid rgba(212,168,67,.22);
+  border-radius: var(--r);
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.2rem;
+  position: relative;
+  overflow: hidden;
+}
+.exam-countdown::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(212,168,67,.04), transparent);
+  pointer-events: none;
+}
+.ec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+.ec-label { font-size: .9rem; color: var(--text); font-weight: 600; }
+.ec-date { font-family: 'JetBrains Mono', monospace; font-size: .75rem; color: var(--gold); margin-top: .15rem; opacity: .8; }
+.ec-admit { font-size: .72rem; color: var(--muted); max-width: 200px; line-height: 1.5; text-align: right; }
+.ec-units {
+  display: flex;
+  justify-content: center;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+.ec-unit {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: .75rem 1rem;
+  text-align: center;
+  min-width: 72px;
+  flex: 1;
+  max-width: 100px;
+  position: relative;
+  overflow: hidden;
+}
+.ec-unit::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold3), var(--gold2));
+  opacity: .6;
+}
+.ec-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.8rem;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+  transition: opacity .25s ease;
+}
+.ec-num.tick { animation: cdTick .3s ease; }
+@keyframes cdTick {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  40% { opacity: 0; transform: translateY(-6px) scale(.92); }
+  41% { opacity: 0; transform: translateY(6px) scale(.92); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.ec-unit-label {
+  font-size: .58rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--muted);
+  margin-top: .3rem;
+  display: block;
+}
+.ec-expired { text-align: center; font-family: 'DM Serif Display', serif; color: var(--red); font-size: 1rem; padding: .5rem; }
+/* Seconds unit — subtle highlight + pulse */
+.ec-unit:last-child { border-color: rgba(212,168,67,.32); background: rgba(212,168,67,.04); }
+.ec-unit:last-child .ec-num { color: var(--gold2); }
+@media(max-width: 380px) {
+  .ec-unit { min-width: 56px; padding: .6rem .7rem; }
+  .ec-num { font-size: 1.5rem; }
+  .ec-admit { text-align: left; max-width: 100%; }
+}
 
 /* ══════════════════════════════════════════════
    ANIMATIONS
@@ -943,7 +1022,7 @@ option { background: var(--bg3); }
       <div class="qs-item"><div class="qs-val">100</div><div class="qs-lbl">MCQ Marks</div></div>
       <div class="qs-item"><div class="qs-val">1 Hr</div><div class="qs-lbl">Duration</div></div>
       <div class="qs-item"><div class="qs-val">35</div><div class="qs-lbl">Pass Mark</div></div>
-      <div class="qs-item"><div class="qs-val" id="daysLeft">—</div><div class="qs-lbl">Days to Exam</div></div>
+      <div class="qs-item"><div class="qs-val" id="daysLeft">—</div><div class="qs-lbl">Days Left</div></div>
     </div>
     <div class="h-btns">
       <button class="btn-pri" onclick="App.nav('subjects')">📖 Start Reading</button>
@@ -954,15 +1033,19 @@ option { background: var(--bg3); }
 
   <div class="home-sections">
     <div class="exam-countdown">
-      <div>
-        <div class="ec-label">📅 NU BBA Exam Date</div>
-        <div class="ec-date">April 25, 2026 · 11:00 AM</div>
+      <div class="ec-header">
+        <div>
+          <div class="ec-label">📅 NU BBA Exam Countdown</div>
+          <div class="ec-date">April 25, 2026 · 11:00 AM</div>
+        </div>
+        <div class="ec-admit">Admit card ~7 days before.<br>Check nu.ac.bd/admissions</div>
       </div>
-      <div style="text-align:center">
-        <div class="ec-days" id="ecDays">—</div>
-        <div class="ec-dsub">Days Remaining</div>
+      <div class="ec-units" id="ecUnits">
+        <div class="ec-unit"><span class="ec-num" id="ecD">—</span><span class="ec-unit-label">Days</span></div>
+        <div class="ec-unit"><span class="ec-num" id="ecH">—</span><span class="ec-unit-label">Hours</span></div>
+        <div class="ec-unit"><span class="ec-num" id="ecM">—</span><span class="ec-unit-label">Minutes</span></div>
+        <div class="ec-unit"><span class="ec-num" id="ecS">—</span><span class="ec-unit-label">Seconds</span></div>
       </div>
-      <div style="font-size:.78rem;color:var(--muted);max-width:175px;line-height:1.55">Admit card ~7 days before. Check nu.ac.bd/admissions</div>
     </div>
 
     <div class="motiv-card">
@@ -1154,31 +1237,10 @@ option { background: var(--bg3); }
       </div>
     </div>
     <div class="about-section">
-      <h3>📱 APK Conversion Recommendations</h3>
-      <p>To convert this web app into an Android APK, here are the best free options:</p>
-      <div class="apk-grid">
-        <div class="apk-card recommended">
-          <div class="apk-name">Capacitor.js <span class="badge">BEST</span></div>
-          <div class="apk-pros">Free, open source by Ionic team. Wraps HTML/CSS/JS into native Android APK. Access to native APIs (storage, filesystem). One HTML file = works perfectly. Generates signed APK for Play Store.</div>
-          <div class="apk-verdict">Best for this project. Minimal setup, full native feel.</div>
-        </div>
-        <div class="apk-card">
-          <div class="apk-name">PWA (Progressive Web App)</div>
-          <div class="apk-pros">Add manifest.json + service worker. Works offline, installs on home screen. No APK needed. Zero additional code for basic functionality.</div>
-          <div class="apk-verdict">Simplest route if Play Store not required.</div>
-        </div>
-        <div class="apk-card">
-          <div class="apk-name">WebView (Android Studio)</div>
-          <div class="apk-pros">Put HTML in /assets, load via WebView. Full control. Requires Android Studio setup. Free but more manual work.</div>
-          <div class="apk-verdict">Good if you know basic Java/Kotlin.</div>
-        </div>
-        <div class="apk-card">
-          <div class="apk-name">Cordova / PhoneGap</div>
-          <div class="apk-pros">Older but still works. npm install -g cordova, then cordova create + add android platform. Plugin ecosystem.</div>
-          <div class="apk-verdict">More complex. Use Capacitor instead.</div>
-        </div>
-      </div>
-      <p style="margin-top:.85rem;font-size:.78rem;color:var(--muted)"><strong style="color:var(--text2)">Recommended Pathway:</strong> (1) Add manifest.json to make it a PWA first — instant install on Android. (2) For a real APK: npm install @capacitor/core @capacitor/cli @capacitor/android → npx cap init → npx cap add android → npx cap copy → open in Android Studio → Build APK.</p>
+      <h3>🛠️ How to Use This App</h3>
+      <p><strong>Subjects tab</strong> — Browse all 5 subjects chapter by chapter. Click any chapter to expand MCQs. Pick an option to check your answer instantly. Progress bar tracks completion per chapter.</p>
+      <p><strong>Test tab</strong> — Choose Practice Mode (fully customisable) or Exam Mode (simulated NU-style with per-question timers and pass/fail grading). Results show chapter breakdown, accuracy, and full question review.</p>
+      <p><strong>History tab</strong> — Every completed test is saved locally. Review past scores, accuracy, and chapter performance to track improvement over time.</p>
     </div>
   </div>
 </div>
@@ -1676,8 +1738,10 @@ const App = {
       document.getElementById('test-modes').style.display = 'block';
     }
     if (name === 'about') {
-      document.getElementById('aboutTotalQ').textContent = Util.totalMCQCount();
-      document.getElementById('aboutHistCount').textContent = State.history.length;
+      const atq = document.getElementById('aboutTotalQ');
+      const ahc = document.getElementById('aboutHistCount');
+      if (atq) atq.textContent = Util.totalMCQCount();
+      if (ahc) ahc.textContent = State.history.length;
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1828,11 +1892,14 @@ const SubjectUI = {
   _updateProg(qid) {
     const parts = qid.split('_'); // r_key_i_qi
     const key = parts[1], i = parts[2];
-    const buttons = document.querySelectorAll(`[data-qid^="r_${key}_${i}_"]`);
-    const total = buttons.length / 4;
-    const done = new Set([...buttons].map(b => document.getElementById('mcq_' + b.dataset.qid)?.dataset.done ? b.dataset.qid : null).filter(Boolean)).size;
+    const chTotal = SUBJECTS[key]?.chapters[parseInt(i)]?.mcqs.length || 0;
+    const doneSet = new Set();
+    document.querySelectorAll(`[data-qid^="r_${key}_${i}_"]`).forEach(b => {
+      const box = document.getElementById('mcq_' + b.dataset.qid);
+      if (box?.dataset.done) doneSet.add(b.dataset.qid);
+    });
     const prog = document.getElementById(`rprog_${key}_${i}`);
-    if (prog) prog.style.width = (total ? Math.round(done / total * 100) : 0) + '%';
+    if (prog && chTotal > 0) prog.style.width = Math.round(doneSet.size / chTotal * 100) + '%';
   }
 };
 
@@ -1962,12 +2029,11 @@ const TestSetup = {
     questions = Util.shuffle(questions);
 
     const numSubjs = subjKey === 'all' ? Object.keys(SUBJECTS).length : 1;
-    const totalTime = cfg.q * cfg.totalMinutes * numSubjs * 60 / cfg.totalMinutes;
     Modal.close();
     ExamEngine.launch({
       mode: 'exam', diff, subject: subjKey,
       subjectName: subjKey === 'all' ? 'All Subjects' : SUBJECTS[subjKey].name,
-      questions, totalTime: cfg.q * numSubjs * cfg.totalMinutes * 2,
+      questions, totalTime: cfg.totalMinutes * 60 * (subjKey === 'all' ? numSubjs : 1),
       posScore: cfg.posScore, negScore: cfg.negScore, passPercent: 60,
       perQSec: cfg.perQSec
     });
@@ -2108,11 +2174,12 @@ const ExamEngine = {
       if (a === questions[i].corr) liveScore += this._state.posScore;
       else liveScore -= this._state.negScore;
     });
-    document.getElementById('exScoreLive').textContent = `Score: ${liveScore.toFixed(1)}`;
+    liveScore = Math.max(0, parseFloat(liveScore.toFixed(1)));
+    document.getElementById('exScoreLive').textContent = `Score: ${liveScore}`;
 
-    // Avg time
-    const avgT = totalElapsed > 0 ? Math.round(totalElapsed / Math.max(1, current)) : 0;
-    document.getElementById('exTimePerQ').textContent = `Avg: ${avgT}s/Q`;
+    // Avg time — avoid divide-by-zero; only count after at least 1 question navigated
+    const avgT = (totalElapsed > 0 && current > 0) ? Math.round(totalElapsed / current) : 0;
+    document.getElementById('exTimePerQ').textContent = avgT > 0 ? `Avg: ${avgT}s/Q` : 'Avg: —';
 
     // Nav buttons
     document.getElementById('exBtnPrev').disabled = current === 0;
@@ -2227,12 +2294,13 @@ const ExamEngine = {
 
     score = Math.max(0, parseFloat(score.toFixed(1)));
     const maxScore = questions.length * posScore;
-    const accuracy = (correct + wrong) > 0 ? Math.round(correct / (correct + wrong) * 100) : 0;
+    const answered = correct + wrong;
+    const accuracy = answered > 0 ? Math.round(correct / answered * 100) : 0;
     const passScore = Math.ceil(maxScore * this._state.passPercent / 100);
     const passed = score >= passScore;
-    const totalSecs = totalTime - timeLeft;
-    const avgPerQ = questions.length ? Math.round(totalSecs / questions.length) : 0;
-    const pct = maxScore ? Math.round(score / maxScore * 100) : 0;
+    const totalSecs = Math.max(0, totalTime - timeLeft);
+    const avgPerQ = questions.length > 0 ? Math.round(totalSecs / questions.length) : 0;
+    const pct = maxScore > 0 ? Math.round(score / maxScore * 100) : 0;
 
     const grade =
       pct >= 85 ? { t: 'A+ Excellent!', c: 'rg-a' } :
@@ -2311,7 +2379,12 @@ const ExamEngine = {
 
   retry() {
     document.getElementById('results-screen').style.display = 'none';
-    TestSetup.openExam();
+    // If the previous session was exam mode, reopen exam; otherwise practice
+    if (this._state && this._state.mode === 'exam') {
+      TestSetup.openExam();
+    } else {
+      TestSetup.openPractice();
+    }
   },
 
   backToModes() {
@@ -2335,8 +2408,9 @@ const HistoryManager = {
     }
     let html = '<div class="hist-list">';
     State.history.forEach((h, idx) => {
-      const cls = h.accuracy >= 70 ? 'g' : h.accuracy >= 45 ? 'a' : 'b';
-      const badge = `${h.score}/${h.maxScore} · ${h.accuracy}%`;
+      const acc = typeof h.accuracy === 'number' ? h.accuracy : 0;
+      const cls = acc >= 70 ? 'g' : acc >= 45 ? 'a' : 'b';
+      const badge = `${h.score ?? 0}/${h.maxScore ?? 0} · ${acc}%`;
       const diffTag = h.diff && h.diff !== 'custom' ? h.diff : 'practice';
       html += `<div class="hi" id="hi_${idx}">
         <div class="hi-head" onclick="this.closest('.hi').classList.toggle('open')">
@@ -2385,26 +2459,67 @@ const HistoryManager = {
 // INIT
 // ══════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
-  // Countdown
+  // ── Countdown: Days, Hours, Minutes, Seconds ──
+  const prevVals = { d: null, h: null, m: null, s: null };
+
   const updateCountdown = () => {
-    const diff = EXAM_DATE - new Date();
-    const d = Math.max(0, Math.ceil(diff / 86400000));
-    document.getElementById('daysLeft').textContent = d;
-    document.getElementById('ecDays').textContent = d;
+    const now = new Date();
+    const diff = EXAM_DATE - now;
+
+    if (diff <= 0) {
+      // Exam has passed
+      const ecUnits = document.getElementById('ecUnits');
+      if (ecUnits) ecUnits.innerHTML = '<div class="ec-expired">🎓 Exam Day has arrived!</div>';
+      const dEl = document.getElementById('daysLeft');
+      if (dEl) dEl.textContent = '0';
+      return;
+    }
+
+    const totalSecs = Math.floor(diff / 1000);
+    const d = Math.floor(totalSecs / 86400);
+    const h = Math.floor((totalSecs % 86400) / 3600);
+    const m = Math.floor((totalSecs % 3600) / 60);
+    const s = totalSecs % 60;
+
+    const pad = n => String(n).padStart(2, '0');
+
+    const animateUnit = (id, val, key) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const display = key === 'd' ? String(val) : pad(val);
+      if (prevVals[key] !== val) {
+        el.classList.remove('tick');
+        void el.offsetWidth; // reflow
+        el.classList.add('tick');
+        el.textContent = display;
+        prevVals[key] = val;
+      }
+    };
+
+    animateUnit('ecD', d, 'd');
+    animateUnit('ecH', h, 'h');
+    animateUnit('ecM', m, 'm');
+    animateUnit('ecS', s, 's');
+
+    const dEl = document.getElementById('daysLeft');
+    if (dEl) dEl.textContent = d;
   };
+
   updateCountdown();
-  setInterval(updateCountdown, 60000);
+  setInterval(updateCountdown, 1000);
 
-  // Motivation
+  // ── Motivation ──
   const m = MOTIVATIONS[Math.floor(Math.random() * MOTIVATIONS.length)];
-  document.getElementById('motivQ').textContent = `"${m.q}"`;
-  document.getElementById('motivSrc').textContent = m.a;
+  const motivQ = document.getElementById('motivQ');
+  const motivSrc = document.getElementById('motivSrc');
+  if (motivQ) motivQ.textContent = `"${m.q}"`;
+  if (motivSrc) motivSrc.textContent = m.a;
 
-  // Total MCQ count
-  const total = Util.totalMCQCount();
-  document.getElementById('totalMCQCount').textContent = total;
+  // ── Total MCQ count ──
+  const totalMCQCount = document.getElementById('totalMCQCount');
+  if (totalMCQCount) totalMCQCount.textContent = Util.totalMCQCount();
 
-  // Build subject cards
+  // ── Build subject cards ──
   SubjectUI.build();
 });
 </script>
