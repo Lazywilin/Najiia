@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>NU BBA Prep — by Waterflame And Lazywilin</title>
+<title>NU BBA Prep — by Waterflame v5</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -117,20 +117,14 @@ body::after {
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   padding: 0 .75rem;
   gap: .2rem;
   overflow-x: auto;
   scrollbar-width: none;
 }
-@media(min-width: 768px) {
-  #topnav {
-    flex-direction: row-reverse;
-    justify-content: flex-start;
-  }
-  #topnav .nav-logo {
-    margin-right: 0;
-    margin-left: auto;
-  }
+@media(max-width: 768px) {
+  #topnav { justify-content: flex-start; }
 }
 #topnav::-webkit-scrollbar { display: none; }
 
@@ -139,9 +133,13 @@ body::after {
   font-size: .95rem;
   color: var(--gold);
   white-space: nowrap;
-  margin-right: .4rem;
+  margin-right: auto;
+  margin-left: 0;
   flex-shrink: 0;
   letter-spacing: .01em;
+}
+@media(min-width: 769px) {
+  .nav-logo { margin-right: .4rem; margin-left: auto; order: 99; }
 }
 
 .nb {
@@ -161,12 +159,12 @@ body::after {
 .nb.on { background: var(--goldg); border-color: rgba(212,168,67,.3); color: var(--gold); font-weight: 600; }
 .nb-test {
   background: linear-gradient(135deg, var(--gold), var(--gold2));
-  color: #fff !important;
+  color: #ffffff !important;
   border: none !important;
   font-weight: 700 !important;
   padding: .3rem .9rem;
   border-radius: 6px;
-  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+  text-shadow: 0 1px 2px rgba(0,0,0,.45);
 }
 .nb-test:hover { opacity: .88; transform: translateY(-1px); }
 .nb-about { color: var(--purple); }
@@ -627,8 +625,84 @@ option { background: var(--bg3); }
 .diff-info { font-size: .7rem; color: var(--muted); line-height: 1.5; }
 
 /* ══════════════════════════════════════════════
-   EXAM SCREEN
+   FOCUS MODE — Tab Warning Overlay
 ══════════════════════════════════════════════ */
+#focusWarningOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0,0,0,.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn .2s ease;
+}
+#focusWarningOverlay.on { display: flex; }
+.focus-warn-box {
+  background: var(--card);
+  border: 2px solid rgba(248,113,113,.5);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(248,113,113,.25), var(--shadow-lg);
+  animation: slideUp .3s var(--spring);
+}
+.focus-warn-icon { font-size: 3rem; margin-bottom: .75rem; animation: pulse-urgency 1.5s infinite; }
+.focus-warn-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--red); margin-bottom: .5rem; }
+.focus-warn-msg { color: var(--muted2); font-size: .88rem; line-height: 1.65; margin-bottom: .5rem; }
+.focus-warn-count { font-family: 'JetBrains Mono', monospace; font-size: .75rem; color: var(--red); background: var(--red2); border: 1px solid rgba(248,113,113,.3); padding: .25rem .75rem; border-radius: 100px; display: inline-block; margin-bottom: 1.2rem; }
+.focus-warn-actions { display: flex; gap: .65rem; flex-wrap: wrap; justify-content: center; }
+.btn-resume { background: linear-gradient(135deg,#34d399,#10b981); color: #022c22; font-weight: 700; font-size: .9rem; padding: .65rem 2rem; border: none; border-radius: 100px; transition: all .2s var(--ease); }
+.btn-resume:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(52,211,153,.3); }
+.btn-stop-exam { background: transparent; color: var(--red); font-weight: 500; font-size: .85rem; padding: .62rem 1.4rem; border: 1px solid rgba(248,113,113,.3); border-radius: 100px; transition: all .2s; }
+.btn-stop-exam:hover { background: var(--red2); border-color: rgba(248,113,113,.5); }
+.focus-badge {
+  display: inline-flex; align-items: center; gap: .32rem;
+  background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.2);
+  color: var(--green); font-size: .68rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; padding: .18rem .65rem;
+  border-radius: 100px; margin-left: .5rem; vertical-align: middle;
+}
+.focus-badge::before { content: '🔒'; font-size: .7rem; }
+
+/* Save Program button in exam */
+.btn-save-prog {
+  background: var(--blue2);
+  color: var(--blue);
+  border: 1px solid rgba(96,165,250,.3);
+  padding: .42rem 1rem;
+  border-radius: var(--rs);
+  font-size: .78rem;
+  font-weight: 600;
+  transition: all .18s;
+  display: flex; align-items: center; gap: .3rem;
+}
+.btn-save-prog:hover { background: rgba(96,165,250,.2); border-color: rgba(96,165,250,.5); }
+
+/* Saved programs panel */
+#savedProgsPanel {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: .85rem 1rem;
+  margin-bottom: .65rem;
+}
+#savedProgsPanel.on { display: block; animation: fadeIn .2s ease; }
+.saved-prog-title { font-size: .68rem; font-family: 'JetBrains Mono', monospace; color: var(--muted); margin-bottom: .5rem; display: flex; align-items: center; justify-content: space-between; }
+.saved-prog-list { display: flex; flex-direction: column; gap: .35rem; max-height: 180px; overflow-y: auto; }
+.saved-prog-item { display: flex; align-items: center; gap: .5rem; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--rs); padding: .45rem .7rem; font-size: .78rem; }
+.saved-prog-name { flex: 1; color: var(--text2); }
+.saved-prog-date { font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--muted); flex-shrink: 0; }
+.saved-prog-load { background: none; border: 1px solid rgba(96,165,250,.3); color: var(--blue); font-size: .68rem; padding: .12rem .45rem; border-radius: 4px; transition: all .16s; }
+.saved-prog-load:hover { background: var(--blue2); }
+.saved-prog-del { background: none; border: none; color: var(--muted); font-size: .8rem; padding: .1rem .3rem; transition: color .15s; }
+.saved-prog-del:hover { color: var(--red); }
+
 #exam-screen { display: none; }
 
 .exam-topbar {
@@ -1060,72 +1134,6 @@ option { background: var(--bg3); }
 .ro-close:hover{color:var(--red)}
 .ro-pass{font-size:.75rem;padding:.2rem .75rem;border-radius:100px;margin:.2rem auto;display:inline-block}
 .ro-pass.pass{background:var(--green2);color:var(--green);border:1px solid rgba(52,211,153,.3)}.ro-pass.fail{background:var(--red2);color:var(--red);border:1px solid rgba(248,113,113,.3)}
-/* ══ FOCUS MODE ══ */
-#focusWarn {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.92);
-  z-index: 9000;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(20px);
-}
-#focusWarn.on { display: flex; }
-.fw-box {
-  background: var(--card2);
-  border: 2px solid rgba(248,113,113,.5);
-  border-radius: 16px;
-  padding: 2.2rem 2rem;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 0 60px rgba(248,113,113,.25);
-  animation: rmPop .4s var(--spring) both;
-}
-.fw-icon { font-size: 3.5rem; margin-bottom: .6rem; display: block; animation: pulse-urgency 1.5s infinite; }
-.fw-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--red); margin-bottom: .4rem; }
-.fw-msg { color: var(--muted2); font-size: .88rem; line-height: 1.7; margin-bottom: 1.2rem; }
-.fw-count { font-family: 'JetBrains Mono', monospace; font-size: .78rem; color: var(--amber); background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.2); padding: .25rem .8rem; border-radius: 100px; display: inline-block; margin-bottom: 1rem; }
-.fw-btn { background: linear-gradient(135deg,var(--red),#f43f5e); color: #fff; border: none; padding: .65rem 2rem; border-radius: 100px; font-weight: 700; font-size: .9rem; cursor: pointer; transition: opacity .16s; width: 100%; }
-.fw-btn:hover { opacity: .88; }
-
-/* ══ SAVE PROGRESS (Practice Only) ══ */
-.save-prog-btn {
-  background: var(--blue2);
-  color: var(--blue);
-  border: 1px solid rgba(96,165,250,.3);
-  padding: .32rem .85rem;
-  border-radius: var(--rs);
-  font-size: .75rem;
-  font-weight: 600;
-  transition: all .16s;
-  white-space: nowrap;
-}
-.save-prog-btn:hover { background: rgba(96,165,250,.2); border-color: rgba(96,165,250,.5); }
-.save-prog-btn.saved { background: var(--green2); color: var(--green); border-color: rgba(52,211,153,.35); }
-.save-toast {
-  position: fixed;
-  bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(0);
-  background: var(--card2);
-  border: 1px solid var(--green);
-  color: var(--green);
-  padding: .55rem 1.4rem;
-  border-radius: 100px;
-  font-size: .83rem;
-  font-weight: 600;
-  z-index: 8000;
-  box-shadow: 0 0 20px rgba(52,211,153,.2);
-  pointer-events: none;
-  animation: saveToast .3s var(--spring) both;
-}
-@keyframes saveToast {
-  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
-}
-
 /* ══ CONFETTI ══ */
 #confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:900;display:none}
 </style>
@@ -1134,17 +1142,6 @@ option { background: var(--bg3); }
 
 <!-- ══ CONFETTI & RESULT OVERLAY ══ -->
 <canvas id="confettiCanvas"></canvas>
-
-<!-- ══ FOCUS MODE WARNING ══ -->
-<div id="focusWarn">
-  <div class="fw-box">
-    <span class="fw-icon">🚨</span>
-    <div class="fw-title">Focus Mode Active!</div>
-    <div class="fw-msg">You left the exam tab. <strong style="color:var(--red)">Tab switching is not allowed</strong> during an active exam. Return to your exam immediately.</div>
-    <div class="fw-count" id="fwViolationCount">Violation: 1</div>
-    <button class="fw-btn" onclick="FocusMode.dismiss()">↩ Return to Exam</button>
-  </div>
-</div>
 <div id="resultOverlay">
   <div class="ro-box">
     <button class="ro-close" onclick="Achievements.closeOverlay()">✕</button>
@@ -1164,6 +1161,20 @@ option { background: var(--bg3); }
       <button class="btn-pri" style="flex:1;min-width:100px" onclick="Achievements.closeOverlay();ExamEngine.retry()">🔄 Retry</button>
       <button class="btn-sec" onclick="Achievements.closeOverlay();ExamEngine.backToModes()">← Modes</button>
       <button class="btn-sec" onclick="Achievements.closeOverlay();App.nav('test')">View Results</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOCUS MODE WARNING OVERLAY ══ -->
+<div id="focusWarningOverlay">
+  <div class="focus-warn-box">
+    <div class="focus-warn-icon">🚫</div>
+    <div class="focus-warn-title">Focus Mode Active</div>
+    <div class="focus-warn-msg">You left the exam tab! Tab-switching is not allowed during an active exam. Stay focused — your time is still running.</div>
+    <div class="focus-warn-count" id="focusWarnCount">Tab switch #1</div>
+    <div class="focus-warn-actions">
+      <button class="btn-resume" onclick="FocusMode.resume()">✓ Return to Exam</button>
+      <button class="btn-stop-exam" onclick="FocusMode.stopExam()">Stop Exam</button>
     </div>
   </div>
 </div>
@@ -1311,7 +1322,7 @@ option { background: var(--bg3); }
         <div class="mc-features">
           <div class="mc-feat">Easy / Medium / Competitive</div>
           <div class="mc-feat">Per-question timer (15/20/30s)</div>
-          <div class="mc-feat">Accurate pass/fail system</div>
+          <div class="mc-feat">🔒 Focus Mode — tab switching blocked</div>
           <div class="mc-feat">Full review after exam</div>
         </div>
         <button class="mc-btn b-gold">Start Exam →</button>
@@ -1345,7 +1356,7 @@ option { background: var(--bg3); }
   <!-- Active exam screen -->
   <div id="exam-screen">
     <div class="exam-topbar">
-      <div class="ex-title" id="exTitle">Exam</div>
+      <div class="ex-title" id="exTitle">Exam <span class="focus-badge" id="focusBadge" style="display:none">Focus Mode</span></div>
       <div class="ex-prog-w-wrap">
         <div class="ex-prog-bar-w"><div class="ex-prog-bar-f" id="exProgBar" style="width:0%"></div></div>
         <div class="ex-prog-txt" id="exProgTxt">Q 1 / 20</div>
@@ -1353,9 +1364,15 @@ option { background: var(--bg3); }
       <div class="ex-time-per-q" id="exTimePerQ">Avg: —</div>
       <div class="ex-score-live" id="exScoreLive">Score: 0</div>
       <div class="ex-timer" id="exTimer">00:00</div>
-      <button class="save-prog-btn" id="saveProgBtn" onclick="SaveProgress.save()" style="display:none">💾 Save</button>
     </div>
     <div class="exam-body">
+      <div id="savedProgsPanel">
+        <div class="saved-prog-title">
+          <span>💾 Saved Programs</span>
+          <button style="background:none;border:none;color:var(--muted);font-size:.75rem;cursor:pointer" onclick="SavedPrograms.closePanel()">✕ Close</button>
+        </div>
+        <div class="saved-prog-list" id="savedProgList"></div>
+      </div>
       <div id="exQContainer"></div>
       <div class="q-palette-wrap" id="qPaletteWrap" style="display:none">
         <div class="q-pal-title">Question Navigator</div>
@@ -1365,6 +1382,7 @@ option { background: var(--bg3); }
         <button class="btn-nav" id="exBtnPrev" onclick="ExamEngine.nav(-1)" disabled>← Prev</button>
         <button class="btn-nav" onclick="ExamEngine.togglePalette()">☰ Questions</button>
         <button class="btn-nav" id="exBtnNext" onclick="ExamEngine.nav(1)">Next →</button>
+        <button class="btn-save-prog" id="btnSaveProg" onclick="SavedPrograms.save()" style="display:none">💾 Save</button>
         <button class="btn-submit" onclick="ExamEngine.submit()">Submit ✓</button>
       </div>
     </div>
@@ -1433,12 +1451,7 @@ option { background: var(--bg3); }
       <h3>👤 Who is Waterflame?</h3>
       <p>A 19-year-old Commerce student from Bonosree, Dhaka, preparing for NU BBA admission 2025–26. Into Liquid DnB (Liquicity is life 🎧), high-fi audio — Tangzu Wan'er SG 2 IEMs through a JCALLY JM7 DAC — and Mobile Legends ranked grind.</p>
       <p>Long-term plan: BBA in Australia (Sydney or Perth), starting February 2027. Until then, NU BBA is the mission.</p>
-    <div class="about-section">
-      <h3>👤 Who is Lazywilin?</h3>
-      <p>A 19-year-old Commerce student from Chittagong, preparing for CSe 2025–26. Into Tech,Music and Mobile Legends.</p>
-      <p>Long-term plan: CSe in Japan (Tokyo), starting April 2027.</p>
-        </div>
-</div>
+    </div>
     <div class="about-section">
       <h3>💌 A Message to You</h3>
       <p style="color:var(--gold);font-family:'DM Serif Display',serif;font-size:.95rem;font-style:italic;line-height:1.7">"The only way to get better is to practice like it matters, even when it doesn't feel like it does. You're already ahead of who you were yesterday."</p>
@@ -1822,21 +1835,29 @@ accounting: {
       ["'Matching Principle' মানে কী?", ["রাজস্ব ও ব্যয় একই সময়ের জন্য মেলানো","সম্পদ ও দায় মেলানো","ডেবিট ও ক্রেডিট মেলানো","পুরনো ও নতুন হিসাব মেলানো"], 0, 2],
       ["Depreciation হিসাব করার সবচেয়ে প্রচলিত পদ্ধতি?", ["FIFO","Straight Line Method (SLM)","LIFO","Reducing Balance"], 1, 1],
       ["হিসাববিজ্ঞানের জনক কাকে বলা হয়?", ["Adam Smith","Luca Pacioli","John Keynes","Alfred Marshall"], 1, 2],
-      ["Accounting Equation কোনটি?", ["Assets = Liabilities","Assets = Liabilities + Owner's Equity","Assets + Liabilities = Equity","Equity = Assets + Liabilities"], 1, 1],
-      ["'Going Concern' ধারণা কী?", ["ব্যবসায় সীমিত সময়ের জন্য পরিচালিত হবে","ব্যবসায় অনির্দিষ্টকাল চলতে থাকবে","ব্যবসায় এক বছরের জন্য হিসাব করা হয়","ব্যবসায় নগদ ভিত্তিতে হিসাব করা হয়"], 1, 2],
-      ["'Accrual Basis' হিসাব পদ্ধতিতে কী ধরা হয়?", ["শুধু নগদ লেনদেন","আয় ও ব্যয় যখন সংঘটিত হয় তখন","শুধু ক্রেডিট লেনদেন","শুধু ব্যয় ধরা হয়"], 1, 2],
-      ["Debit কোন পক্ষকে বোঝায়?", ["ডান পক্ষ","বাম পক্ষ","উভয় পক্ষ","কোনোটিই না"], 1, 1],
-      ["Credit কোন পক্ষকে বোঝায়?", ["বাম পক্ষ","ডান পক্ষ","উপরের পক্ষ","নিচের পক্ষ"], 1, 1],
-      ["'Matching Principle' বলতে কী বোঝায়?", ["আয় ও ব্যয় আলাদা করা","একই সময়কালে আয়ের সাথে সংশ্লিষ্ট ব্যয় মেলানো","সম্পদ ও দায় মেলানো","নগদ ও ক্রেডিট মেলানো"], 1, 3],
-      ["Double Entry System-এ প্রতিটি লেনদেনে কয়টি পক্ষ থাকে?", ["একটি","দুটি","তিনটি","চারটি"], 1, 1],
-      ["Fixed Assets-এর উদাহরণ কোনটি?", ["Stock","Debtors","Land & Building","Cash"], 2, 1],
-      ["Working Capital কীভাবে হিসাব করা হয়?", ["Fixed Assets − Current Liabilities","Current Assets − Current Liabilities","Total Assets − Total Liabilities","Revenue − Expenses"], 1, 2],
-      ["Revenue Expenditure কোনটি?", ["মেশিন ক্রয়","বিদ্যুৎ বিল পরিশোধ","জমি ক্রয়","পেটেন্ট ক্রয়"], 1, 1],
-      ["Capital Expenditure কোনটি?", ["বেতন প্রদান","বিজ্ঞাপন ব্যয়","যন্ত্রপাতি ক্রয়","ভাড়া পরিশোধ"], 2, 1],
-      ["Provision for Bad Debts তৈরি করা হয় কেন?", ["মুনাফা বাড়াতে","সম্ভাব্য অনাদায়ী পাওনার জন্য সংস্থান রাখতে","কর কমাতে","মূলধন বাড়াতে"], 1, 2],
-      ["Inventory Valuation-এ FIFO মানে?", ["First In First Out","Final In First Out","Fast In Free Out","Fixed Input First Out"], 0, 1],
-      ["Net Profit কীভাবে হিসাব করা হয়?", ["Revenue + Expenses","Revenue − All Expenses","Assets − Liabilities","Sales − COGS only"], 1, 1],
-      ["Gross Profit = ?", ["Net Sales − Total Expenses","Net Sales − Cost of Goods Sold","Net Sales − Operating Expenses","Revenue − Interest"], 1, 1],
+      ["'Business Entity Concept' নীতি অনুযায়ী কী ধরে নেওয়া হয়?", ["ব্যবসা ও মালিক একই সত্তা","ব্যবসা ও মালিক আলাদা সত্তা","ব্যবসার কোনো মালিক নেই","মালিকই ব্যবসা পরিচালনা করে"], 1, 2],
+      ["'Cost Principle' (Historical Cost) মানে কী?", ["বাজারমূল্যে সম্পদ লেখা হয়","সম্পদ ক্রয়ের মূল মূল্যে লেখা হয়","প্রতি বছর পুনর্মূল্যায়ন করা হয়","সম্পদের আনুমানিক মূল্য ব্যবহার করা হয়"], 1, 2],
+      ["'Conservatism Principle' বা সতর্কতার নীতি কী বলে?", ["সম্ভাব্য লাভ লেখো, নিশ্চিত ক্ষতি লিখো না","নিশ্চিত লাভ লেখো এবং সম্ভাব্য ক্ষতির জন্য প্রস্তুত থাকো","সব লাভ ও ক্ষতি আগাম লেখো","শুধু নগদ লেনদেন লেখো"], 1, 2],
+      ["'Materiality Principle' মানে কী?", ["সব তথ্য বিস্তারিত লেখা","গুরুত্বহীন বিষয় এড়িয়ে শুধু গুরুত্বপূর্ণ তথ্য লেখা","ছোট ব্যয় বাতিল করা","বড় ব্যয় ক্যাপিটালাইজ করা"], 1, 2],
+      ["'Revenue Recognition Principle' কখন আয় স্বীকার করে?", ["টাকা পাওয়ার পর","পণ্য/সেবা প্রদান হলেই, নগদ না পেলেও","অর্ডার পাওয়ার পর","হিসাব বছর শেষে"], 1, 2],
+      ["সম্পদের Straight Line Depreciation সূত্র কোনটি?", ["(Cost × Rate)/100","(Cost − Salvage Value) / Useful Life","Cost × Useful Life","Salvage Value / Cost"], 1, 1],
+      ["Reducing Balance পদ্ধতিতে অবচয় কীভাবে হয়?", ["প্রতি বছর সমান","প্রতি বছর কমতে থাকে","প্রতি বছর বাড়তে থাকে","শুধু প্রথম বছর অবচয় ধরা হয়"], 1, 2],
+      ["'Consistency Principle' মানে?", ["প্রতি বছর পদ্ধতি পরিবর্তন করা","একই হিসাব পদ্ধতি ধারাবাহিকভাবে ব্যবহার করা","সব প্রতিষ্ঠান একই পদ্ধতি ব্যবহার করবে","নতুন পদ্ধতি গ্রহণ বাধ্যতামূলক"], 1, 2],
+      ["Working Capital নির্ণয়ের সূত্র?", ["Fixed Assets − Long-term Liabilities","Current Assets − Current Liabilities","Total Assets − Total Liabilities","Revenue − Expenses"], 1, 1],
+      ["'Full Disclosure Principle' কী?", ["শুধু ভালো তথ্য প্রকাশ","সকল গুরুত্বপূর্ণ আর্থিক তথ্য প্রকাশ করা","গোপনীয়তা বজায় রাখা","শুধু মালিককে তথ্য দেওয়া"], 1, 2],
+      ["একটি ব্যবসায় Assets = ৫০,০০০ ও Liabilities = ২০,০০০ হলে Owner's Equity কত?", ["৭০,০০০","৩০,০০০","২০,০০০","৫০,০০০"], 1, 1],
+      ["হিসাববিজ্ঞানের কোন নীতি বলে 'ভবিষ্যৎ লাভের প্রত্যাশায় হিসাব করো না'?", ["Going Concern","Conservatism","Materiality","Cost Principle"], 1, 2],
+      ["'Intangible Assets' এর উদাহরণ কোনটি?", ["জমি","যন্ত্রপাতি","Goodwill ও Patent","নগদ"], 2, 2],
+      ["Gross Profit নির্ণয়ের সূত্র?", ["Net Sales − COGS (Cost of Goods Sold)","Net Sales − All Expenses","Revenue − Net Profit","COGS − Sales"], 0, 1],
+      ["Net Profit নির্ণয়ের সূত্র?", ["Gross Profit + All Expenses","Gross Profit − Operating Expenses","Revenue + Expenses","Sales − COGS only"], 1, 1],
+      ["কোনটি 'Current Liability'?", ["Mortgage Loan (দীর্ঘমেয়াদি)","Bank Overdraft","Buildings","Machinery"], 1, 1],
+      ["'Prepaid Expense' হিসাবে কোথায় দেখানো হয়?", ["দায় হিসেবে","চলতি সম্পদ হিসেবে","স্থায়ী সম্পদ হিসেবে","মূলধন হিসেবে"], 1, 2],
+      ["'Accrued Income' কীভাবে শ্রেণিবদ্ধ?", ["দায়","খরচ","চলতি সম্পদ (প্রাপ্য আয়)","স্থায়ী সম্পদ"], 2, 2],
+      ["হিসাববিজ্ঞানের কোন ধারণাটি বাৎসরিক হিসাব সমাপ্তির ভিত্তি?", ["Accounting Period Concept","Going Concern","Cost Concept","Matching Principle"], 0, 2],
+      ["'Bad Debts' কী?", ["ভালো পাওনা","আদায়যোগ্য নয় এমন পাওনা (অনাদায়ী দেনা)","ব্যাংক ঋণ","নগদ প্রদান"], 1, 2],
+      ["Provision for Bad Debts কেন তৈরি করা হয়?", ["মুনাফা বাড়াতে","সম্ভাব্য অনাদায়ী দেনার বিপরীতে আগাম ব্যবস্থা নিতে","সম্পদের মূল্য বাড়াতে","কর কমাতে"], 1, 2],
+      ["GAAP পূর্ণরূপ কী?", ["General Accounting and Audit Principles","Generally Accepted Accounting Principles","Global Accounting and Audit Protocol","General Asset and Accounting Policy"], 1, 1],
+      ["হিসাবচক্রের (Accounting Cycle) প্রথম ধাপ কোনটি?", ["Trial Balance","Journalizing","Posting to Ledger","Financial Statements"], 1, 1],
     ]},
     { name: 'জাবেদা ও খতিয়ান', imp: 3, mcqs: [
       ["জাবেদা (Journal) কী?", ["লেনদেনের চূড়ান্ত হিসাব","লেনদেন প্রথমে যে বইতে লেখা হয় (দৈনিক হিসাব)","ব্যালেন্স শিট","আয়-ব্যয় বিবরণী"], 1, 1],
@@ -1845,19 +1866,30 @@ accounting: {
       ["পাওনাদারকে নগদ পরিশোধ করলে এন্ট্রি হবে?", ["Cash Dr, Creditor Cr","Creditor Dr, Cash Cr","Purchase Dr, Cash Cr","Expense Dr, Cash Cr"], 1, 2],
       ["'Posting' মানে কী?", ["নতুন লেনদেন লেখা","জাবেদা থেকে খতিয়ানে স্থানান্তর","খতিয়ান থেকে রেওয়ামিলে স্থানান্তর","ব্যালেন্স শিট তৈরি"], 1, 2],
       ["'Trial Balance' এর উদ্দেশ্য কী?", ["লাভ-ক্ষতি হিসাব","ডেবিট ও ক্রেডিট সমতা যাচাই","সম্পদের মূল্যায়ন","নগদ প্রবাহ নিরীক্ষা"], 1, 1],
-      ["সম্পদ হিসাব সাধারণত কোন পক্ষে ব্যালেন্স দেখায়?", ["ক্রেডিট পক্ষে","ডেবিট পক্ষে","উভয় পক্ষে","কোনো ব্যালেন্স নেই"], 1, 1],
-      ["দায় হিসাব সাধারণত কোন পক্ষে ব্যালেন্স দেখায়?", ["ডেবিট পক্ষে","ক্রেডিট পক্ষে","উভয় পক্ষে","কোনো ব্যালেন্স নেই"], 1, 1],
-      ["আয় হিসাবে ক্রেডিট ব্যালেন্স থাকলে তা কীসের ইঙ্গিত দেয়?", ["ক্ষতির","লাভের","সম্পদ বৃদ্ধির","দায় হ্রাসের"], 1, 2],
-      ["ক্রয় (Purchases) হিসাবে কোন পক্ষে এন্ট্রি হয়?", ["ক্রেডিট পক্ষে","ডেবিট পক্ষে","উভয় পক্ষে","নিরপেক্ষ"], 1, 1],
-      ["বিক্রয় ফেরত (Sales Return) হিসাবে কোন পক্ষে এন্ট্রি হয়?", ["ক্রেডিট পক্ষে","ডেবিট পক্ষে","উভয় পক্ষে","কোনোটিই না"], 1, 2],
-      ["জাবেদা থেকে খতিয়ানে তোলার প্রক্রিয়াকে কী বলে?", ["Journalizing","Posting","Balancing","Closing"], 1, 1],
-      ["'Folio Column' কোন বইতে থাকে?", ["শুধু খতিয়ানে","শুধু জাবেদায়","জাবেদা ও খতিয়ান উভয়তেই","শুধু ক্যাশ বুকে"], 2, 2],
-      ["নমুনা জাবেদায় Narration কী?", ["প্রতিটি এন্ট্রির সংক্ষিপ্ত ব্যাখ্যা","টাকার পরিমাণ","তারিখ","অ্যাকাউন্টের নাম"], 0, 2],
-      ["খতিয়ানের ব্যালেন্স বের করা হয় কীভাবে?", ["ডেবিট যোগফল থেকে ক্রেডিট যোগফল বিয়োগ করে","ক্রেডিট যোগফল দিয়ে","শুধু ডেবিট দিয়ে","যেকোনো একটি দিয়ে"], 0, 2],
-      ["Opening Entry জাবেদায় কেন দেওয়া হয়?", ["নতুন লেনদেন শুরু করতে","নতুন হিসাব বছরের শুরুতে পূর্ববর্তী ব্যালেন্স আনতে","ব্যাংক ব্যালেন্স মেলাতে","বার্ষিক মুনাফা হিসাব করতে"], 1, 2],
-      ["Closing Entry কেন দেওয়া হয়?", ["নতুন হিসাব বছর শুরু করতে","সাময়িক হিসাবগুলো বন্ধ করে স্থায়ী হিসাবে স্থানান্তর করতে","ব্যাংক হিসাব মেলাতে","সম্পদ বৃদ্ধি করতে"], 1, 3],
-      ["Compound Journal Entry কী?", ["একটি ডেবিট ও একটি ক্রেডিট","একাধিক ডেবিট বা ক্রেডিট একসাথে","শুধু নগদ লেনদেন","শুধু বাকি লেনদেন"], 1, 2],
-      ["Contra Entry কী?", ["ব্যাংক ও নগদের মধ্যে লেনদেন","শুধু ক্রেডিট লেনদেন","শুধু ডেবিট লেনদেন","দুটি সম্পদের মধ্যে বিনিময়"], 0, 3],
+      ["ধারে পণ্য কিনলে জাবেদা কী হবে?", ["Cash Dr, Purchase Cr","Purchase Dr, Creditor Cr","Creditor Dr, Purchase Cr","Purchase Dr, Cash Cr"], 1, 2],
+      ["মালিক ব্যবসায় অতিরিক্ত মূলধন আনলে এন্ট্রি কী?", ["Capital Dr, Cash Cr","Cash Dr, Capital Cr","Cash Dr, Revenue Cr","Asset Dr, Liability Cr"], 1, 2],
+      ["ভাড়া ব্যয় নগদে পরিশোধ হলে এন্ট্রি কী?", ["Cash Dr, Rent Expense Cr","Rent Expense Dr, Cash Cr","Rent Income Dr, Cash Cr","Cash Dr, Expense Cr"], 1, 1],
+      ["ব্যাংকে টাকা জমা দিলে এন্ট্রি কী?", ["Cash Dr, Bank Cr","Bank Dr, Cash Cr","Bank Dr, Revenue Cr","Cash Dr, Liability Cr"], 1, 2],
+      ["Compound Journal Entry মানে কী?", ["দুটি আলাদা এন্ট্রি","একটি এন্ট্রিতে একাধিক ডেবিট বা ক্রেডিট","শুধু ক্রেডিট এন্ট্রি","শুধু নগদ লেনদেন"], 1, 2],
+      ["খতিয়ানের প্রতিটি হিসাবকে কী বলা হয়?", ["Entry","Account","Ledger Folio","Narration"], 1, 1],
+      ["জাবেদায় সংক্ষিপ্ত ব্যাখ্যাকে কী বলে?", ["Folio","Narration","Posting","Balancing"], 1, 1],
+      ["'Debit Note' কে পাঠায়?", ["বিক্রেতা ক্রেতাকে","ক্রেতা বিক্রেতাকে","ব্যাংক গ্রাহককে","সরকার করদাতাকে"], 1, 2],
+      ["'Credit Note' কে পাঠায়?", ["ক্রেতা বিক্রেতাকে","বিক্রেতা ক্রেতাকে","ব্যাংক গ্রাহককে","কর্মচারী নিয়োগকর্তাকে"], 1, 2],
+      ["পণ্য ফেরত দেওয়া হলে (Purchase Return) এন্ট্রি কী?", ["Purchase Dr, Creditor Cr","Creditor Dr, Purchase Return Cr","Cash Dr, Purchase Cr","Purchase Return Dr, Cash Cr"], 1, 2],
+      ["Sales Return (বিক্রয় ফেরত) এন্ট্রি কী?", ["Sales Return Dr, Debtor Cr","Debtor Dr, Sales Return Cr","Cash Dr, Sales Return Cr","Sales Dr, Debtor Cr"], 0, 2],
+      ["মজুরি প্রদান করা হলে এন্ট্রি কী?", ["Cash Dr, Wages Cr","Wages Dr, Cash Cr","Capital Dr, Wages Cr","Wages Cr, Cash Dr"], 1, 1],
+      ["ধারে বিক্রয় হলে কার হিসাব ডেবিট হয়?", ["বিক্রয় হিসাব","ক্রেতার হিসাব (Debtor)","ক্রেডিটর হিসাব","নগদ হিসাব"], 1, 1],
+      ["খতিয়ানে ব্যালেন্স বের করার প্রক্রিয়াকে কী বলে?", ["Posting","Journalizing","Balancing the Account","Trial Balance"], 2, 2],
+      ["রেওয়ামিলে (Trial Balance) কোনটি অন্তর্ভুক্ত হয়?", ["শুধু সম্পদ","শুধু আয় ও ব্যয়","সব খতিয়ান হিসাবের সমাপনী উদ্বৃত্ত","শুধু দায়"], 2, 2],
+      ["Contra Entry কী?", ["দুটো আলাদা লেনদেনের এন্ট্রি","নগদান বইতে উভয় পক্ষে (Cash ও Bank) এন্ট্রি","শুধু খতিয়ানে এন্ট্রি","জাবেদায় সংশোধনী এন্ট্রি"], 1, 3],
+      ["খতিয়ানে Credit Balance মানে সাধারণত কী?", ["সম্পদ বৃদ্ধি","দায় বা আয়ের উদ্বৃত্ত","ব্যয়ের উদ্বৃত্ত","সম্পদের হ্রাস"], 1, 2],
+      ["প্রতিটি জাবেদা এন্ট্রিতে মোট ডেবিট ও ক্রেডিট কেমন হওয়া উচিত?", ["ডেবিট > ক্রেডিট","ডেবিট < ক্রেডিট","ডেবিট = ক্রেডিট","যেকোনো হতে পারে"], 2, 1],
+      ["Opening Entry কখন করা হয়?", ["হিসাব বছরের শেষে","নতুন হিসাব বছরের শুরুতে পূর্বের উদ্বৃত্ত আনতে","লেনদেন ঘটলে","ত্রুটি সংশোধনে"], 1, 2],
+      ["Closing Entry কখন করা হয়?", ["হিসাব বছর শুরুতে","হিসাব বছর শেষে সাময়িক হিসাব বন্ধ করতে","প্রতি মাসে","কর জমা দেওয়ার সময়"], 1, 2],
+      ["কোনটি সাময়িক (Temporary) হিসাব?", ["Assets","Capital","Revenue ও Expenses","Liabilities"], 2, 2],
+      ["কোনটি স্থায়ী (Permanent) হিসাব?", ["Revenue","Expenses","Capital ও Assets","Withdrawals"], 2, 2],
+      ["জাবেদায় লেনদেনের ক্রম কীভাবে লেখা হয়?", ["আয়ের পরিমাণ অনুযায়ী","তারিখ অনুযায়ী কালানুক্রমিকভাবে","সম্পদের গুরুত্ব অনুযায়ী","বর্ণমালার ক্রম অনুযায়ী"], 1, 1],
+      ["'L.F.' (Ledger Folio) জাবেদায় কেন ব্যবহার করা হয়?", ["লেনদেনের পরিমাণ বোঝাতে","খতিয়ানের পাতা নম্বর রেফারেন্সের জন্য","তারিখ বোঝাতে","নারেশন লেখার জন্য"], 1, 2],
     ]},
     { name: 'নগদান বই ও ব্যাংক সমন্বয়', imp: 3, mcqs: [
       ["ব্যাংক সমন্বয় বিবরণী কেন তৈরি করা হয়?", ["নতুন ব্যাংক অ্যাকাউন্ট খুলতে","ক্যাশ বুক ও ব্যাংক স্টেটমেন্টের পার্থক্য মেলাতে","লাভ-ক্ষতি হিসাব করতে","ঋণ পরিশোধ করতে"], 1, 1],
@@ -1865,16 +1897,31 @@ accounting: {
       ["Petty Cash Book কী?", ["বড় লেনদেনের বই","ছোট নগদ ব্যয়ের হিসাব বই","ব্যাংক লেনদেনের বই","আমদানি-রপ্তানির হিসাব"], 1, 1],
       ["Single Column Cash Book-এ কয়টি কলাম থাকে?", ["১","২","৩","৪"], 1, 1],
       ["Bank Overdraft মানে কী?", ["ব্যাংকে জমা অর্থ","ব্যাংক ঋণ বা ব্যাংক ব্যালেন্স ঋণাত্মক","সুদের আয়","ডেবিট কার্ড ব্যালেন্স"], 1, 2],
-      ["Double Column Cash Book-এ কয়টি কলাম থাকে?", ["১","২","৩","৪"], 1, 1],
-      ["Triple Column Cash Book-এ কোন বাড়তি কলাম থাকে?", ["Petty Cash","Bank","Discount","Interest"], 2, 2],
-      ["Deposit in Transit কী?", ["ব্যাংকে জমা দেওয়া কিন্তু এখনো ব্যাংক স্টেটমেন্টে আসেনি","ব্যাংক থেকে উত্তোলিত অর্থ","ব্যাংকে পাঠানো চেক","বাতিল চেক"], 0, 2],
-      ["Bank Reconciliation Statement তৈরিতে কোন দুটির মধ্যে পার্থক্য মেলানো হয়?", ["Cash Book ও Journal","Bank Statement ও Cash Book","Ledger ও Trial Balance","Journal ও Ledger"], 1, 1],
-      ["Cash Book-এর ডেবিট পক্ষে কী লেখা হয়?", ["সমস্ত প্রাপ্তি (Receipts)","সমস্ত পরিশোধ (Payments)","ব্যয় মাত্র","আয় মাত্র"], 0, 1],
-      ["Imprest System Petty Cash কী?", ["প্রতি মাসে নির্দিষ্ট পরিমাণ অগ্রিম দিয়ে ছোট ব্যয় মেটানো","ব্যাংক থেকে ঋণ নেওয়া","বড় ব্যয়ের জন্য বিশেষ তহবিল","কর্মীদের বেতনের ব্যবস্থা"], 0, 3],
-      ["ক্যাশ বুকে সাধারণত কতটি কলাম থাকে (Single Column)?", ["২","৪","৬","৮"], 1, 1],
-      ["Bank Error কোথায় সংশোধন করা হয়?", ["Cash Book-এ","Bank Reconciliation Statement-এ","Journal-এ","Ledger-এ"], 1, 2],
-      ["NSF Cheque মানে কী?", ["New Safe Fund","Not Sufficient Funds চেক (বাউন্স)","National Security Fund","Net Standard Form"], 1, 2],
-      ["Dishonoured Cheque হলে প্রাপকের ক্যাশ বুকে কী এন্ট্রি হবে?", ["ক্রেডিট পক্ষে বাদ দেওয়া হবে","ডেবিট পক্ষে যোগ করা হবে","কোনো এন্ট্রি হবে না","ব্যাংক হিসাবে যোগ হবে"], 0, 3],
+      ["Three-Column Cash Book-এ কোন তিনটি কলাম থাকে?", ["Cash, Bank, Capital","Cash, Bank, Discount","Date, Narration, Amount","Cash, Credit, Debit"], 1, 2],
+      ["ব্যাংক সমন্বয় বিবরণী কে তৈরি করে?", ["ব্যাংক","প্রতিষ্ঠানের হিসাবরক্ষক","সরকার","অডিটর"], 1, 1],
+      ["ক্যাশ বুকে Bank Column-এর ডেবিট ব্যালেন্স মানে কী?", ["প্রতিষ্ঠান ব্যাংকের কাছে ঋণী","প্রতিষ্ঠানের ব্যাংকে টাকা আছে","ব্যাংক ওভারড্রাফট","কোনো টাকা নেই"], 1, 1],
+      ["Un-presented Cheque মানে কী?", ["ব্যাংকে জমা দেওয়া চেক","ইস্যু করা কিন্তু ব্যাংকে এখনো উপস্থাপিত হয়নি","প্রত্যাখ্যাত চেক","বাতিল চেক"], 1, 2],
+      ["Un-credited Cheque মানে কী?", ["প্রদত্ত চেক","ব্যাংকে জমা দেওয়া কিন্তু এখনো ব্যাংক কর্তৃক ক্রেডিট হয়নি","প্রত্যাখ্যাত চেক","ইস্যু করা চেক"], 1, 2],
+      ["Imprest System মানে কী?", ["পেটি ক্যাশ নির্দিষ্ট পরিমাণে পুনরায় পূরণ করার পদ্ধতি","মূলধন জমার পদ্ধতি","ব্যাংক সমন্বয়ের পদ্ধতি","বাৎসরিক হিসাব পদ্ধতি"], 0, 2],
+      ["ব্যাংক চার্জ (Bank Charges) ক্যাশ বুকে কীভাবে দেখানো হয়?", ["ডেবিট পাশে","ক্রেডিট পাশে","উভয় পাশে","দেখানো হয় না"], 1, 2],
+      ["ব্যাংক সুদ (Bank Interest) প্রাপ্ত হলে ক্যাশ বুকে কীভাবে দেখানো হয়?", ["ক্রেডিট পাশে","ডেবিট পাশে","উভয় পাশে","দেখানো হয় না"], 1, 2],
+      ["ব্যাংক সমন্বয় বিবরণীতে Outstanding Cheque যোগ করা হয় নাকি বিয়োগ করা হয়?", ["ক্যাশ বুকের ব্যালেন্স থেকে যোগ","পাস বুকের ব্যালেন্স থেকে বিয়োগ","পাস বুকের ব্যালেন্সে যোগ","উভয় থেকে বিয়োগ"], 1, 2],
+      ["ব্যাংক স্টেটমেন্ট (Pass Book) কে তৈরি করে?", ["প্রতিষ্ঠান","ব্যাংক","অডিটর","সরকার"], 1, 1],
+      ["নগদান বইয়ের (Cash Book) প্রধান বৈশিষ্ট্য কী?", ["শুধু ক্রেডিট এন্ট্রি","জাবেদা ও খতিয়ান উভয়ের কাজ করে","শুধু ব্যাংক লেনদেন","বার্ষিক হিসাব"], 1, 2],
+      ["Dishonoured Cheque মানে কী?", ["সফলভাবে নগদ হওয়া চেক","ব্যাংক কর্তৃক প্রত্যাখ্যাত চেক","ইস্যু করা চেক","সংগৃহীত চেক"], 1, 1],
+      ["ব্যাংক সমন্বয় বিবরণীতে ক্যাশ বুকের ব্যালেন্স থেকে কী বিয়োগ করা হয়?", ["Un-credited Cheque","Bank Charges / ব্যাংক কর্তৃক চার্জ","ব্যাংক সুদ আয়","Un-presented Cheque"], 1, 2],
+      ["Double Column Cash Book-এ কোন দুটি কলাম থাকে?", ["Cash ও Capital","Cash ও Bank","Debit ও Credit amount","Discount ও Tax"], 1, 1],
+      ["ব্যাংক সমন্বয় বিবরণীর মূল লক্ষ্য কোনটি?", ["ব্যাংকের লাভ বের করা","দুটি হিসাবের পার্থক্যের কারণ খুঁজে বের করা","নতুন ব্যাংক একাউন্ট খোলা","ঋণের পরিমাণ নির্ধারণ করা"], 1, 1],
+      ["Petty Cashier কে?", ["প্রধান অ্যাকাউন্ট্যান্ট","ছোটখাটো নগদ ব্যয় পরিচালনাকারী কর্মচারী","ব্যাংক কর্মকর্তা","কর কর্মকর্তা"], 1, 1],
+      ["ব্যাংকে Cheque জমা দিলে কিন্তু ক্লিয়ার না হলে — ব্যাংক স্টেটমেন্টে কীভাবে থাকে?", ["ক্রেডিট হয়ে যায়","দেখা যায় না","Pending / Uncredited হিসেবে থাকে","ডেবিট হয়ে যায়"], 2, 2],
+      ["ক্যাশ বুকের Credit Balance মানে কী?", ["নগদ উদ্বৃত্ত আছে","Bank Overdraft (ব্যাংক থেকে বেশি উত্তোলন)","ব্যবসায় লাভ হয়েছে","মূলধন বেড়েছে"], 1, 2],
+      ["কোনটি ব্যাংক সমন্বয়ের পার্থক্যের কারণ নয়?", ["Outstanding Cheque","Timing Difference","Direct Deposit by Customer","বার্ষিক অবচয়"], 3, 2],
+      ["ব্যাংক সমন্বয় বিবরণীতে 'ত্রুটি সংশোধন' কেন অন্তর্ভুক্ত হয়?", ["ব্যাংকের ভুল এন্ট্রি সংশোধন করতে","প্রতিষ্ঠানের ক্যাশ বুকের ভুল এন্ট্রির কারণে ব্যালেন্সে পার্থক্য হলে","উভয় কারণে","কোনোটিই নয়"], 2, 3],
+      ["Cash Book-এ Receipt (প্রাপ্তি) কোন দিকে লেখা হয়?", ["ক্রেডিট পাশে","ডেবিট পাশে","উভয় পাশে","যেকোনো পাশে"], 1, 1],
+      ["Cash Book-এ Payment (প্রদান) কোন দিকে লেখা হয়?", ["ডেবিট পাশে","ক্রেডিট পাশে","উভয় পাশে","লেখা হয় না"], 1, 1],
+      ["ব্যাংক সমন্বয় বিবরণীতে Direct Payment by Bank (ব্যাংক সরাসরি পরিশোধ করলে) কী হয়?", ["ক্যাশ বুকে যোগ করতে হয়","ক্যাশ বুক থেকে বিয়োগ করতে হয়","পাস বুকে যোগ করতে হয়","কোনো পরিবর্তন হয় না"], 1, 2],
+      ["ব্যাংক সুদ চার্জ (Interest charged by Bank) ক্যাশ বুকে না থাকলে সমন্বয়ে কী হয়?", ["ক্যাশ বুকের ব্যালেন্সে যোগ করা হয়","ক্যাশ বুকের ব্যালেন্স থেকে বিয়োগ করা হয়","পাস বুক থেকে বিয়োগ করা হয়","কিছু করা হয় না"], 1, 2],
+      ["কোনটি নগদান বইতে থাকে না?", ["নগদ লেনদেন","ব্যাংক লেনদেন","জমি ক্রয়ের অ-নগদ লেনদেন","ছাড় (Discount)"], 2, 2],
     ]},
     { name: 'রেওয়ামিল ও আর্থিক বিবরণী', imp: 3, mcqs: [
       ["আর্থিক বিবরণী কয়টি অংশ নিয়ে গঠিত?", ["২","৩","৪","৫"], 0, 2],
@@ -1882,38 +1929,64 @@ accounting: {
       ["Income Statement (আয় বিবরণী) থেকে কী জানা যায়?", ["সম্পদের পরিমাণ","নির্দিষ্ট সময়ের নিট আয় বা নিট ক্ষতি","মূলধনের পরিমাণ","নগদ উদ্বৃত্ত"], 1, 1],
       ["Current Assets মানে কী?", ["স্থায়ী সম্পদ","১ বছরের মধ্যে নগদে রূপান্তরযোগ্য সম্পদ","দীর্ঘমেয়াদি বিনিয়োগ","অদৃশ্য সম্পদ"], 1, 1],
       ["Goodwill কোন ধরনের সম্পদ?", ["চলতি সম্পদ","অদৃশ্য সম্পদ (Intangible Asset)","স্থায়ী দৃশ্যমান সম্পদ","নগদ সম্পদ"], 1, 2],
-      ["Trial Balance কখন তৈরি করা হয়?", ["মাসের শেষে","আর্থিক বিবরণী তৈরির আগে","লেনদেনের সময়","বছরের শুরুতে"], 1, 1],
-      ["Adjusted Trial Balance কী?", ["সাধারণ রেওয়ামিল","সমন্বয় এন্ট্রির পরে তৈরি রেওয়ামিল","ব্যাংক সমন্বয় বিবরণী","খতিয়ানের সারাংশ"], 1, 3],
-      ["Non-current Liabilities-এর উদাহরণ কোনটি?", ["Accounts Payable","Bank Overdraft","Long-term Loans","Accrued Expenses"], 2, 2],
-      ["Retained Earnings কী?", ["বিনিয়োগকারীদের মূলধন","ব্যবসায়ে পুনরায় বিনিয়োগ করা নিট মুনাফার সঞ্চিতি","ঋণের সুদ","নগদ মজুদ"], 1, 2],
-      ["Statement of Cash Flows-এ Operating Activities-এ কী থাকে?", ["শুধু বিনিয়োগ","মূল ব্যবসায়িক কার্যক্রম থেকে নগদ প্রবাহ","লভ্যাংশ পরিশোধ","ঋণ গ্রহণ ও পরিশোধ"], 1, 2],
-      ["Prepaid Expenses কোন ধরনের সম্পদ?", ["Fixed Asset","Current Asset","Intangible Asset","Investment"], 1, 2],
-      ["Accrued Income কীসের উদাহরণ?", ["Current Liability","Current Asset","Fixed Asset","Capital Reserve"], 1, 2],
-      ["Net Assets = ?", ["Total Assets + Total Liabilities","Total Assets − Total Liabilities","Fixed Assets − Current Assets","Revenue − Expenses"], 1, 1],
-      ["Owner's Equity = ?", ["Assets + Liabilities","Assets − Liabilities","Liabilities − Assets","Revenue + Assets"], 1, 1],
-      ["Accumulated Depreciation কোন পক্ষে দেখানো হয়?", ["Assets-এর পাশে ঋণাত্মক (Contra Asset)","Liabilities-এর মধ্যে","Owner's Equity-তে","Revenue-তে"], 0, 3],
-      ["'Conservatism Principle' বলে কী?", ["সর্বদা আশাবাদী হিসাব করা","সম্ভাব্য ক্ষতি স্বীকার করা, কিন্তু অনিশ্চিত আয় নয়","আয় সর্বদা বেশি দেখানো","ব্যয় বেশি দেখানো"], 1, 3],
-      ["Materiality Concept কী বলে?", ["ছোট অঙ্কের তথ্যও সম্পূর্ণ প্রকাশ করতে হবে","গুরুত্বহীন ক্ষুদ্র তথ্য আলাদাভাবে দেখানো বাধ্যতামূলক নয়","সব সম্পদ বাজারমূল্যে দেখাতে হবে","শুধু সম্পদের হিসাব করতে হবে"], 1, 3],
-      ["Historical Cost Concept মানে কী?", ["সম্পদ বাজারমূল্যে দেখানো","সম্পদ ক্রয়মূল্যে দেখানো","সম্পদ বর্তমান মূল্যে দেখানো","সম্পদ নিলামমূল্যে দেখানো"], 1, 2],
-      ["Unearned Revenue কোথায় দেখানো হয়?", ["আয় বিবরণীতে সরাসরি আয় হিসেবে","ব্যালেন্স শিটে Current Liability হিসেবে","Fixed Assets-এ","Owner's Equity-তে"], 1, 2],
-      ["Net Realizable Value (NRV) কী?", ["সম্পদের ক্রয়মূল্য","আনুমানিক বিক্রয়মূল্য বিয়োগ বিক্রয় ব্যয়","সম্পদের বাজারমূল্য","সম্পদের বইমূল্য"], 1, 3],
+      ["Trial Balance তৈরি করা হয় কখন?", ["হিসাব বছরের মাঝামাঝি","হিসাব সমাপ্তির আগে, আর্থিক বিবরণী প্রস্তুতের ভিত্তি হিসেবে","প্রতিটি লেনদেনের পরে","শুধু অডিটের জন্য"], 1, 2],
+      ["ব্যালেন্স শিটে Assets ও Liabilities সর্বদা কেমন?", ["Assets > Liabilities","Assets < Liabilities","Assets = Liabilities + Capital (সমান)","নির্দিষ্ট নিয়ম নেই"], 2, 1],
+      ["Fixed Assets এর উদাহরণ কোনটি?", ["Cash","Inventory","Machinery ও Land","Accounts Receivable"], 2, 1],
+      ["কোনটি 'Liquid Asset'?", ["Inventory","Machinery","Cash ও Bank Balance","Land"], 2, 1],
+      ["Opening Stock কোথায় দেখানো হয়?", ["ব্যালেন্স শিটে","Trading Account-এর ডেবিট পাশে","Profit & Loss Account-এ","Capital Account-এ"], 1, 2],
+      ["Closing Stock কোথায় দেখানো হয়?", ["শুধু Trading Account-এর ক্রেডিট পাশে","Trading Account-এ ক্রেডিট ও Balance Sheet-এ সম্পদ হিসেবে","Profit & Loss Account-এ","Capital Account-এ"], 1, 2],
+      ["COGS (Cost of Goods Sold) নির্ণয়ের সূত্র?", ["Opening Stock + Purchases − Closing Stock","Closing Stock + Purchases + Opening Stock","Sales − Gross Profit","Opening Stock − Closing Stock"], 0, 2],
+      ["Depreciation কোথায় দেখানো হয়?", ["Trading Account-এ","Profit & Loss Account-এ ডেবিট পাশে","Balance Sheet-এ Capital অংশে","Sales Account-এ"], 1, 2],
+      ["Net Profit কোথায় স্থানান্তরিত হয়?", ["Cash Account-এ","Owner's Capital Account-এ","Bank Account-এ","Revenue Account-এ"], 1, 2],
+      ["'Drawings' কী?", ["ব্যবসায় বিনিয়োগ","মালিক কর্তৃক ব্যক্তিগত কাজে ব্যবহৃত ব্যবসায়ের তহবিল","কর্মচারীর বেতন","ব্যবসায়িক ব্যয়"], 1, 2],
+      ["Drawings ব্যালেন্স শিটে কীভাবে দেখানো হয়?", ["সম্পদ হিসেবে","মূলধন থেকে বিয়োগ করে","দায় হিসেবে","আলাদা দেখানো হয় না"], 1, 2],
+      ["'Accounts Receivable' মানে কী?", ["প্রদেয় হিসাব","প্রাপ্য হিসাব (দেনাদার / Debtors)","ব্যাংক ঋণ","অগ্রদত্ত সম্পদ"], 1, 1],
+      ["'Accounts Payable' মানে কী?", ["প্রাপ্য হিসাব","ব্যাংক ঋণ","প্রদেয় হিসাব (পাওনাদার / Creditors)","মূলধন"], 2, 1],
+      ["Reserves and Surplus কোন বিবরণীতে থাকে?", ["Income Statement","Balance Sheet-এ মূলধন ও দায়ের পাশে","Cash Flow Statement","Trading Account-এ"], 1, 2],
+      ["রেওয়ামিলে (Trial Balance) সমতা প্রমাণ করে —", ["কোনো ত্রুটি নেই","ডেবিট ও ক্রেডিটের গাণিতিক সমতা, কিন্তু সব ত্রুটি ধরা পড়ে না","ব্যবসায় লাভ হয়েছে","সব হিসাব সঠিক"], 1, 2],
+      ["Suspense Account কখন ব্যবহার করা হয়?", ["লাভ হলে","Trial Balance না মিললে সাময়িকভাবে পার্থক্য রাখতে","নতুন হিসাব খুলতে","অংশীদার যোগ হলে"], 1, 3],
+      ["Cash Flow Statement কোন তিনটি কার্যক্রম দেখায়?", ["লাভ, ক্ষতি, মূলধন","Operating, Investing, Financing Activities","Income, Expenses, Assets","Planning, Organizing, Controlling"], 1, 2],
+      ["Balance Sheet-এ Capital ও Liabilities কোন পাশে থাকে?", ["ডেবিট / বাম পাশে","ক্রেডিট / ডান পাশে","উভয় পাশে","কোনো পাশে না"], 1, 2],
+      ["Balance Sheet-এ Assets কোন পাশে থাকে?", ["ডেবিট / বাম পাশে","ক্রেডিট / ডান পাশে","মাঝখানে","উপরে"], 0, 2],
+      ["Accrued Expenses (বকেয়া ব্যয়) Balance Sheet-এ কীভাবে দেখানো হয়?", ["সম্পদ হিসেবে","চলতি দায় হিসেবে","মূলধনের অংশ হিসেবে","দেখানো হয় না"], 1, 2],
+      ["Prepaid Expenses Balance Sheet-এ কীভাবে দেখানো হয়?", ["চলতি দায়","চলতি সম্পদ (অগ্রদত্ত ব্যয়)","স্থায়ী সম্পদ","দায়"], 1, 2],
+      ["কোন বিবরণীটি 'Snapshot' নামে পরিচিত?", ["Income Statement","Cash Flow Statement","Balance Sheet","Trial Balance"], 2, 2],
+      ["Profit & Loss Account-এ ক্রেডিট পাশে কী থাকে?", ["সব ব্যয়","Gross Profit ও অন্যান্য আয়","Capital","Liabilities"], 1, 2],
+      ["রেওয়ামিলে কোনটি ডেবিট ব্যালেন্সে থাকবে?", ["পাওনাদার হিসাব","মূলধন হিসাব","দেনাদার হিসাব","বিক্রয় হিসাব"], 2, 2],
+      ["কোনটি Revenue Expenditure?", ["যন্ত্রপাতি কিনা","ভবন নির্মাণ","দৈনিক মেরামত খরচ","পেটেন্ট কেনা"], 2, 1],
+      ["কোনটি Capital Expenditure?", ["বেতন প্রদান","দৈনিক পরিষ্কারের খরচ","নতুন যন্ত্রপাতি ক্রয়","বিদ্যুৎ বিল"], 2, 1],
     ]},
     { name: 'অংশীদারিত্ব হিসাব', imp: 2, mcqs: [
       ["অংশীদারিত্ব ব্যবসায় লাভ-ক্ষতির ডিফল্ট বণ্টন অনুপাত কী (চুক্তি না থাকলে)?", ["মূলধন অনুপাতে","সমান অনুপাতে","সিনিয়রিটি অনুসারে","ব্যবস্থাপনা অনুযায়ী"], 1, 2],
       ["নতুন অংশীদার প্রবেশের সময় পুরানো অংশীদারদের কাছ থেকে কী নেওয়া হয়?", ["মূলধন","লাভের অংশ","গুডউইলের অংশ (Sacrifice Ratio)","সম্পদের অংশ"], 2, 2],
       ["অংশীদারের মৃত্যুতে তার প্রতিনিধিকে কী দিতে হয়?", ["শুধু মূলধন","মূলধন + লাভের অংশ + গুডউইলের অংশ","শুধু লাভের অংশ","কিছুই না"], 1, 3],
       ["Profit & Loss Appropriation Account কী?", ["সাধারণ ব্যয়ের হিসাব","অংশীদারদের মধ্যে লাভ বণ্টনের হিসাব","উৎপাদন ব্যয়ের হিসাব","কর হিসাব"], 1, 2],
-      ["অংশীদারদের মূলধন হিসাব কত ধরনের?", ["১","২","৩","৪"], 1, 2],
-      ["Fixed Capital Method-এ মূলধন হিসাব কখন পরিবর্তন হয়?", ["প্রতি মাসে","লাভ-ক্ষতির সময়","শুধু নতুন মূলধন যোগ বা উত্তোলনে","কখনো না"], 2, 3],
-      ["অংশীদারের বেতন ভাতা (Salary) কোথায় দেখানো হয়?", ["P&L Account-এ সরাসরি","P&L Appropriation Account-এ","Capital Account-এ সরাসরি","Cash Book-এ"], 1, 2],
-      ["Goodwill of Partnership কখন হিসাবে আনা হয়?", ["প্রতি বছর","শুধু নতুন অংশীদার প্রবেশে বা কেউ বের হলে","সবসময়","শুধু ক্ষতির সময়"], 1, 2],
-      ["Gaining Ratio কী?", ["পুরানো অংশীদারের লাভের অনুপাত","নতুন অংশীদার প্রবেশের পর যে অনুপাতে পুরানোরা লাভ বেশি পায়","সকল অংশীদারের সমান অনুপাত","ক্ষতির অনুপাত"], 1, 3],
-      ["Sacrificing Ratio কী?", ["নতুন অংশীদারের অনুপাত","পুরানো অংশীদাররা যে অনুপাতে লাভের অংশ ছেড়ে দেয়","মোট লাভের অনুপাত","ক্ষতির বণ্টন অনুপাত"], 1, 3],
-      ["Revaluation Account কেন তৈরি করা হয়?", ["নতুন মূলধন যোগ করতে","নতুন অংশীদার প্রবেশ বা বের হওয়ার সময় সম্পদ ও দায়ের পুনর্মূল্যায়ন করতে","লাভ বণ্টন করতে","ব্যাংক লেনদেন মেলাতে"], 1, 3],
-      ["অংশীদারিত্বের সর্বোচ্চ সদস্য সংখ্যা (সাধারণ ব্যবসায়) কত?", ["১০","২০","৫০","অসীম"], 1, 2],
-      ["Partnership Deed না থাকলে কোন আইন প্রযোজ্য হয়?", ["Company Act","Partnership Act","Contract Act","Income Tax Act"], 1, 1],
-      ["Interest on Capital পরিশোধ করা হয় কেন?", ["কর্মীদের উৎসাহিত করতে","অংশীদারদের বিনিয়োগের উপর ন্যায্য পুরস্কার দিতে","দায় কমাতে","ব্যাংক সুবিধা পেতে"], 1, 2],
-      ["Interest on Drawings কে বহন করে?", ["অংশীদারি প্রতিষ্ঠান","উত্তোলনকারী অংশীদার","সকল অংশীদার সমানভাবে","সিনিয়র অংশীদার"], 1, 2],
+      ["অংশীদারিত্ব চুক্তিকে কী বলে?", ["MOA","Partnership Deed","AOA","Company Act"], 1, 1],
+      ["Goodwill-এর সংজ্ঞা কী?", ["ব্যবসায়ের সুনাম ও অতিরিক্ত উপার্জন ক্ষমতার মূল্য","জমির মূল্য","নগদ সম্পদ","যন্ত্রপাতির মূল্য"], 0, 2],
+      ["Sacrifice Ratio কীভাবে নির্ণয় করা হয়?", ["নতুন অনুপাত − পুরানো অনুপাত","পুরানো অনুপাত − নতুন অনুপাত","মূলধন ÷ লাভের অনুপাত","লাভের অনুপাত × মূলধন"], 1, 2],
+      ["Gaining Ratio কখন ব্যবহার হয়?", ["নতুন অংশীদার যোগ হলে","অংশীদার অবসর বা মৃত্যুর সময়","ব্যবসা বন্ধে","শুধু লাভ বণ্টনে"], 1, 2],
+      ["অংশীদার অবসর নিলে তার মূলধন ও বকেয়া — ব্যবসায় থেকে কীভাবে পরিশোধ হয়?", ["শুধু নগদে","নগদে, কিস্তিতে বা চুক্তি অনুযায়ী","শুধু নতুন শেয়ার দিয়ে","ব্যবসা বন্ধ না করলে পরিশোধ হয় না"], 2, 2],
+      ["Fixed Capital Method-এ অংশীদারের হিসাব কেমন?", ["প্রতি বছর মূলধন পরিবর্তন হয়","মূলধন হিসাব স্থির, Current Account আলাদা থাকে","কোনো Current Account নেই","লাভ সরাসরি মূলধনে যোগ হয়"], 1, 3],
+      ["Fluctuating Capital Method-এ কী হয়?", ["মূলধন স্থির থাকে","মূলধন হিসাবে সব লেনদেন এন্ট্রি হয়, তাই মূলধন পরিবর্তন হয়","আলাদা Current Account থাকে","কোনো লাভ বণ্টন নেই"], 1, 3],
+      ["অংশীদারের বেতন (Partner's Salary) কোথায় চার্জ করা হয়?", ["Trading Account-এ","P&L Appropriation Account-এ","Capital Account-এ","Balance Sheet-এ"], 1, 2],
+      ["অংশীদারের মূলধনের উপর সুদ কোথায় দেখানো হয়?", ["P&L Account-এ","P&L Appropriation Account-এ","Trading Account-এ","Cash Flow-এ"], 1, 2],
+      ["ঋণের উপর সুদ (Interest on Loan by Partner) কোথায় চার্জ হয়?", ["P&L Appropriation Account","P&L Account (লাভ-ক্ষতি হিসাবে)","Trading Account","Capital Account"], 1, 2],
+      ["'Revaluation Account' কখন তৈরি করা হয়?", ["প্রতি বছর","নতুন অংশীদার প্রবেশ বা অবসরে সম্পদ-দায় পুনর্মূল্যায়নে","শুধু ব্যবসা বন্ধে","কর জমা দেওয়ার সময়"], 1, 2],
+      ["অংশীদারিত্বের সর্বোচ্চ সদস্য সংখ্যা (ব্যাংকিং ছাড়া) কত?", ["১০","২০","৫০","কোনো সীমা নেই"], 1, 2],
+      ["অংশীদারিত্বের ন্যূনতম সদস্য কত?", ["১","২","৩","৪"], 1, 1],
+      ["Dissolution of Partnership মানে কী?", ["নতুন অংশীদার যোগ","অংশীদারিত্ব চুক্তির সমাপ্তি / ব্যবসা বন্ধ","শুধু একজন অংশীদার অবসর","মূলধন বৃদ্ধি"], 1, 2],
+      ["'Realization Account' কখন তৈরি হয়?", ["নতুন অংশীদার প্রবেশে","ব্যবসা বিলুপ্তিতে সম্পদ বিক্রয় ও দায় পরিশোধের হিসাবে","বার্ষিক লাভ বণ্টনে","মূলধন বৃদ্ধিতে"], 1, 3],
+      ["অংশীদারিত্বে কি একজন অংশীদার নিজে বেতন নিতে পারে?", ["সবসময়","শুধু চুক্তিতে উল্লেখ থাকলে","কখনো না","শুধু ব্যবস্থাপনা অংশীদার পারে"], 1, 2],
+      ["Drawings on Capital — এন্ট্রি কী?", ["Drawings Dr, Capital Cr","Capital Dr, Drawings Cr","Cash Dr, Drawings Cr","Drawings Dr, Cash Cr"], 0, 2],
+      ["নতুন অংশীদার Premium for Goodwill আনলে পুরানো অংশীদাররা কীভাবে ভাগ পায়?", ["নতুন অনুপাতে","Sacrifice Ratio অনুসারে","সমানভাবে","মূলধন অনুসারে"], 1, 2],
+      ["Goodwill-এর কোন পদ্ধতিতে গড় মুনাফার ভিত্তিতে হিসাব করা হয়?", ["Net Asset Method","Average Profit Method","Super Profit Method","Capitalisation Method"], 1, 2],
+      ["Super Profit Method-এ কী হিসাব করা হয়?", ["মোট মুনাফা","স্বাভাবিক মুনাফার চেয়ে অতিরিক্ত মুনাফার ভিত্তিতে Goodwill","শুধু মূলধনের সুদ","বার্ষিক ক্ষতি"], 1, 3],
+      ["অংশীদারিত্ব ব্যবসায় কর (Tax) কে প্রদান করে?", ["ব্যবসায় নিজে","প্রতিটি অংশীদার নিজ নিজ আয়ের উপর","শুধু প্রধান অংশীদার","সরকার নির্ধারণ করে দেয়"], 1, 2],
+      ["অংশীদারিত্বে সীমিত দায় (Limited Liability) কার থাকে?", ["সব অংশীদারের","শুধু Sleeping/Dormant Partner-এর","শুধু Limited Partner-এর","কারো থাকে না"], 2, 3],
+      ["Sleeping Partner বা Dormant Partner কে?", ["সব কাজে সক্রিয় অংশীদার","শুধু মূলধন বিনিয়োগ করে, ব্যবস্থাপনায় অংশ নেয় না","নতুন অংশীদার","অবসরপ্রাপ্ত অংশীদার"], 1, 2],
+      ["অংশীদারিত্ব বিলুপ্তিতে পরিশোধের ক্রম কোনটি সঠিক?", ["অংশীদার প্রথমে পায়","বাইরের পাওনাদার → অংশীদারের ঋণ → মূলধন → অবশিষ্ট লাভ","মূলধন প্রথমে","সমানভাবে সবাই পায়"], 1, 3],
+      ["অংশীদারের অবদান (Capital) ব্যতীত 'Loan by Partner' কোথায় দেখানো হয়?", ["Capital Account-এ","আলাদা Loan Account-এ (দায় হিসেবে)","P&L Account-এ","Goodwill Account-এ"], 1, 2],
+      ["অংশীদারিত্বে নতুন অংশীদার গ্রহণে বিদ্যমান অংশীদাররা কী ত্যাগ করে?", ["তাদের মূলধন","তাদের লাভের অংশের একটি অংশ","তাদের পদ","ব্যবসার মালিকানা"], 1, 2],
     ]},
   ]
 },
@@ -1939,6 +2012,30 @@ management: {
       ["Bureaucracy তত্ত্বের প্রবক্তা কে?", ["Max Weber","Henri Fayol","Elton Mayo","Abraham Maslow"], 0, 2],
       ["ব্যবস্থাপনার মূল কার্যাবলির সঠিক ক্রম কোনটি?", ["Organizing → Planning → Staffing → Controlling","Planning → Organizing → Staffing → Directing → Controlling","Staffing → Planning → Organizing → Controlling","Controlling → Planning → Organizing → Directing"], 1, 2],
       ["'Management is getting things done through others' — এই সংজ্ঞাটি কার?", ["Henri Fayol","Mary Parker Follett","Harold Koontz","Frederick Taylor"], 2, 2],
+      ["Hawthorne Studies পরিচালনা করেন কে?", ["Frederick Taylor","Henri Fayol","Elton Mayo","Max Weber"], 2, 2],
+      ["Hawthorne Studies-এর প্রধান আবিষ্কার কী ছিল?", ["অর্থই একমাত্র অনুপ্রেরণা","সামাজিক সম্পর্ক ও মনোভাব উৎপাদনশীলতাকে প্রভাবিত করে","কাজের শর্তই উৎপাদনশীলতার মূল","কড়া নজরদারি জরুরি"], 1, 2],
+      ["'Modern Management' এর জনক কাকে বলা হয়?", ["Max Weber","Frederick Taylor","Peter Drucker","Elton Mayo"], 2, 2],
+      ["Management-এর কার্যাবলির মধ্যে 'Staffing' মানে কী?", ["পণ্য বিক্রয়","সঠিক ব্যক্তিকে সঠিক পদে নিয়োগ দেওয়া","আর্থিক পরিকল্পনা","উৎপাদন নিয়ন্ত্রণ"], 1, 1],
+      ["'Directing' বা নির্দেশনা বলতে কী বোঝায়?", ["সংগঠন তৈরি","কর্মীদের পরিচালনা, প্রেষণা ও নেতৃত্বদান","লক্ষ্য নির্ধারণ","কর্মী নিয়োগ"], 1, 2],
+      ["Henri Fayol ব্যবস্থাপনার কয়টি মূল কার্যাবলি চিহ্নিত করেছেন?", ["৩","৪","৫","৬"], 2, 2],
+      ["Top Level Management-এর কাজ কী?", ["দৈনন্দিন কাজ তদারকি","সামগ্রিক নীতি ও কৌশল নির্ধারণ","উৎপাদন কার্য পরিচালনা","বিক্রয় তদারকি"], 1, 1],
+      ["Middle Level Management কারা?", ["CEO, MD","বিভাগীয় প্রধান ও ব্যবস্থাপকগণ","কর্মচারী","তদারকিকারী (Supervisor)"], 1, 1],
+      ["Lower/First Line Management-এর উদাহরণ?", ["CEO","বিভাগীয় পরিচালক","Supervisor / Foreman","অডিটর"], 2, 1],
+      ["'Classical Theory of Management' কে প্রবর্তন করেন?", ["Elton Mayo","Henri Fayol ও Frederick Taylor","Peter Drucker","Abraham Maslow"], 1, 2],
+      ["Scientific Management-এ 'Time and Motion Study' কী?", ["কর্মীদের মনোবল পর্যবেক্ষণ","কাজের সবচেয়ে দক্ষ পদ্ধতি খুঁজে বের করতে সময় ও নড়াচড়া বিশ্লেষণ","বাজার গবেষণা","আর্থিক পরিকল্পনা"], 1, 2],
+      ["কোনটি 'Behavioral Management Theory' এর অংশ?", ["Scientific Management","Bureaucracy","Human Relations Movement (Hawthorne Studies)","Classical Theory"], 2, 2],
+      ["'Systems Theory' অনুযায়ী প্রতিষ্ঠান কী?", ["বিচ্ছিন্ন একক","পরিবেশের সাথে সম্পর্কযুক্ত উন্মুক্ত ব্যবস্থা","বন্ধ ব্যবস্থা","শুধু উৎপাদন যন্ত্র"], 1, 3],
+      ["'Contingency Theory' বলে কী?", ["এক পদ্ধতিই সবার জন্য কার্যকর","পরিস্থিতি অনুযায়ী ব্যবস্থাপনার পদ্ধতি ভিন্ন হওয়া উচিত","কঠোর নিয়ম সবসময় কার্যকর","মানবীয় সম্পর্কই একমাত্র সমাধান"], 1, 3],
+      ["ব্যবস্থাপনা কি একটি বিজ্ঞান, শিল্প নাকি পেশা?", ["শুধু বিজ্ঞান","শুধু শিল্প","বিজ্ঞান, শিল্প ও পেশা সবই","শুধু পেশা"], 2, 2],
+      ["'Scalar Chain' বলতে কী বোঝায়?", ["সমান ক্ষমতার শৃঙ্খল","উচ্চ থেকে নিম্নস্তর পর্যন্ত কর্তৃত্বের ধারাবাহিক শৃঙ্খল","বেতন কাঠামো","সাংগঠনিক চার্ট"], 1, 2],
+      ["'Gang Plank' কী?", ["Fayol-এর Scalar Chain-এর ব্যতিক্রম — দুটি বিভাগ সরাসরি যোগাযোগ করতে পারে","ব্যবস্থাপনার একটি স্তর","কর্মী স্থানান্তর প্রক্রিয়া","বিভাগ বিভাজন"], 0, 3],
+      ["'Unity of Direction' নীতি কী বলে?", ["প্রতিটি কর্মী ভিন্ন লক্ষ্যে কাজ করবে","একই লক্ষ্যের কার্যাবলি একজন ব্যবস্থাপকের নেতৃত্বে পরিচালিত হবে","সব কর্মী একসাথে কাজ করবে","শুধু একটি বিভাগ থাকবে"], 1, 2],
+      ["'Centralization' ও 'Decentralization' পার্থক্য কী?", ["কোনো পার্থক্য নেই","Centralization: ক্ষমতা উপরে কেন্দ্রীভূত; Decentralization: নিম্নস্তরে ক্ষমতা বিতরণ","Decentralization মানে কোনো কর্তৃত্ব নেই","Centralization মানে সবাই সিদ্ধান্ত নেয়"], 1, 2],
+      ["'Coordination' বা সমন্বয় কার কাজ?", ["শুধু নিম্নস্তরের","সব স্তরের ব্যবস্থাপকের","শুধু HR বিভাগের","শুধু CEO-এর"], 1, 2],
+      ["ব্যবস্থাপনার কোন কার্যটি সবশেষে আসে?", ["Planning","Organizing","Staffing","Controlling"], 3, 1],
+      ["Bureaucracy-তে কোনটি সবচেয়ে গুরুত্বপূর্ণ?", ["ব্যক্তিগত সম্পর্ক","নিয়ম ও আইনের উপর নির্ভরতা","অনানুষ্ঠানিক যোগাযোগ","কর্মীর ইচ্ছা"], 1, 2],
+      ["Taylor-এর Scientific Management-এর চারটি নীতির একটি কোনটি?", ["Unity of Command","Science, Not Rule of Thumb","Gang Plank","Esprit de Corps"], 1, 2],
+      ["'Management by Objectives (MBO)' কোন নীতির উপর ভিত্তি করে?", ["কঠোর নিয়মতন্ত্র","কর্মী ও ব্যবস্থাপক মিলে লক্ষ্য নির্ধারণ করে কার্যক্ষমতা মূল্যায়ন","কর্তৃত্বের কেন্দ্রীকরণ","শুধু আর্থিক লক্ষ্য নির্ধারণ"], 1, 2],
     ]},
     { name: 'Henri Fayol-এর ১৪টি নীতি', imp: 3, mcqs: [
       ["'Division of Work' নীতির সুবিধা কী?", ["সকলে সব কাজ করে","বিশেষায়নের মাধ্যমে দক্ষতা বৃদ্ধি","কর্মীরা স্বাধীনভাবে কাজ করে","ব্যবস্থাপনার বোঝা বাড়ে"], 1, 1],
@@ -1949,6 +2046,29 @@ management: {
       ["'Initiative' নীতি অনুসারে কর্মীদের কী দেওয়া উচিত?", ["শুধু নির্দেশ পালন","স্বতঃস্ফূর্তভাবে চিন্তা ও কাজ করার সুযোগ","পুরস্কার","কঠোর শাস্তি"], 1, 2],
       ["'Remuneration' নীতি কী বলে?", ["কর্মীরা কম বেতন পাবে","কর্মীরা ন্যায্য ও সন্তোষজনক পারিশ্রমিক পাবে","বেতন সবার জন্য সমান","বেতন নির্ধারণে কোনো নিয়ম নেই"], 1, 1],
       ["'Order' নীতি মানে?", ["কঠোর নিয়ম","প্রত্যেক ব্যক্তি ও জিনিস সঠিক স্থানে থাকবে","সবাই একসাথে কাজ করবে","নিম্ন স্তরের কর্তৃত্ব"], 1, 2],
+      ["'Discipline' নীতি বলতে কী বোঝায়?", ["শুধু শাস্তি প্রদান","নিয়মাবলী মেনে চলা ও সম্মান প্রদর্শন","কর্মী ছাঁটাই","কঠোর নজরদারি"], 1, 1],
+      ["'Equity' নীতি কী?", ["সব কর্মী একই বেতন পাবে","কর্মীদের সাথে ন্যায়বিচার ও সমতার ভিত্তিতে আচরণ","বরিষ্ঠতা অনুযায়ী মর্যাদা","কড়া নিয়ম"], 1, 2],
+      ["'Stability of Tenure' নীতি কী বলে?", ["কর্মীদের ঘন ঘন বদলি করা","কর্মীদের কর্মক্ষেত্রে স্থায়িত্ব নিশ্চিত করা","প্রতি বছর নতুন কর্মী নিয়োগ","অস্থায়ী নিয়োগ পদ্ধতি"], 1, 2],
+      ["'Subordination of Individual Interest to General Interest' নীতি কী?", ["ব্যক্তিস্বার্থ প্রধান","প্রতিষ্ঠানের স্বার্থ ব্যক্তিস্বার্থের উপরে","সবার স্বার্থ সমান","কর্মীরা যা চায় তাই হবে"], 1, 2],
+      ["'Centralization' নীতি সম্পর্কে Fayol কী বলেছেন?", ["সব সময় বিকেন্দ্রীভূত হওয়া উচিত","পরিস্থিতি অনুযায়ী কেন্দ্রীভূত বা বিকেন্দ্রীভূত করা উচিত","সব সময় কেন্দ্রীভূত হওয়া উচিত","কর্মীরা সিদ্ধান্ত নেবে"], 1, 2],
+      ["Fayol-এর ১৪টি নীতির মধ্যে কোনটি কর্মীদের একাকীত্ব রোধ করে?", ["Discipline","Esprit de Corps","Order","Equity"], 1, 2],
+      ["'Unity of Direction' ও 'Unity of Command' পার্থক্য কী?", ["একই জিনিস","Unity of Direction: এক পরিকল্পনা-এক প্রধান; Unity of Command: এক কর্মী-এক বস","Unity of Command: সংগঠনগত; Unity of Direction: ব্যক্তিগত","কোনো পার্থক্য নেই"], 1, 3],
+      ["কোন নীতিতে বলা হয় যে কাজ ভাগ করে করলে দক্ষতা বাড়ে?", ["Unity of Command","Scalar Chain","Division of Work","Order"], 2, 1],
+      ["Fayol-এর নীতিগুলো কোন স্তরের ব্যবস্থাপনার জন্য প্রযোজ্য?", ["শুধু নিম্নস্তর","শুধু উচ্চস্তর","সব স্তরের ব্যবস্থাপনার জন্য","শুধু উৎপাদন বিভাগের"], 2, 2],
+      ["'Stability of Tenure' কেন গুরুত্বপূর্ণ?", ["নতুন কর্মীরা বেশি মেধাবী","দক্ষ কর্মীরা দ্রুত পরিবর্তন চায়","স্থায়ী কর্মী সংগঠনের জন্য উৎপাদনশীল ও অভিজ্ঞ হয়","কম বেতনে কাজ হয়"], 2, 2],
+      ["Henri Fayol কোন ক্ষেত্রে কাজ করতেন?", ["একাডেমিক গবেষক","ফরাসি খনিজ কোম্পানির প্রশাসক","সামরিক কর্মকর্তা","সরকারি আমলা"], 1, 2],
+      ["Fayol-এর নীতি কোন বইতে প্রকাশিত হয়?", ["Principles of Scientific Management","General and Industrial Management","The Wealth of Nations","The Practice of Management"], 1, 2],
+      ["'Authority' ও 'Power' পার্থক্য কী?", ["একই অর্থ","Authority: পদ অনুযায়ী আনুষ্ঠানিক অধিকার; Power: প্রভাব বিস্তারের সক্ষমতা","Power: আনুষ্ঠানিক; Authority: অনানুষ্ঠানিক","Authority সবসময় বেশি"], 1, 3],
+      ["Fayol-এর মতে সর্বোচ্চ ব্যবস্থাপনার প্রধান কাজ কী?", ["প্রত্যক্ষ তদারকি","পরিকল্পনা ও সংগঠন কাজ","উৎপাদন","বিক্রয়"], 1, 2],
+      ["কোনটি Fayol-এর ১৪টি নীতির মধ্যে নেই?", ["Discipline","Gang Plank","Equity","Initiative"], 1, 3],
+      ["Fayol-এর 'Remuneration' নীতি কর্মীর কোন চাহিদার সাথে সম্পর্কিত?", ["Maslow-এর Safety Needs","Maslow-এর Physiological Needs","Maslow-এর Self-Actualization","Maslow-এর Esteem Needs"], 1, 2],
+      ["Fayol-এর 'Esprit de Corps' তৈরিতে কোন ব্যবস্থাপনা কার্য সহায়ক?", ["Controlling","Directing ও Coordination","Planning","Staffing"], 1, 2],
+      ["'Discipline' নীতি শুধু কর্মীর জন্য নাকি ব্যবস্থাপকেরও?", ["শুধু কর্মীর জন্য","শুধু ব্যবস্থাপকের জন্য","উভয়ের জন্য","কারো জন্য নয়"], 2, 2],
+      ["'Scalar Chain' নীতি লঙ্ঘন করলে কী হয়?", ["দক্ষতা বাড়ে","বিভ্রান্তি ও দায়িত্বহীনতা সৃষ্টি হয়","কর্মীরা খুশি হয়","উৎপাদন বাড়ে"], 1, 2],
+      ["'Division of Work' নীতি কোন অর্থশাস্ত্রীর 'Division of Labour' ধারণার সাথে সম্পর্কিত?", ["John Keynes","Adam Smith","Alfred Marshall","Milton Friedman"], 1, 2],
+      ["Fayol কতটি ব্যবস্থাপনা কার্যাবলি চিহ্নিত করেছিলেন?", ["৩","৪","৫","৬"], 2, 2],
+      ["'Initiative' নীতিটি কোন ব্যবস্থাপনা কার্যের সাথে সম্পর্কিত?", ["Planning","Directing ও Leadership","Controlling","Staffing"], 1, 2],
+      ["Fayol-এর ১৪টি নীতি কি সর্বজনীন (Universal)?", ["না, শুধু ফ্রান্সে প্রযোজ্য","হ্যাঁ, সব ধরনের প্রতিষ্ঠানে প্রযোজ্য","শুধু শিল্প প্রতিষ্ঠানে","শুধু সরকারি প্রতিষ্ঠানে"], 1, 2],
     ]},
     { name: 'প্রেষণা (Motivation) তত্ত্ব', imp: 3, mcqs: [
       ["Maslow-এর চাহিদা পদক্রমে সর্বোচ্চ স্তর কোনটি?", ["Safety Needs","Social Needs","Self-Actualization","Esteem Needs"], 2, 1],
@@ -1959,6 +2079,29 @@ management: {
       ["McGregor-এর Theory X অনুযায়ী কর্মীরা কেমন?", ["স্বতঃপ্রণোদিত ও দায়িত্বশীল","অলস, নিয়ন্ত্রণ না করলে কাজ করে না","সৃজনশীল","স্বেচ্ছায় লক্ষ্য অর্জন করে"], 1, 2],
       ["McGregor-এর Theory Y কী বলে?", ["কর্মীরা অলস","কর্মীরা স্বতঃস্ফূর্ত, দায়িত্বশীল ও সৃজনশীল","কর্মীরা শুধু অর্থের জন্য কাজ করে","কর্মীদের কঠোর তত্ত্বাবধান প্রয়োজন"], 1, 2],
       ["Vroom-এর Expectancy Theory-তে Motivation নির্ভর করে?", ["শুধু বেতনের উপর","Expectancy × Instrumentality × Valence-এর উপর","কর্তৃপক্ষের উপর","সহকর্মীদের উপর"], 1, 3],
+      ["Maslow-এর 'Social Needs' এর উদাহরণ কোনটি?", ["খাবার","নিরাপত্তা","বন্ধুত্ব ও ভালোবাসা","সম্মান"], 2, 1],
+      ["Maslow-এর 'Esteem Needs' বলতে কী বোঝায়?", ["শারীরিক চাহিদা","নিরাপত্তার চাহিদা","সম্মান, মর্যাদা ও স্বীকৃতির চাহিদা","আত্মউপলব্ধির চাহিদা"], 2, 2],
+      ["Herzberg-এর 'Hygiene Factors' এর উদাহরণ কোনটি?", ["Achievement","Recognition","Responsibility","Salary ও Working Conditions"], 3, 2],
+      ["Herzberg-এর Two-Factor Theory-কে আর কী বলা হয়?", ["ERG Theory","Motivation-Hygiene Theory","Expectancy Theory","Equity Theory"], 1, 2],
+      ["Clayton Alderfer-এর ERG Theory-তে 'E' মানে কী?", ["Employment","Existence Needs","Efficiency","Evaluation"], 1, 2],
+      ["ERG Theory-এ 'R' ও 'G' মানে কী?", ["Responsibility ও Growth","Relatedness ও Growth","Revenue ও Goals","Recognition ও Goals"], 1, 2],
+      ["'Equity Theory' কে প্রদান করেন?", ["Abraham Maslow","Frederick Herzberg","J. Stacy Adams","Victor Vroom"], 2, 2],
+      ["Equity Theory অনুযায়ী কর্মী কখন অনুপ্রাণিত হয়?", ["বেশি বেতন পেলে","নিজের পুরস্কার-প্রচেষ্টা অনুপাত অন্যের সাথে সমতুল্য মনে হলে","পদোন্নতি পেলে","কম কাজ করলে"], 1, 3],
+      ["McClelland-এর Achievement Motivation Theory-তে কয়টি চাহিদা আছে?", ["২","৩","৪","৫"], 1, 2],
+      ["McClelland-এর তিনটি চাহিদা কী কী?", ["Existence, Relatedness, Growth","Achievement, Power, Affiliation","Physiological, Safety, Social","Hygiene, Motivators, Growth"], 1, 2],
+      ["Motivation কোন ব্যবস্থাপনা কার্যাবলির অংশ?", ["Planning","Organizing","Directing","Controlling"], 2, 1],
+      ["Theory Z কে প্রদান করেন?", ["McGregor","William Ouchi","Maslow","Herzberg"], 1, 2],
+      ["Theory Z-এর মূল বৈশিষ্ট্য কী?", ["কঠোর তত্ত্বাবধান","দীর্ঘমেয়াদি কর্মসংস্থান ও অংশগ্রহণমূলক সিদ্ধান্ত গ্রহণ","কর্মীদের স্বায়ত্তশাসন","আর্থিক পুরস্কার প্রধান"], 1, 2],
+      ["Intrinsic Motivation মানে কী?", ["বাইরের পুরস্কার দ্বারা অনুপ্রেরণা","ভেতর থেকে আসা অনুপ্রেরণা (কাজের আনন্দ, আত্মসন্তুষ্টি)","বেতন বৃদ্ধি","পদোন্নতি"], 1, 2],
+      ["Extrinsic Motivation এর উদাহরণ?", ["কাজের প্রতি আগ্রহ","আত্মউন্নয়নের ইচ্ছা","বোনাস ও পদোন্নতি","সৃজনশীলতা"], 2, 1],
+      ["Positive Reinforcement মানে কী?", ["শাস্তি দেওয়া","ভালো কাজের জন্য পুরস্কার দিয়ে আচরণ উৎসাহিত করা","কর্মী ছাঁটাই","নজরদারি বৃদ্ধি"], 1, 2],
+      ["Negative Reinforcement মানে কী?", ["শাস্তি দেওয়া","অপ্রিয় পরিস্থিতি সরিয়ে দিয়ে কাঙ্ক্ষিত আচরণ বৃদ্ধি করা","পুরস্কার দেওয়া","কর্মী বরখাস্ত"], 1, 3],
+      ["কোন তত্ত্বটি Content Theory নয়?", ["Maslow's Hierarchy","Herzberg's Two-Factor","Vroom's Expectancy Theory","McClelland's Achievement Theory"], 2, 3],
+      ["Process Theory of Motivation-এর উদাহরণ?", ["Maslow's Hierarchy","Herzberg's Two-Factor","Vroom's Expectancy Theory","ERG Theory"], 2, 3],
+      ["Maslow-এর 'Safety Needs' এর উদাহরণ?", ["খাদ্য ও পানি","চাকরির নিরাপত্তা ও স্বাস্থ্যসেবা","বন্ধুত্ব","পদোন্নতি"], 1, 2],
+      ["'Job Enrichment' কোন তত্ত্বের সাথে সম্পর্কিত?", ["Maslow","Herzberg (Motivators)","McGregor Theory X","Equity Theory"], 1, 2],
+      ["'Self-Actualization' বলতে কী বোঝায়?", ["নিরাপত্তার অনুভূতি","নিজের সম্পূর্ণ সম্ভাবনা অর্জন করা","অন্যদের থেকে স্বীকৃতি পাওয়া","সামাজিক সম্পর্ক গড়া"], 1, 2],
+      ["Herzberg মতে, কোনটি সত্যিকারের Motivator?", ["বেতন","কর্মপরিবেশ","কাজের সাফল্য ও দায়িত্ব","কোম্পানি নীতি"], 2, 2],
     ]},
     { name: 'পরিকল্পনা ও সংগঠন', imp: 3, mcqs: [
       ["পরিকল্পনার প্রথম ধাপ কোনটি?", ["বিকল্প নির্ণয়","লক্ষ্য নির্ধারণ","মূল্যায়ন","বাস্তবায়ন"], 1, 1],
@@ -1966,6 +2109,31 @@ management: {
       ["Line Organization-এর বৈশিষ্ট্য কী?", ["পরামর্শদাতা আছে","সরল কর্তৃত্বের শৃঙ্খল","কমিটি-ভিত্তিক","সমতল কাঠামো"], 1, 1],
       ["Span of Management মানে কী?", ["ব্যবস্থাপনার স্তর সংখ্যা","একজন ব্যবস্থাপক কতজনকে সরাসরি তত্ত্বাবধান করতে পারে","ব্যবস্থাপনার বয়ঃসীমা","বিভাগের সংখ্যা"], 1, 2],
       ["Delegation of Authority মানে কী?", ["কর্তৃত্ব কাউকে না দেওয়া","ঊর্ধ্বতন থেকে অধীনস্থকে কর্তৃত্ব হস্তান্তর","সবার কাছে সমান কর্তৃত্ব","কর্তৃত্ব বাতিল করা"], 1, 2],
+      ["পরিকল্পনার কোন ধাপে সম্ভাব্য বিকল্পগুলো মূল্যায়ন করা হয়?", ["প্রথম ধাপে","লক্ষ্য নির্ধারণের পরে","বিকল্প নির্ণয়ের পরে","শেষ ধাপে"], 2, 2],
+      ["Strategic Planning কোন স্তরের ব্যবস্থাপনার কাজ?", ["নিম্নস্তরের","মধ্যস্তরের","উচ্চস্তরের (Top Management)","সব স্তরের"], 2, 1],
+      ["Tactical Planning কোন স্তরের কাজ?", ["উচ্চস্তরের","মধ্যস্তরের (Middle Management)","নিম্নস্তরের","Supervisor স্তরের"], 1, 2],
+      ["Operational Planning কোন স্তরের কাজ?", ["উচ্চস্তরের","মধ্যস্তরের","নিম্নস্তরের (First Line Management)","পরিচালনা পর্ষদের"], 2, 1],
+      ["'Formal Organization' বলতে কী বোঝায়?", ["অনানুষ্ঠানিক সম্পর্কের কাঠামো","আনুষ্ঠানিকভাবে নির্ধারিত কর্তৃত্ব ও দায়িত্বের কাঠামো","বন্ধুত্বের নেটওয়ার্ক","ব্যক্তিগত সম্পর্ক"], 1, 2],
+      ["'Informal Organization' কীভাবে গড়ে ওঠে?", ["ব্যবস্থাপনার নির্দেশে","কর্মীদের স্বতঃস্ফূর্ত সামাজিক সম্পর্ক থেকে","নিয়োগ প্রক্রিয়ায়","কোম্পানির নীতিতে"], 1, 2],
+      ["Line and Staff Organization-এ 'Staff'-এর ভূমিকা কী?", ["সরাসরি উৎপাদন করে","পরামর্শ ও বিশেষজ্ঞ সহায়তা প্রদান করে","কর্মী নিয়োগ করে","বাজেট নির্ধারণ করে"], 1, 2],
+      ["Committee Organization-এর সুবিধা কী?", ["দ্রুত সিদ্ধান্ত","সামষ্টিক জ্ঞান ও বিভিন্ন দৃষ্টিভঙ্গির সমন্বয়","কম সময় ব্যয়","এককেন্দ্রিক ক্ষমতা"], 1, 2],
+      ["'Departmentalization' মানে কী?", ["কর্মচারী ছাঁটাই","কার্য, পণ্য বা অঞ্চল অনুযায়ী সংগঠনকে বিভাগে ভাগ করা","পদোন্নতি প্রক্রিয়া","আর্থিক পরিকল্পনা"], 1, 2],
+      ["Wide Span of Management-এর সুবিধা কী?", ["বেশি নিয়ন্ত্রণ","সমতল সংগঠন ও দ্রুত যোগাযোগ","বেশি পর্যবেক্ষণ","কঠোর নিয়ন্ত্রণ"], 1, 2],
+      ["Narrow Span of Management-এর সুবিধা কী?", ["সমতল কাঠামো","ঘনিষ্ঠ তত্ত্বাবধান ও নিয়ন্ত্রণ","দ্রুত যোগাযোগ","কম খরচ"], 1, 2],
+      ["Standing Plans কী?", ["একবার ব্যবহারযোগ্য পরিকল্পনা","বারবার ব্যবহারের জন্য নীতি ও পদ্ধতি","বাৎসরিক পরিকল্পনা","কৌশলগত পরিকল্পনা"], 1, 2],
+      ["Single-use Plans কী?", ["বারবার ব্যবহারযোগ্য","একটি নির্দিষ্ট উদ্দেশ্যে তৈরি, যেমন প্রজেক্ট প্ল্যান","দীর্ঘমেয়াদি","বার্ষিক বাজেট"], 1, 2],
+      ["'Policies' ও 'Procedures' পার্থক্য কী?", ["একই জিনিস","Policies: নির্দেশনার কাঠামো; Procedures: কাজ সম্পাদনের ধাপ","Procedures: বৃহত্তর নির্দেশনা; Policies: ছোট বিস্তারিত","কোনো পার্থক্য নেই"], 1, 2],
+      ["Organizational Chart কী দেখায়?", ["আর্থিক তথ্য","সংগঠনের কাঠামো, বিভাগ ও কর্তৃত্বের সম্পর্ক","শুধু কর্মচারীর সংখ্যা","উৎপাদন প্রক্রিয়া"], 1, 1],
+      ["'Chain of Command' মানে কী?", ["কর্মীদের পারিশ্রমিক","কর্তৃত্ব ও দায়িত্বের ধারাবাহিক রেখা","দলগত কাজের নিয়ম","বিক্রয় পরিকল্পনা"], 1, 2],
+      ["Matrix Organization-এর বৈশিষ্ট্য কী?", ["শুধু কার্যভিত্তিক","কর্মচারী একাধিক ব্যবস্থাপকের অধীনে কাজ করে","কঠোর কেন্দ্রীভূত কর্তৃত্ব","শুধু একটি বিভাগ"], 1, 3],
+      ["SWOT Analysis-এ 'T' মানে কী?", ["Team","Threats (হুমকি)","Technology","Training"], 1, 2],
+      ["SWOT Analysis-এ 'S', 'W', 'O' যথাক্রমে কী?", ["Strength, Weakness, Opportunities","Strategy, Workforce, Operations","Sales, Wages, Output","System, Workforce, Objectives"], 0, 2],
+      ["'Decentralization' কখন বেশি কার্যকর?", ["ছোট প্রতিষ্ঠানে","বড় ও বৈচিত্র্যময় প্রতিষ্ঠানে","সংকটকালীন সময়ে","একজন মালিকের ব্যবসায়"], 1, 2],
+      ["Responsibility ও Authority-এর সম্পর্ক কী?", ["Responsibility > Authority সর্বদা","দুটোর মধ্যে কোনো সম্পর্ক নেই","Responsibility ও Authority সামঞ্জস্যপূর্ণ হওয়া উচিত","Authority > Responsibility সর্বদা"], 2, 2],
+      ["Accountability মানে কী?", ["কর্তৃত্ব অর্পণ","ফলাফলের জন্য উত্তর দেওয়ার বাধ্যবাধকতা","দায়িত্ব নেওয়া","পরিকল্পনা তৈরি করা"], 1, 2],
+      ["পরিকল্পনার সীমাবদ্ধতা কোনটি?", ["লক্ষ্য স্পষ্ট হয়","ভবিষ্যৎ অনিশ্চয়তার কারণে পরিকল্পনা সবসময় কার্যকর নাও হতে পারে","সম্পদের সদ্ব্যবহার হয়","দলগত কাজ উৎসাহিত হয়"], 1, 2],
+      ["'Exception Principle' মানে কী?", ["সব বিষয়ে ব্যবস্থাপকের হস্তক্ষেপ","শুধু ব্যতিক্রমী সমস্যায় উচ্চস্তর হস্তক্ষেপ করে","নতুন পরিকল্পনা","কর্মী বদলি"], 1, 2],
+      ["Flat Organization Structure-এর সুবিধা কী?", ["কঠোর নিয়ন্ত্রণ","দ্রুত যোগাযোগ ও সিদ্ধান্ত","বেশি তদারকি","ব্যবস্থাপনার স্তর বেশি"], 1, 2],
     ]},
     { name: 'নেতৃত্ব ও নিয়ন্ত্রণ', imp: 3, mcqs: [
       ["Autocratic Leadership-এর বৈশিষ্ট্য?", ["সকলকে সিদ্ধান্তে অংশ নিতে দেওয়া","নেতা একাই সিদ্ধান্ত নেন","কর্মীরা স্বাধীনভাবে কাজ করে","কমিটির মাধ্যমে সিদ্ধান্ত"], 1, 1],
@@ -1974,7 +2142,31 @@ management: {
       ["নিয়ন্ত্রণ (Controlling) প্রক্রিয়ার প্রথম ধাপ?", ["বিচ্যুতি সংশোধন","কার্যক্ষমতা পরিমাপ","মানদণ্ড (Standards) স্থাপন","বিচ্যুতি বিশ্লেষণ"], 2, 2],
       ["PERT ও CPM কোন ব্যবস্থাপনা কার্যে ব্যবহৃত হয়?", ["Staffing","Project Planning & Control (পরিকল্পনা ও নিয়ন্ত্রণ)","Motivation","Leadership"], 1, 3],
       ["'Management by Exception' মানে কী?", ["সব বিষয়ে হস্তক্ষেপ","শুধু গুরুত্বপূর্ণ বিচ্যুতিতে ব্যবস্থাপনার মনোযোগ","কম কর্মীতে বেশি কাজ","কর্মী ছাঁটাই"], 1, 3],
-    ]}
+      ["Transformational Leadership কী?", ["স্থিতিশীলতা বজায় রাখে","কর্মীদের অনুপ্রাণিত করে পরিবর্তন ও উদ্ভাবনে নেতৃত্ব দেয়","শুধু নিয়মকানুন মেনে চলে","পুরস্কার ও শাস্তির উপর নির্ভরশীল"], 1, 2],
+      ["Transactional Leadership কী?", ["পরিবর্তনমুখী","পুরস্কার ও শাস্তির ভিত্তিতে কর্মী পরিচালনা","কর্মীদের সম্পূর্ণ স্বাধীনতা","অংশগ্রহণমূলক"], 1, 2],
+      ["Servant Leadership মানে কী?", ["কর্মীদের আদেশ করা","নেতা কর্মীদের সেবা করেন এবং তাদের বিকাশে সহায়তা করেন","কঠোর নিয়ন্ত্রণ","সর্বোচ্চ কর্তৃত্ব প্রয়োগ"], 1, 2],
+      ["Situational Leadership Theory কে দিয়েছেন?", ["Maslow","Hersey & Blanchard","McGregor","Fayol"], 1, 2],
+      ["নিয়ন্ত্রণ প্রক্রিয়ায় মোট কয়টি ধাপ আছে?", ["২","৩","৪","৫"], 2, 2],
+      ["নিয়ন্ত্রণের শেষ ধাপ কোনটি?", ["মানদণ্ড নির্ধারণ","কার্যক্ষমতা পরিমাপ","বিচ্যুতি বিশ্লেষণ","সংশোধনমূলক ব্যবস্থা গ্রহণ"], 3, 2],
+      ["Budgetary Control কী?", ["বাজেটের মাধ্যমে কার্যক্ষমতা নিয়ন্ত্রণ","কর্মী সংখ্যা নিয়ন্ত্রণ","উৎপাদন নিয়ন্ত্রণ","গুণগত মান নিয়ন্ত্রণ"], 0, 2],
+      ["'Feed-forward Control' মানে কী?", ["সমস্যার পরে ব্যবস্থা","সমস্যা হওয়ার আগে প্রতিরোধমূলক ব্যবস্থা","চলমান নিয়ন্ত্রণ","বার্ষিক মূল্যায়ন"], 1, 3],
+      ["'Concurrent Control' কখন হয়?", ["কাজের আগে","কাজ চলাকালীন","কাজের পরে","মাসিক মূল্যায়নে"], 1, 2],
+      ["'Feedback Control' কখন হয়?", ["কাজের আগে","কাজ চলাকালীন","কাজ শেষে ফলাফলের ভিত্তিতে","নিয়োগের সময়"], 2, 2],
+      ["Leadership ও Management পার্থক্য কী?", ["একই জিনিস","Leadership: মানুষকে প্রভাবিত করে; Management: প্রক্রিয়া ও সম্পদ পরিচালনা করে","Management: মানুষের দিকে মনোযোগ; Leadership: কাজের দিকে","Management মানে Leadership"], 1, 2],
+      ["Trait Theory of Leadership কী?", ["নেতৃত্ব শেখা যায়","কিছু বিশেষ গুণাবলীসম্পন্ন ব্যক্তিরাই নেতা হতে পারে","পরিস্থিতি নেতা তৈরি করে","গণতান্ত্রিক নেতৃত্বই শ্রেষ্ঠ"], 1, 2],
+      ["Behavioral Theory of Leadership কী বলে?", ["নেতার গুণ জন্মগত","নেতৃত্ব আচরণ শেখা ও অনুশীলন করা যায়","শুধু পরিস্থিতিতে নেতা তৈরি হয়","একটিই সঠিক নেতৃত্ব শৈলী আছে"], 1, 2],
+      ["Contingency Theory of Leadership মানে?", ["একটি শৈলীই সব পরিস্থিতিতে কার্যকর","পরিস্থিতি অনুযায়ী নেতৃত্বের শৈলী পরিবর্তন হওয়া উচিত","গণতান্ত্রিক শৈলীই সর্বোত্তম","কর্মচারীরাই নেতৃত্ব দেয়"], 1, 2],
+      ["Blake and Mouton-এর Managerial Grid-এ কয়টি নেতৃত্ব শৈলী আছে?", ["২","৩","৪","৫ (৫টি প্রধান শৈলী)"], 3, 3],
+      ["Managerial Grid-এ '9,9' স্টাইল কী?", ["দুর্বল ব্যবস্থাপনা","Team Management — উভয় কাজ ও মানুষের প্রতি উচ্চ মনোযোগ","শুধু কাজমুখী","শুধু সম্পর্কমুখী"], 1, 3],
+      ["নিয়ন্ত্রণ কার্যটি কোন ব্যবস্থাপনা কার্যের সাথে সবচেয়ে সম্পর্কিত?", ["Organizing","Staffing","Planning (পরিকল্পনার লক্ষ্যের সাথে তুলনা করে নিয়ন্ত্রণ)","Directing"], 2, 2],
+      ["TQM (Total Quality Management) কোন নিয়ন্ত্রণের পদ্ধতি?", ["আর্থিক নিয়ন্ত্রণ","গুণগত মানের ব্যাপক নিয়ন্ত্রণ","কর্মী নিয়ন্ত্রণ","বাজেট নিয়ন্ত্রণ"], 1, 2],
+      ["Six Sigma কী?", ["কর্মচারীর কাজের পরিমাণ","উৎপাদনে ত্রুটি প্রায় শূন্যে নামিয়ে আনার গুণমান নিয়ন্ত্রণ পদ্ধতি","নেতৃত্বের মডেল","বাজার গবেষণার হাতিয়ার"], 1, 3],
+      ["'Key Performance Indicators (KPI)' কী?", ["কর্মচারীর সংখ্যা","সংগঠনের লক্ষ্য অর্জনের মাপকাঠি","বাজেটের পরিমাণ","নিয়োগ পদ্ধতি"], 1, 2],
+      ["Balanced Scorecard কী?", ["শুধু আর্থিক কার্যক্ষমতা মূল্যায়ন","আর্থিক, গ্রাহক, প্রক্রিয়া ও শেখার — চারটি দৃষ্টিকোণ থেকে কার্যক্ষমতা মূল্যায়ন","নেতৃত্ব মডেল","কর্মী প্রশিক্ষণ পদ্ধতি"], 1, 3],
+      ["নেতৃত্বের সবচেয়ে গুরুত্বপূর্ণ গুণ কোনটি?", ["কঠোরতা","শুধু বুদ্ধিমত্তা","যোগাযোগ দক্ষতা, দূরদর্শিতা ও অনুপ্রেরণার ক্ষমতা","শারীরিক শক্তি"], 2, 2],
+      ["Crisis Management মানে কী?", ["বাজেট তৈরি","অপ্রত্যাশিত সংকট মোকাবেলার কৌশল ও ব্যবস্থাপনা","কর্মী নিয়োগ","দৈনন্দিন পরিচালনা"], 1, 2],
+      ["নিয়ন্ত্রণ ব্যবস্থাপনার কোন কার্যের সাথে বৃত্তাকারভাবে সম্পর্কিত?", ["Organizing","Staffing","Directing","Planning (নিয়ন্ত্রণের ফলে পরিকল্পনা পুনর্মূল্যায়ন হয়)"], 3, 2],
+    ]},
   ]
 }
 
@@ -2109,92 +2301,6 @@ const App = {
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-};
-
-// ══════════════════════════════
-// FOCUS MODE (Exam only — all difficulties)
-// ══════════════════════════════
-const FocusMode = {
-  _violations: 0,
-  _active: false,
-
-  activate() {
-    this._violations = 0;
-    this._active = true;
-    document.addEventListener('visibilitychange', this._onVisibilityChange.bind(this));
-  },
-
-  deactivate() {
-    this._active = false;
-    document.removeEventListener('visibilitychange', this._onVisibilityChange.bind(this));
-    document.getElementById('focusWarn').classList.remove('on');
-  },
-
-  _onVisibilityChange() {
-    if (!this._active) return;
-    if (document.hidden) {
-      this._violations++;
-      document.getElementById('fwViolationCount').textContent = `Violation #${this._violations} — ${this._violations >= 3 ? '⚠️ Final warning!' : 'Stop switching tabs!'}`;
-      document.getElementById('focusWarn').classList.add('on');
-    }
-  },
-
-  dismiss() {
-    document.getElementById('focusWarn').classList.remove('on');
-  }
-};
-
-// ══════════════════════════════
-// SAVE PROGRESS (Practice only)
-// ══════════════════════════════
-const SAVE_KEY = 'nu_bba_saved_practice_v7';
-const SaveProgress = {
-  save() {
-    if (!ExamEngine._state || ExamEngine._state.mode !== 'practice') return;
-    const s = ExamEngine._state;
-    const saveData = {
-      ts: Date.now(),
-      mode: s.mode,
-      subject: s.subject,
-      subjectName: s.subjectName,
-      questions: s.questions,
-      answers: s.answers,
-      current: s.current,
-      timeLeft: s.timeLeft,
-      totalTime: s.totalTime,
-      posScore: s.posScore,
-      negScore: s.negScore,
-      passPercent: s.passPercent,
-      perQSec: s.perQSec || 0,
-    };
-    try {
-      localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
-    } catch (e) { alert('Could not save: storage full.'); return; }
-    const btn = document.getElementById('saveProgBtn');
-    if (btn) { btn.classList.add('saved'); btn.textContent = '✓ Saved!'; setTimeout(() => { btn.classList.remove('saved'); btn.textContent = '💾 Save'; }, 2200); }
-    // Toast
-    const t = document.createElement('div');
-    t.className = 'save-toast';
-    t.textContent = '✓ Progress saved!';
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 2500);
-  },
-
-  hasSave() {
-    try { return !!localStorage.getItem(SAVE_KEY); } catch { return false; }
-  },
-
-  load() {
-    try {
-      const d = JSON.parse(localStorage.getItem(SAVE_KEY));
-      if (!d) return null;
-      return d;
-    } catch { return null; }
-  },
-
-  clear() {
-    try { localStorage.removeItem(SAVE_KEY); } catch {}
   }
 };
 
@@ -2514,18 +2620,24 @@ const ExamEngine = {
       qStartTime: Date.now()
     };
 
+    // Focus Mode — activate for ALL exam difficulties
+    if (cfg.mode === 'exam') {
+      FocusMode.activate(cfg.diff === 'hard');
+    } else {
+      FocusMode.deactivate();
+    }
+
+    // Save Program button — only for practice & easy/medium exam (NOT competitive)
+    const saveBtn = document.getElementById('btnSaveProg');
+    if (saveBtn) {
+      const showSave = cfg.mode === 'practice' || (cfg.mode === 'exam' && cfg.diff !== 'hard');
+      saveBtn.style.display = showSave ? 'inline-flex' : 'none';
+    }
+
     document.getElementById('test-modes').style.display = 'none';
     document.getElementById('exam-screen').style.display = 'block';
     document.getElementById('results-screen').style.display = 'none';
     this._paletteVisible = false;
-
-    // Focus Mode — activate for exam mode (all difficulties)
-    FocusMode.deactivate();
-    if (cfg.mode === 'exam') FocusMode.activate();
-
-    // Save button — only for practice mode
-    const saveBtn = document.getElementById('saveProgBtn');
-    if (saveBtn) saveBtn.style.display = cfg.mode === 'practice' ? 'inline-flex' : 'none';
 
     // Start total timer
     this._totalTimer = setInterval(() => this._tickTotal(), 1000);
@@ -2621,7 +2733,8 @@ const ExamEngine = {
     const ans = answers[current];
 
     // Topbar
-    document.getElementById('exTitle').textContent = `${subjectName} · ${mode === 'exam' ? 'Exam Mode' : 'Practice Mode'}`;
+    const focusBadgeHtml = FocusMode._active ? ' <span class="focus-badge">Focus Mode</span>' : '';
+    document.getElementById('exTitle').innerHTML = `${subjectName} · ${mode === 'exam' ? 'Exam Mode' : 'Practice Mode'}${focusBadgeHtml}`;
     document.getElementById('exProgTxt').textContent = `Q ${current + 1} / ${total}`;
     document.getElementById('exProgBar').style.width = `${((current + 1) / total) * 100}%`;
 
@@ -3223,7 +3336,151 @@ const Achievements = {
   }
 };
 
-// Patch ExamEngine.finish to trigger Achievements overlay
+// ══════════════════════════════
+// FOCUS MODE
+// ══════════════════════════════
+const FocusMode = {
+  _active: false,
+  _switchCount: 0,
+  _isCompetitive: false,
+
+  activate(isCompetitive) {
+    this._active = true;
+    this._switchCount = 0;
+    this._isCompetitive = isCompetitive;
+    const badge = document.getElementById('focusBadge');
+    if (badge) badge.style.display = 'inline-flex';
+    document.addEventListener('visibilitychange', this._onVisChange);
+  },
+
+  deactivate() {
+    this._active = false;
+    this._switchCount = 0;
+    this._isCompetitive = false;
+    const badge = document.getElementById('focusBadge');
+    if (badge) badge.style.display = 'none';
+    document.removeEventListener('visibilitychange', this._onVisChange);
+    document.getElementById('focusWarningOverlay').classList.remove('on');
+  },
+
+  _onVisChange() {
+    // Must use FocusMode directly (not this) since it's an event listener
+    if (!FocusMode._active) return;
+    if (document.hidden) {
+      FocusMode._switchCount++;
+      document.getElementById('focusWarnCount').textContent =
+        `Tab switch #${FocusMode._switchCount}`;
+      document.getElementById('focusWarningOverlay').classList.add('on');
+    }
+  },
+
+  resume() {
+    document.getElementById('focusWarningOverlay').classList.remove('on');
+  },
+
+  stopExam() {
+    if (!confirm('Stop the exam? Your progress will be saved as-is.')) return;
+    document.getElementById('focusWarningOverlay').classList.remove('on');
+    FocusMode.deactivate();
+    ExamEngine.submit();
+  }
+};
+
+// ══════════════════════════════
+// SAVED PROGRAMS
+// ══════════════════════════════
+const SavedPrograms = {
+  _STORAGE_KEY: 'nu_bba_saved_progs_v1',
+
+  _load() {
+    try { return JSON.parse(localStorage.getItem(this._STORAGE_KEY) || '[]'); }
+    catch { return []; }
+  },
+
+  _store(items) {
+    try { localStorage.setItem(this._STORAGE_KEY, JSON.stringify(items.slice(0, 20))); } catch {}
+  },
+
+  save() {
+    if (!ExamEngine._state) return;
+    const { subjectName, mode, diff, answers, questions } = ExamEngine._state;
+    const name = prompt('Name this saved progress:', `${subjectName} — ${new Date().toLocaleTimeString()}`);
+    if (!name) return;
+    const items = this._load();
+    items.unshift({
+      id: Date.now(),
+      name: name.trim(),
+      date: new Date().toLocaleString(),
+      subjectName, mode, diff,
+      answers: [...answers],
+      questionsMeta: questions.map(q => ({ q: q.q, opts: q.opts, corr: q.corr, chapName: q.chapName, subj: q.subj }))
+    });
+    this._store(items);
+    this.renderPanel();
+    const btn = document.getElementById('btnSaveProg');
+    if (btn) { btn.textContent = '✓ Saved!'; setTimeout(() => { btn.textContent = '💾 Save'; }, 1500); }
+  },
+
+  openPanel() {
+    this.renderPanel();
+    const panel = document.getElementById('savedProgsPanel');
+    if (panel) panel.classList.add('on');
+  },
+
+  closePanel() {
+    const panel = document.getElementById('savedProgsPanel');
+    if (panel) panel.classList.remove('on');
+  },
+
+  renderPanel() {
+    const list = document.getElementById('savedProgList');
+    if (!list) return;
+    const items = this._load();
+    if (!items.length) {
+      list.innerHTML = '<div style="color:var(--muted);font-size:.78rem;text-align:center;padding:.75rem">No saved programs yet.</div>';
+      return;
+    }
+    list.innerHTML = items.map(it => `
+      <div class="saved-prog-item">
+        <span class="saved-prog-name">${it.name}</span>
+        <span class="saved-prog-date">${it.date}</span>
+        <button class="saved-prog-load" onclick="SavedPrograms.load(${it.id})">Load</button>
+        <button class="saved-prog-del" onclick="SavedPrograms.del(${it.id})" title="Delete">✕</button>
+      </div>`).join('');
+  },
+
+  load(id) {
+    const items = this._load();
+    const it = items.find(x => x.id === id);
+    if (!it) return;
+    if (!confirm(`Load "${it.name}"? Current exam progress will be lost.`)) return;
+    FocusMode.deactivate();
+    ExamEngine._clearTimers();
+    const questions = it.questionsMeta.map(m => ({ ...m }));
+    ExamEngine.launch({
+      mode: it.mode, diff: it.diff, subject: it.subjectName,
+      subjectName: it.subjectName,
+      questions,
+      totalTime: (EXAM_CONFIG[it.diff] || EXAM_CONFIG.easy).totalMinutes * 60,
+      posScore: (EXAM_CONFIG[it.diff] || EXAM_CONFIG.easy).posScore,
+      negScore: (EXAM_CONFIG[it.diff] || EXAM_CONFIG.easy).negScore,
+      passPercent: 60,
+      perQSec: (EXAM_CONFIG[it.diff] || EXAM_CONFIG.easy).perQSec
+    });
+    // Restore answers
+    it.answers.forEach((a, i) => { if (a !== null) ExamEngine._state.answers[i] = a; });
+    ExamEngine.renderQ();
+    this.closePanel();
+  },
+
+  del(id) {
+    const items = this._load().filter(x => x.id !== id);
+    this._store(items);
+    this.renderPanel();
+  }
+};
+
+
 const _origFinish = ExamEngine.finish.bind(ExamEngine);
 ExamEngine.finish = function() {
   _origFinish();
@@ -3255,4 +3512,3 @@ ExamEngine.finish = function() {
 </script>
 </body>
 </html>
-
