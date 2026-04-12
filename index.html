@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,101 +13,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-   /* ══ METROLIST DEV CARDS (MATCH YOUR THEME) ══ */
-
-.dev-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--rx);
-  padding: 18px;
-  margin-top: 18px;
-  box-shadow: var(--shadow-sm);
-}
-
-.dev-top {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.dev-avatar {
-  width: 92px;
-  height: 92px;
-  border-radius: 18px;
-  object-fit: cover;
-  transition: transform .25s var(--ease);
-  border: 1px solid var(--border2);
-}
-
-.dev-avatar:hover {
-  transform: scale(1.05);
-}
-
-.dev-name {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--text);
-}
-
-.dev-role {
-  font-size: .9rem;
-  color: var(--gold);
-  font-weight: 600;
-  margin-top: 2px;
-}
-
-/* Socials */
-.dev-socials {
-  display: flex;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.dev-socials a {
-  flex: 1;
-  height: 42px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: .2s var(--ease);
-}
-
-.dev-socials a:hover {
-  border-color: var(--gold3);
-  background: var(--goldb);
-}
-
-/* Button */
-.dev-btn {
-  width: 100%;
-  margin-top: 12px;
-  padding: 12px;
-  border-radius: 999px;
-  border: 1px solid var(--gold3);
-  background: var(--goldg);
-  color: var(--gold2);
-  font-weight: 700;
-  transition: .2s var(--ease);
-}
-
-.dev-btn:hover {
-  background: rgba(212,168,67,.18);
-  box-shadow: var(--glow-gold);
-}
-
-/* Assistant smaller variant */
-.dev-small .dev-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 14px;
-}
-
-.dev-small .dev-name {
-  font-size: 1.1rem;
-}
 /* ══════════════════════════════════════════════
    DESIGN TOKENS & CSS VARIABLES
 ══════════════════════════════════════════════ */
@@ -1525,68 +1431,34 @@ option { background: var(--bg3); }
 </div>
 
 <!-- ══ ABOUT PANEL ══ -->
-     <h3>🎓 About Us</h3>
-<p>
-  This platform is built specifically for NU BBA Commerce Unit admission test preparation.
-  Covers all 5 subjects: বাংলা, English, General Knowledge, Accounting, and Management —
-  with 500+ MCQs based on HSC 2025 syllabus and past admission patterns (NU, DU, JnU).
-</p>
-        <!-- ══ ABOUT PANEL ══ -->
-<div class="about-section">
-
-  <h3>🎓 About Us</h3>
-
-  <p>
-    This platform is built specifically for NU BBA Commerce Unit admission test preparation.
-    Covers all 5 subjects: বাংলা, English, General Knowledge, Accounting, and Management —
-    with 500+ MCQs based on HSC 2025 syllabus and past admission patterns (NU, DU, JnU).
-  </p>
-
-</div>
-
-
-<!-- ══ LEAD DEV ══ -->
-<div class="dev-card">
-
-  <div class="dev-top">
-    <img src="https://github.com/waterflam.png" class="dev-avatar"/>
-
-    <div>
-      <div class="dev-name">Waterflame</div>
-      <div class="dev-role">Lead Developer</div>
+<div class="panel" id="panel-about">
+  <div class="about-wrap">
+    <div class="about-hero">
+      <div class="ab-avatar">🔥</div>
+      <div class="ab-name">Waterflame</div>
+      <div class="ab-title">Creator · Student · Dreamer</div>
+      <p class="ab-quote">"I built the tool I wished existed when I started preparing. If it helps even one student find their confidence — <strong>it was worth every line of code.</strong>"</p>
+    </div>
+    <div class="about-section">
+      <h3>🎓 About This App</h3>
+      <p>Built specifically for NU BBA Commerce Unit admission test preparation. Covers all 5 subjects: বাংলা, English, General Knowledge, Accounting, and Management — with 500+ MCQs based on HSC 2025 syllabus and past admission patterns (NU, DU, JnU).</p>
+      <p>Practice Mode for focused chapter study, Exam Mode for full simulation. Per-question timers, chapter breakdown, and history tracking to monitor your progress.</p>
+      <div class="ab-stat-row">
+        <div class="ab-stat"><div class="ab-sv" id="aboutTotalQ">—</div><div class="ab-sl">Total MCQs</div></div>
+        <div class="ab-stat"><div class="ab-sv">5</div><div class="ab-sl">Subjects</div></div>
+        <div class="ab-stat"><div class="ab-sv" id="aboutHistCount">—</div><div class="ab-sl">Tests Taken</div></div>
+      </div>
+    </div>
+    <div class="about-section">
+      <h3>👤 Who is Waterflame?</h3>
+      <p>A 19-year-old Commerce student from Bonosree, Dhaka, preparing for NU BBA admission 2025–26. Into Liquid DnB (Liquicity is life 🎧), high-fi audio — Tangzu Wan'er SG 2 IEMs through a JCALLY JM7 DAC — and Mobile Legends ranked grind.</p>
+      <p>Long-term plan: BBA in Australia (Sydney or Perth), starting February 2027. Until then, NU BBA is the mission.</p>
+    </div>
+    <div class="about-section">
+      <h3>💌 A Message to You</h3>
+      <p style="color:var(--gold);font-family:'DM Serif Display',serif;font-size:.95rem;font-style:italic;line-height:1.7">"The only way to get better is to practice like it matters, even when it doesn't feel like it does. You're already ahead of who you were yesterday."</p>
     </div>
   </div>
-
-  <div class="dev-socials">
-    <a href="https://metrolist.meowery.eu">🌐</a>
-    <a href="https://github.com/waterflam">🐙</a>
-  </div>
-
-  <button class="dev-btn"
-    onclick="window.open('https://buymeacoffee.com/waterflame','_blank')">
-    ☕ Buy me a coffee
-  </button>
-
-</div>
-
-
-<!-- ══ ASSISTANT DEV ══ -->
-<div class="dev-card dev-small">
-
-  <div class="dev-top">
-    <img src="https://github.com/lazywilin.png" class="dev-avatar"/>
-
-    <div>
-      <div class="dev-name">Lazywilin</div>
-      <div class="dev-role">Assistant Lead Developer</div>
-    </div>
-  </div>
-
-  <div class="dev-socials">
-    <a href="https://github.com/lazywilin">🐙</a>
-    <a href="https://metrolist.meowery.eu">🌐</a>
-  </div>
-
 </div>
 
 <!-- ══ NAV EXAM WARNING ══ -->
