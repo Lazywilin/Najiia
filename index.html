@@ -12,6 +12,101 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+   /* ══ METROLIST DEV CARDS (MATCH YOUR THEME) ══ */
+
+.dev-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--rx);
+  padding: 18px;
+  margin-top: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.dev-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dev-avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 18px;
+  object-fit: cover;
+  transition: transform .25s var(--ease);
+  border: 1px solid var(--border2);
+}
+
+.dev-avatar:hover {
+  transform: scale(1.05);
+}
+
+.dev-name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.dev-role {
+  font-size: .9rem;
+  color: var(--gold);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Socials */
+.dev-socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.dev-socials a {
+  flex: 1;
+  height: 42px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .2s var(--ease);
+}
+
+.dev-socials a:hover {
+  border-color: var(--gold3);
+  background: var(--goldb);
+}
+
+/* Button */
+.dev-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 999px;
+  border: 1px solid var(--gold3);
+  background: var(--goldg);
+  color: var(--gold2);
+  font-weight: 700;
+  transition: .2s var(--ease);
+}
+
+.dev-btn:hover {
+  background: rgba(212,168,67,.18);
+  box-shadow: var(--glow-gold);
+}
+
+/* Assistant smaller variant */
+.dev-small .dev-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+}
+
+.dev-small .dev-name {
+  font-size: 1.1rem;
+}
 /* ══════════════════════════════════════════════
    DESIGN TOKENS & CSS VARIABLES
 ══════════════════════════════════════════════ */
