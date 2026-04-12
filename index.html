@@ -7,106 +7,11 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>NU BBA Prep — by Waterflame v5</title>
+<title>NU BBA Prep — by Waterflame</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-   /* ══ METROLIST DEV CARDS (MATCH YOUR THEME) ══ */
-
-.dev-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--rx);
-  padding: 18px;
-  margin-top: 18px;
-  box-shadow: var(--shadow-sm);
-}
-
-.dev-top {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.dev-avatar {
-  width: 92px;
-  height: 92px;
-  border-radius: 18px;
-  object-fit: cover;
-  transition: transform .25s var(--ease);
-  border: 1px solid var(--border2);
-}
-
-.dev-avatar:hover {
-  transform: scale(1.05);
-}
-
-.dev-name {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--text);
-}
-
-.dev-role {
-  font-size: .9rem;
-  color: var(--gold);
-  font-weight: 600;
-  margin-top: 2px;
-}
-
-/* Socials */
-.dev-socials {
-  display: flex;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.dev-socials a {
-  flex: 1;
-  height: 42px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: .2s var(--ease);
-}
-
-.dev-socials a:hover {
-  border-color: var(--gold3);
-  background: var(--goldb);
-}
-
-/* Button */
-.dev-btn {
-  width: 100%;
-  margin-top: 12px;
-  padding: 12px;
-  border-radius: 999px;
-  border: 1px solid var(--gold3);
-  background: var(--goldg);
-  color: var(--gold2);
-  font-weight: 700;
-  transition: .2s var(--ease);
-}
-
-.dev-btn:hover {
-  background: rgba(212,168,67,.18);
-  box-shadow: var(--glow-gold);
-}
-
-/* Assistant smaller variant */
-.dev-small .dev-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 14px;
-}
-
-.dev-small .dev-name {
-  font-size: 1.1rem;
-}
 /* ══════════════════════════════════════════════
    DESIGN TOKENS & CSS VARIABLES
 ══════════════════════════════════════════════ */
@@ -1515,6 +1420,7 @@ option { background: var(--bg3); }
 <!-- ══ HISTORY PANEL ══ -->
 <div class="panel" id="panel-history">
   <div class="hist-wrap">
+    <div id="pausedExamsSection" style="display:none"></div>
     <div class="hist-head">
       <h2>📜 Test History</h2>
       <button class="hist-clear-btn" onclick="HistoryManager.confirmClear()">Clear All</button>
@@ -1525,91 +1431,47 @@ option { background: var(--bg3); }
 
 <!-- ══ ABOUT PANEL ══ -->
 <div class="panel" id="panel-about">
-
   <div class="about-wrap">
-
-
-    <!-- ══ ABOUT APP ══ -->
+    <div class="about-hero">
+      <div class="ab-avatar">🔥</div>
+      <div class="ab-name">Waterflame</div>
+      <div class="ab-title">Creator · Student · Dreamer</div>
+      <p class="ab-quote">"I built the tool I wished existed when I started preparing. If it helps even one student find their confidence — <strong>it was worth every line of code.</strong>"</p>
+    </div>
     <div class="about-section">
       <h3>🎓 About This App</h3>
-      <p>
-        Built specifically for NU BBA Commerce Unit admission test preparation.
-        Covers all 5 subjects: বাংলা, English, General Knowledge, Accounting, and Management —
-        with 500+ MCQs based on HSC 2025 syllabus and past admission patterns (NU, DU, JnU).
-      </p>
-      <p>
-        Practice Mode for focused chapter study, Exam Mode for full simulation.
-        Per-question timers, chapter breakdown, and history tracking to monitor your progress.
-      </p>
-
+      <p>Built specifically for NU BBA Commerce Unit admission test preparation. Covers all 5 subjects: বাংলা, English, General Knowledge, Accounting, and Management — with 500+ MCQs based on HSC 2025 syllabus and past admission patterns (NU, DU, JnU).</p>
+      <p>Practice Mode for focused chapter study, Exam Mode for full simulation. Per-question timers, chapter breakdown, and history tracking to monitor your progress.</p>
       <div class="ab-stat-row">
-        <div class="ab-stat">
-          <div class="ab-sv" id="aboutTotalQ">—</div>
-          <div class="ab-sl">Total MCQs</div>
-        </div>
-
-        <div class="ab-stat">
-          <div class="ab-sv">5</div>
-          <div class="ab-sl">Subjects</div>
-        </div>
-
-        <div class="ab-stat">
-          <div class="ab-sv" id="aboutHistCount">—</div>
-          <div class="ab-sl">Tests Taken</div>
-        </div>
+        <div class="ab-stat"><div class="ab-sv" id="aboutTotalQ">—</div><div class="ab-sl">Total MCQs</div></div>
+        <div class="ab-stat"><div class="ab-sv">5</div><div class="ab-sl">Subjects</div></div>
+        <div class="ab-stat"><div class="ab-sv" id="aboutHistCount">—</div><div class="ab-sl">Tests Taken</div></div>
       </div>
     </div>
-
-    <!-- ══ LEAD DEV ══ -->
-<div class="dev-card">
-
-  <div class="dev-top">
-    <img src="https://github.com/waterflam.png" class="dev-avatar"/>
-
-    <div>
-      <div class="dev-name">Waterflame</div>
-      <div class="dev-role">Lead Developer</div>
+    <div class="about-section">
+      <h3>👤 Who is Waterflame?</h3>
+      <p>A 19-year-old Commerce student from Bonosree, Dhaka, preparing for NU BBA admission 2025–26. Into Liquid DnB (Liquicity is life 🎧), high-fi audio — Tangzu Wan'er SG 2 IEMs through a JCALLY JM7 DAC — and Mobile Legends ranked grind.</p>
+      <p>Long-term plan: BBA in Australia (Sydney or Perth), starting February 2027. Until then, NU BBA is the mission.</p>
+    </div>
+    <div class="about-section">
+      <h3>💌 A Message to You</h3>
+      <p style="color:var(--gold);font-family:'DM Serif Display',serif;font-size:.95rem;font-style:italic;line-height:1.7">"The only way to get better is to practice like it matters, even when it doesn't feel like it does. You're already ahead of who you were yesterday."</p>
     </div>
   </div>
-
-  <div class="dev-socials">
-    <a href="https://metrolist.meowery.eu">🌐</a>
-    <a href="https://github.com/waterflam">🐙</a>
-  </div>
-
-  <button class="dev-btn"
-    onclick="window.open('https://buymeacoffee.com/waterflame','_blank')">
-    ☕ Buy me a coffee
-  </button>
-
 </div>
 
-
-<!-- ══ ASSISTANT DEV ══ -->
-<div class="dev-card dev-small">
-
-  <div class="dev-top">
-    <img src="https://github.com/lazywilin.png" class="dev-avatar"/>
-
-    <div>
-      <div class="dev-name">Lazywilin</div>
-      <div class="dev-role">Assistant Lead Developer</div>
+<!-- ══ NAV EXAM WARNING ══ -->
+<div id="focusNavWarning" style="display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);align-items:center;justify-content:center;animation:fadeIn .2s ease;">
+  <div class="focus-warn-box" style="border-color:rgba(251,191,36,.5);box-shadow:0 0 60px rgba(251,191,36,.2),var(--shadow-lg);">
+    <div class="focus-warn-icon">⚠️</div>
+    <div class="focus-warn-title" style="color:var(--amber)">Exam In Progress</div>
+    <div class="focus-warn-msg">You're trying to leave during an active exam.<br>Choose what to do with your current progress.</div>
+    <div class="focus-warn-actions" style="flex-direction:column;gap:.5rem;align-items:center">
+      <button class="btn-resume" style="width:100%;max-width:260px" onclick="App._navSaveAndLeave()">💾 Save &amp; Leave — Resume Later</button>
+      <button class="btn-stop-exam" style="width:100%;max-width:260px" onclick="App._navDiscard()">✕ Discard &amp; Leave</button>
+      <button style="width:100%;max-width:260px;background:transparent;border:1px solid var(--border2);color:var(--text2);font-size:.85rem;padding:.62rem 1.4rem;border-radius:100px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--border3)'" onmouseout="this.style.borderColor='var(--border2)'" onclick="App._navStay()">← Back to Exam</button>
     </div>
   </div>
-
-  <div class="dev-socials">
-    <a href="https://github.com/lazywilin">🐙</a>
-    <a href="https://github.com/lazywilin">🌐</a>
-  </div>
-
-</div>
-
-  <!-- Donate Button -->
-  <button onclick="window.open('https://buymeacoffee.com/waterflame','_blank')"
-          class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-full transition">
-    ☕ Buy me a coffee
-  </button>
-
 </div>
 
 <!-- ══ MODAL ══ -->
@@ -1795,6 +1657,30 @@ english: {
       ["An interjection expresses —", ["Connection","Emotion or feeling","Description","Action"], 1, 1],
       ["'Whom did you see?' — 'whom' is a —", ["Relative pronoun","Interrogative pronoun","Personal pronoun","Reflexive pronoun"], 1, 2],
       ["Identify the preposition: 'The book is on the table.'", ["book","is","on","table"], 2, 1],
+      ["Which word is a proper noun?", ["city","London","teacher","river"], 1, 1],
+      ["'He runs very fast.' — 'very' is a —", ["Adjective","Adverb modifying an adverb","Noun","Preposition"], 1, 2],
+      ["A pronoun that refers back to the subject is called a —", ["Relative pronoun","Reflexive pronoun","Demonstrative pronoun","Interrogative pronoun"], 1, 1],
+      ["'Neither he nor she ___ present.' (correct verb)", ["were","was","are","is"], 1, 2],
+      ["Which is a countable noun?", ["water","sugar","chair","advice"], 2, 1],
+      ["'This, that, these, those' are examples of —", ["Personal pronouns","Indefinite pronouns","Demonstrative pronouns","Interrogative pronouns"], 2, 1],
+      ["'Swim' in 'Swimming is good exercise' acts as a —", ["Verb","Gerund (noun)","Adjective","Adverb"], 1, 2],
+      ["Which sentence contains a transitive verb?", ["She sleeps.","Birds fly.","He kicked the ball.","The baby cried."], 2, 1],
+      ["An auxiliary verb is used to —", ["Express main action","Help the main verb","Describe a noun","Connect clauses"], 1, 1],
+      ["'Although he was tired, he kept working.' — 'Although' is a —", ["Preposition","Coordinating conjunction","Subordinating conjunction","Relative pronoun"], 2, 2],
+      ["Which is a modal auxiliary verb?", ["have","be","might","do"], 2, 1],
+      ["The plural of 'child' is —", ["childs","childes","children","childre"], 2, 1],
+      ["'He is the man who won the prize.' — 'who' is a —", ["Personal pronoun","Relative pronoun","Interrogative pronoun","Reflexive pronoun"], 1, 1],
+      ["Which word is an adjective in: 'She wore a beautiful red dress'?", ["wore","beautiful","dress","she"], 1, 1],
+      ["An infinitive is —", ["A verb ending in -ing","The base form of a verb, often preceded by 'to'","A verb in past tense","A verb that shows action"], 1, 2],
+      ["'Hardly' is an example of a —", ["Conjunction","Preposition","Degree adverb","Noun"], 2, 2],
+      ["Which pair is a correlative conjunction?", ["and, but","either...or","although, because","since, until"], 1, 1],
+      ["'He gave her a gift.' — What is 'a gift'?", ["Indirect object","Direct object","Subject complement","Predicate"], 1, 2],
+      ["'The committee has reached its decision.' — 'committee' is a —", ["Abstract noun","Collective noun","Proper noun","Common noun"], 1, 1],
+      ["Which is a possessive pronoun?", ["me","my","mine","I"], 2, 2],
+      ["'Sleeping' in 'The sleeping baby looked cute' is a —", ["Gerund","Present participle used as adjective","Verb","Infinitive"], 1, 2],
+      ["Which article is used before a vowel sound?", ["a","an","the","no article"], 1, 1],
+      ["'To err is human.' — 'To err' is a —", ["Gerund","Infinitive used as subject","Present participle","Past participle"], 1, 2],
+      ["Identify the appositive in: 'My friend Ali is a doctor.'", ["my","friend","Ali","doctor"], 2, 3],
     ]},
     { name: 'Tense', imp: 3, mcqs: [
       ["She ___ in Dhaka since 2010. (correct form)", ["lives","is living","has been living","lived"], 2, 2],
@@ -1807,6 +1693,30 @@ english: {
       ["'No sooner had he arrived ___' — what follows?", ["when I left","than I left","then I left","before I left"], 1, 2],
       ["'It is time you ___ the truth.' (correct form)", ["know","knew","have known","will know"], 1, 3],
       ["Which is the correct Past Perfect Continuous?", ["He has been working.","He had been working.","He was working.","He worked."], 1, 2],
+      ["Choose the correct tense: 'She ___ (write) a letter when he called.'", ["wrote","was writing","has written","is writing"], 1, 2],
+      ["'I ___ (not/see) that film yet.' (correct form)", ["didn't see","haven't seen","don't see","hadn't seen"], 1, 1],
+      ["'The sun ___ in the east.' (correct form)", ["rose","has risen","rises","is rising"], 2, 1],
+      ["'They ___ the project by 5 PM tomorrow.' (correct form)", ["will finish","will have finished","finished","have finished"], 1, 2],
+      ["'If it ___ tomorrow, we will cancel the trip.'", ["rained","rains","will rain","would rain"], 1, 1],
+      ["'He ___ here for ten years.' (He still lives here.)", ["lived","has lived","had lived","was living"], 1, 2],
+      ["'She ___ to Paris three times.' (life experience)", ["went","has gone","goes","had gone"], 1, 1],
+      ["'By the time we arrived, the show ___.'", ["starts","started","had started","has started"], 2, 2],
+      ["Identify the Present Perfect Continuous:", ["She has been sleeping for hours.","She slept for hours.","She was sleeping.","She had slept for hours."], 0, 1],
+      ["'They ___ football every Sunday.' (habitual action)", ["play","are playing","were playing","played"], 0, 1],
+      ["'No sooner ___ she entered than the phone rang.'", ["has","had","did","was"], 1, 2],
+      ["'I wish I ___ taller.' (unreal present wish)", ["am","was/were","have been","will be"], 1, 2],
+      ["Which tense expresses a completed action with present relevance?", ["Past simple","Present perfect","Past continuous","Present continuous"], 1, 1],
+      ["'Scarcely had he left ___ it began to rain.'", ["when","than","then","after"], 0, 2],
+      ["'She ___ TV when I switched it off.' (interrupted action)", ["watched","was watching","has watched","had been watching"], 1, 2],
+      ["'Look! The train ___!' (right now)", ["comes","came","is coming","has come"], 2, 1],
+      ["'I ___ my homework before dinner.' (before a past event)", ["do","did","had done","have done"], 2, 2],
+      ["'He ___ for three hours without a break.' (up to now)", ["worked","works","has been working","had worked"], 2, 2],
+      ["'It ___ dark when we left.' (past state)", ["got","was getting","gets","had got"], 0, 1],
+      ["'If I were rich, I ___ travel the world.' (hypothetical)", ["will","would","shall","can"], 1, 1],
+      ["'She ___  her homework. Now she can play.' (just finished)", ["does","has done","did","had done"], 1, 1],
+      ["'We ___ (wait) for an hour before the bus came.'", ["waited","had been waiting","were waiting","have waited"], 1, 2],
+      ["'I am going to study tonight' expresses —", ["Habitual action","Future intention","Past habit","Present fact"], 1, 1],
+      ["'He told me that he ___ tired.' (backshift rule)", ["is","was","has been","will be"], 1, 1],
     ]},
     { name: 'Voice (Active & Passive)', imp: 3, mcqs: [
       ["Active: 'He wrote a letter.' → Passive:", ["A letter is written by him.","A letter was written by him.","A letter has been written by him.","A letter wrote by him."], 1, 1],
@@ -1817,6 +1727,27 @@ english: {
       ["Active: 'Who broke the glass?' → Passive:", ["By whom was the glass broken?","Who was the glass broken by?","The glass was broken by whom?","By whom the glass was broken?"], 0, 2],
       ["Passive: 'He will be praised by everyone.' → Active:", ["Everyone will praise him.","Everyone praised him.","Everyone is praising him.","Everyone has praised him."], 0, 1],
       ["Active: 'They are building a bridge.' → Passive:", ["A bridge is built by them.","A bridge was being built by them.","A bridge is being built by them.","A bridge has been built by them."], 2, 2],
+      ["Active: 'He has completed the work.' → Passive:", ["The work is completed by him.","The work was completed by him.","The work has been completed by him.","The work had been completed by him."], 2, 2],
+      ["Active: 'She will cook dinner.' → Passive:", ["Dinner will cooked by her.","Dinner is cooked by her.","Dinner will be cooked by her.","Dinner would be cooked by her."], 2, 1],
+      ["Passive: 'English is spoken here.' → Active:", ["They speak English here.","They are speaking English here.","They spoke English here.","They will speak English here."], 0, 1],
+      ["Active: 'The dog bit the child.' → Passive:", ["The child has been bitten by the dog.","The child was bit by the dog.","The child was bitten by the dog.","The child is bitten by the dog."], 2, 1],
+      ["Which sentence is in passive voice?", ["She reads the book.","The book was read.","He is reading.","They will read."], 1, 1],
+      ["Active: 'People speak English all over the world.' → Passive:", ["English is spoken all over the world.","English has been spoken all over the world.","English was spoken all over the world.","English will be spoken all over the world."], 0, 1],
+      ["Active: 'She had made a cake.' → Passive:", ["A cake was made by her.","A cake is made by her.","A cake had been made by her.","A cake has been made by her."], 2, 2],
+      ["In passive transformation, the object of active voice becomes the ___ of passive voice.", ["Object","Subject","Complement","Verb"], 1, 1],
+      ["Active: 'Please open the window.' → Passive:", ["The window is opened.","Let the window be opened.","The window should be opened.","The window was opened."], 1, 2],
+      ["Active: 'He was writing a report.' → Passive:", ["A report was being written by him.","A report is being written by him.","A report was written by him.","A report had been written by him."], 0, 2],
+      ["Which is an incorrect passive sentence?", ["He was seen by them.","The letter was wrote by her.","A book is being read.","The work has been done."], 1, 2],
+      ["Active: 'Who teaches you English?' → Passive:", ["By whom are you taught English?","Who is English taught by you?","By whom English is taught you?","English is taught you by whom?"], 0, 2],
+      ["Active: 'They will have finished the work.' → Passive:", ["The work will have been finished by them.","The work will be finished by them.","The work is finished by them.","The work would be finished by them."], 0, 2],
+      ["Passive: 'The cake has been baked.' What is missing?", ["The subject (agent) is omitted","The verb is wrong","The object is missing","The tense is wrong"], 0, 2],
+      ["Active: 'She makes me laugh.' → Passive:", ["I am made to laugh by her.","I am made laugh by her.","I was made to laugh by her.","I am laughed by her."], 0, 3],
+      ["In passive voice, 'by' introduces the —", ["Direct object","Agent (doer)","Instrument","Time"], 1, 1],
+      ["Active: 'He knows me.' → Passive:", ["I am known to him.","I am known by him.","I was known by him.","I am being known by him."], 0, 2],
+      ["Active: 'We saw him cross the road.' → Passive:", ["He was seen to cross the road by us.","He was seen crossing the road by us.","He was seen crossed the road by us.","He is seen crossing the road by us."], 0, 3],
+      ["Which verb cannot be used in passive voice?", ["write","happen","build","show"], 1, 2],
+      ["Active: 'He paid the bill.' → Passive:", ["The bill was paid by him.","The bill is paid by him.","The bill paid by him.","The bill has been paid by him."], 0, 1],
+      ["Passive of 'They elected him president' is —", ["He was elected as president by them.","He was elected president by them.","President was elected by them.","He elected president by them."], 1, 2],
     ]},
     { name: 'Narration (Direct & Indirect)', imp: 3, mcqs: [
       ["Direct: He said, 'I am happy.' → Indirect:", ["He said that he was happy.","He said that he is happy.","He told he was happy.","He said he were happy."], 0, 1],
@@ -1827,6 +1758,27 @@ english: {
       ["Direct: 'Are you tired?' she asked. → Indirect:", ["She asked if I was tired.","She asked whether I am tired.","She asked that I was tired.","She asked was I tired."], 0, 2],
       ["'said to' changes to ___ when reporting a question.", ["told","asked","said","stated"], 1, 1],
       ["Direct: He said, 'Honesty is the best policy.' → Indirect:", ["He said that honesty was the best policy.","He said that honesty is the best policy.","He told that honesty is the best policy.","He said honesty had been the best policy."], 1, 2],
+      ["Direct: 'Don't waste your time.' he said to me. → Indirect:", ["He told me don't waste my time.","He advised me not to waste my time.","He said me not waste my time.","He told me to not waste my time."], 1, 1],
+      ["In indirect speech, 'shall' usually changes to —", ["should","will","would","can"], 2, 2],
+      ["'Yesterday' in direct speech becomes ___ in indirect speech.", ["the previous day","yesterday","the next day","that day"], 0, 1],
+      ["Direct: She said, 'I have finished my work.' → Indirect:", ["She said that she had finished her work.","She said that she has finished her work.","She said that she finished her work.","She told she had finished her work."], 0, 2],
+      ["'This' in direct speech becomes ___ in indirect speech.", ["this","that","it","the"], 1, 1],
+      ["Direct: 'Can you help me?' he asked. → Indirect:", ["He asked if I could help him.","He asked whether I can help him.","He asked could I help him.","He told me to help him."], 0, 2],
+      ["The word 'tomorrow' changes to ___ in indirect speech.", ["tomorrow","yesterday","the next day","the following day"], 3, 1],
+      ["Direct: He said, 'I will call you.' → Indirect:", ["He said that he would call me.","He said that he will call me.","He told that he would call me.","He said he called me."], 0, 1],
+      ["Direct: 'What a beautiful day!' she said. → Indirect:", ["She exclaimed that it was a very beautiful day.","She exclaimed what a beautiful day.","She said what a beautiful day it was.","She told it was a beautiful day."], 0, 2],
+      ["When the reporting verb is 'present' tense, the reported speech tense —", ["Always changes","Remains unchanged","Always becomes past","Becomes future"], 1, 2],
+      ["Direct: He said to me, 'Work hard.' → Indirect:", ["He told me to work hard.","He said me work hard.","He told me work hard.","He told me that work hard."], 0, 1],
+      ["'Here' in direct speech becomes ___ in indirect speech.", ["here","there","this place","that place"], 1, 1],
+      ["Direct: 'I don't know the answer.' he said. → Indirect:", ["He said that he didn't know the answer.","He said that he doesn't know the answer.","He told he did not know the answer.","He said he had not known the answer."], 0, 2],
+      ["Direct: 'What are you doing?' she asked him. → Indirect:", ["She asked him what he was doing.","She asked him what he is doing.","She asked him what was he doing.","She told him what he was doing."], 0, 2],
+      ["In indirect speech, 'may' changes to —", ["might","will","would","should"], 0, 2],
+      ["Direct: 'Hurrah! We have won!' → Indirect:", ["They exclaimed joyfully that they had won.","They said that they have won.","They told that they won.","They exclaimed they have won."], 0, 2],
+      ["'Last week' in direct speech → indirect speech:", ["last week","the week before","the following week","that week"], 1, 1],
+      ["Direct: 'Do you like coffee?' she asked me. → Indirect:", ["She asked me whether I liked coffee.","She asked me whether I like coffee.","She asked me did I like coffee.","She asked me if I like coffee."], 0, 2],
+      ["'These' in direct speech becomes ___ in indirect speech.", ["these","those","they","them"], 1, 1],
+      ["Direct: He said, 'I was sleeping when she arrived.' → Indirect:", ["He said that he had been sleeping when she arrived.","He said that he was sleeping when she arrived.","He said he slept when she arrived.","He said he has been sleeping when she arrived."], 0, 2],
+      ["Direct: 'Now' in direct speech → indirect speech:", ["now","at that time/then","this moment","here"], 1, 1],
     ]},
     { name: 'Vocabulary — Synonyms & Antonyms', imp: 2, mcqs: [
       ["Synonym of 'Ambiguous':", ["Clear","Obscure / Unclear","Simple","Bright"], 1, 2],
@@ -1839,6 +1791,25 @@ english: {
       ["Antonym of 'Concise':", ["Brief","Wordy / Verbose","Short","Compact"], 1, 2],
       ["Synonym of 'Exonerate':", ["Blame","Condemn","Acquit / Clear","Punish"], 2, 2],
       ["Antonym of 'Prudent':", ["Wise","Careful","Reckless / Imprudent","Judicious"], 2, 2],
+      ["Synonym of 'Meticulous':", ["Careless","Extremely careful","Fast","Lazy"], 1, 2],
+      ["Antonym of 'Verbose':", ["Wordy","Long-winded","Concise/Brief","Talkative"], 2, 1],
+      ["Synonym of 'Alleviate':", ["Worsen","Relieve/Ease","Ignore","Intensify"], 1, 2],
+      ["Antonym of 'Lenient':", ["Mild","Easy-going","Strict/Harsh","Forgiving"], 2, 1],
+      ["Synonym of 'Pragmatic':", ["Idealistic","Practical","Visionary","Dreamy"], 1, 1],
+      ["Antonym of 'Enigmatic':", ["Mysterious","Puzzling","Clear/Obvious","Strange"], 2, 2],
+      ["Synonym of 'Incessant':", ["Rare","Occasional","Continuous/Unceasing","Brief"], 2, 1],
+      ["Antonym of 'Gregarious':", ["Sociable","Outgoing","Solitary/Unsociable","Friendly"], 2, 2],
+      ["Synonym of 'Candid':", ["Dishonest","Frank/Honest","Secretive","Evasive"], 1, 1],
+      ["Antonym of 'Dubious':", ["Uncertain","Doubtful","Certain/Clear","Suspicious"], 2, 1],
+      ["Synonym of 'Impede':", ["Help","Hinder/Block","Support","Promote"], 1, 2],
+      ["Antonym of 'Taciturn':", ["Quiet","Silent","Reserved","Talkative/Garrulous"], 3, 2],
+      ["Synonym of 'Credulous':", ["Sceptical","Naive/Easily deceived","Wise","Suspicious"], 1, 2],
+      ["Antonym of 'Somber':", ["Dark","Gloomy","Cheerful/Bright","Serious"], 2, 1],
+      ["Synonym of 'Vehement':", ["Mild","Passionate/Forceful","Calm","Quiet"], 1, 2],
+      ["Antonym of 'Opaque':", ["Cloudy","Dark","Transparent/Clear","Thick"], 2, 1],
+      ["Synonym of 'Concur':", ["Disagree","Oppose","Agree","Reject"], 2, 1],
+      ["Antonym of 'Mundane':", ["Ordinary","Boring","Extraordinary/Unusual","Routine"], 2, 1],
+      ["Synonym of 'Tenacious':", ["Weak","Giving up","Determined/Persistent","Flexible"], 2, 1],
     ]},
     { name: 'Sentence Correction & Idioms', imp: 2, mcqs: [
       ["Choose the correct sentence:", ["She don't know him.","She doesn't knows him.","She doesn't know him.","She not know him."], 2, 1],
@@ -1851,6 +1822,26 @@ english: {
       ["'It is I who ___ responsible.' (correct form)", ["are","am","is","be"], 1, 3],
       ["'Under the weather' means:", ["In bad weather","Feeling slightly ill","Outdoors","In summer"], 1, 1],
       ["Correct form: 'He is one of the students who ___ passed.'", ["has","have","had","is"], 1, 3],
+      ["Choose the correct sentence:", ["Each of the boys were present.","Each of the boys was present.","Each of the boy were present.","Each of the boys are present."], 1, 2],
+      ["'Hit the nail on the head' means:", ["Do carpentry work","Make a mistake","Be exactly right","Lose your temper"], 2, 1],
+      ["'She ___ (go) to the market before it closed.' (correct form)", ["went","has gone","had gone","goes"], 2, 2],
+      ["'A penny for your thoughts' means:", ["You are being paid","Ask someone what they're thinking","Comment on money","A cheap idea"], 1, 1],
+      ["Choose the correct sentence:", ["He as well as his friends are coming.","He as well as his friends is coming.","He as well as his friend were coming.","He and his friends is coming."], 1, 2],
+      ["'Spill the beans' means:", ["Cook food","Drop something","Reveal a secret","Make a mess"], 2, 1],
+      ["Correct the error: 'She is more smarter than him.'", ["She is smarter than he.","She is more smart than him.","She is most smarter than him.","She is smarter than his."], 0, 2],
+      ["'The number of students ___ increasing.' (correct verb)", ["are","were","is","have been"], 2, 2],
+      ["'Let the cat out of the bag' means:", ["Release a cat","Tell a secret by mistake","Be careless","Cause trouble"], 1, 1],
+      ["Choose the correct sentence:", ["He suggested that she studies more.","He suggested that she should study more.","He suggested she would study more.","He suggested for her to study."], 1, 2],
+      ["'Bite off more than you can chew' means:", ["Eat too much","Take on more responsibility than you can handle","Be too ambitious positively","Work efficiently"], 1, 1],
+      ["'Hardly ___ he sat down when she arrived.' (correct form)", ["did","had","was","has"], 1, 2],
+      ["'Break a leg' means:", ["Injure yourself","Good luck","Work hard","Run away"], 1, 1],
+      ["Choose the correct sentence:", ["The police has arrested the thief.","The police have arrested the thief.","The police had arrested the thiefs.","The police is arresting the thief."], 1, 2],
+      ["'Cost an arm and a leg' means:", ["Physical injury","Something very expensive","Manual labour","A body metaphor"], 1, 1],
+      ["Identify the error: 'He is too weak to hardly walk.'", ["'too' should be 'so'","'hardly' is redundant with 'too...to'","'weak' should be 'weakly'","No error"], 1, 3],
+      ["'Add fuel to the fire' means:", ["Help extinguish a problem","Make a bad situation worse","Start a conflict","Solve a problem"], 1, 1],
+      ["'Much of the work ___ been done.' (correct verb)", ["has","have","had","are"], 0, 2],
+      ["'The ball is in your court' means:", ["Play a game","It is your responsibility to act","Go to court","Make a decision for others"], 1, 1],
+      ["'Either the teachers or the principal ___ to attend.' (correct verb)", ["have","were","is","are"], 2, 3],
     ]}
   ]
 },
@@ -1926,6 +1917,25 @@ gk: {
       ["বাংলাদেশের জাতীয় স্মৃতিসৌধ কোথায়?", ["মিরপুরে","আজিমপুরে","সাভারে","ধানমন্ডিতে"], 2, 1],
       ["সংবিধানের কোন অনুচ্ছেদে বাংলা রাষ্ট্রভাষা?", ["২","৩","৪","৫"], 1, 2],
       ["জাতীয় সংসদ ভবনের স্থপতি কে?", ["মাজহারুল ইসলাম","লুই আই. কান","ফ্রাঙ্ক লয়েড রাইট","রফিক আজম"], 1, 2],
+      ["বাংলাদেশের দীর্ঘতম নদী কোনটি?", ["পদ্মা","যমুনা","মেঘনা","সুরমা"], 1, 2],
+      ["বাংলাদেশ কতটি দেশের সাথে সীমান্ত ভাগ করে?", ["১","২","৩","৪"], 1, 1],
+      ["বাংলাদেশের সবচেয়ে বড় দ্বীপ কোনটি?", ["সন্দ্বীপ","ভোলা","হাতিয়া","সেন্ট মার্টিন"], 1, 1],
+      ["বাংলাদেশের জাতীয় মসজিদের নাম কী?", ["বায়তুল মুকাররম","তুরাগ মসজিদ","শহীদ মসজিদ","কেন্দ্রীয় মসজিদ"], 0, 1],
+      ["বাংলাদেশের প্রধান সমুদ্রবন্দর কোনটি?", ["মংলা","পায়রা","চট্টগ্রাম","কক্সবাজার"], 2, 1],
+      ["বঙ্গোপসাগরের মোট বিস্তৃতিতে বাংলাদেশের সমুদ্রসীমা কত নটিক্যাল মাইল?", ["১২০","২০০","৩৫০","৪০০"], 1, 2],
+      ["বাংলাদেশের রাজধানীর নাম কী?", ["চট্টগ্রাম","ঢাকা","সিলেট","রাজশাহী"], 1, 1],
+      ["জাতীয় সংসদের সংরক্ষিত নারী আসন কতটি?", ["৫০","৪৫","৩০","৬০"], 0, 2],
+      ["সংবিধানের কোন অনুচ্ছেদে মৌলিক অধিকার আছে?", ["১৭-৪৩","২৭-৪৪","৩২-৫০","২০-৩৮"], 1, 2],
+      ["বাংলাদেশের প্রথম মহিলা প্রধানমন্ত্রী কে?", ["শেখ হাসিনা","বেগম খালেদা জিয়া","রওশন এরশাদ","দিলরুবা খানম"], 1, 2],
+      ["বাংলাদেশের সর্বোচ্চ আদালতের নাম কী?", ["হাইকোর্ট","সুপ্রিম কোর্ট","সেশন কোর্ট","জেলা কোর্ট"], 1, 1],
+      ["বাংলাদেশের জাতীয় পতাকার রঙ কয়টি?", ["১","২","৩","৪"], 1, 1],
+      ["বাংলাদেশে মোট উপজেলা কতটি?", ["৪৫০","৪৭৫","৪৯২","৫১০"], 2, 2],
+      ["বাংলাদেশের কোন জেলা সবচেয়ে বড়?", ["রাঙামাটি","ময়মনসিংহ","চট্টগ্রাম","সিলেট"], 0, 2],
+      ["সংবিধানের কোন অনুচ্ছেদে বিচার বিভাগের স্বাধীনতার কথা আছে?", ["৩৫","৯৪","১১৬","৬৫"], 1, 3],
+      ["বাংলাদেশের জাতীয় দিবস কোনটি?", ["২১ ফেব্রুয়ারি","২৬ মার্চ","১৬ ডিসেম্বর","৭ মার্চ"], 1, 1],
+      ["সুন্দরবনের মোট আয়তন কত বর্গকিমি?", ["৪,০০০","৬,০১৭","৮,০০০","১০,০০০"], 1, 2],
+      ["বাংলাদেশের বৃহত্তম হাওর কোনটি?", ["হাকালুকি","টাঙ্গুয়ার হাওর","শনির হাওর","চলন বিল"], 0, 2],
+      ["বাংলাদেশের জাতীয় বৃক্ষ কোনটি?", ["বটগাছ","আমগাছ","শাল গাছ","তেঁতুল গাছ"], 1, 1],
     ]},
     { name: 'মেগাপ্রজেক্ট ও অবকাঠামো (২০২৪–২০২৫)', imp: 3, mcqs: [
       ["পদ্মা সেতুর দৈর্ঘ্য কত কিমি?", ["৪.৮","৫.৫","৬.১৫","৭.০"], 2, 1],
@@ -1938,6 +1948,30 @@ gk: {
       ["রূপপুর পারমাণবিক কেন্দ্রের মোট ক্ষমতা কত মেগাওয়াট?", ["৮০০","১,২০০","২,৪০০","৩,৬০০"], 2, 2],
       ["বঙ্গবন্ধু স্যাটেলাইট-১ উৎক্ষেপণ হয় কত সালে?", ["২০১৭","২০১৮","২০১৯","২০২০"], 1, 1],
       ["বাংলাদেশে বিদ্যুৎ সংযোগের হার (২০২৪)?", ["৮০%","৯০%","৯৫%","১০০% (সর্বজনীন)"], 3, 2],
+      ["পদ্মা সেতুর রেললাইন কোন স্তরে?", ["উপরে","নিচে","মাঝে","আলাদা ব্রিজে"], 1, 2],
+      ["কর্ণফুলী টানেলের নাম কী?", ["পদ্মা টানেল","মেঘনা টানেল","বঙ্গবন্ধু টানেল","কর্ণফুলী ব্রিজ"], 2, 1],
+      ["ঢাকা মেট্রোরেল MRT-6 উত্তরা থেকে কোথা পর্যন্ত?", ["গাজীপুর","মতিঝিল","কমলাপুর","মিরপুর"], 1, 1],
+      ["রূপপুর পারমাণবিক বিদ্যুৎ কেন্দ্র কোন জেলায়?", ["রাজশাহী","ঢাকা","পাবনা","কুষ্টিয়া"], 2, 1],
+      ["পায়রা গভীর সমুদ্রবন্দর কোথায়?", ["চট্টগ্রাম","পটুয়াখালী","খুলনা","বরিশাল"], 1, 1],
+      ["বঙ্গবন্ধু স্যাটেলাইট-১ এর অরবিটাল স্লট কোনটি?", ["৯১.৫° পূর্ব","১১৯.১° পূর্ব","৪৫° পূর্ব","৭৫° পূর্ব"], 1, 3],
+      ["ঢাকা-চট্টগ্রাম এক্সপ্রেসওয়ে প্রকল্পের উদ্দেশ্য কী?", ["শুধু পণ্য পরিবহন","যানজট কমানো ও দ্রুত যোগাযোগ","বিমান যোগাযোগ","নদীপথ উন্নয়ন"], 1, 2],
+      ["মাতারবাড়ী বিদ্যুৎ কেন্দ্রের মোট ক্ষমতা কত মেগাওয়াট?", ["১,২০০","১,৬০০","২,০০০","৬০০"], 0, 2],
+      ["বাংলাদেশের প্রথম এলিভেটেড এক্সপ্রেসওয়ে কোনটি?", ["ঢাকা-আরিচা","হযরত শাহজালাল আন্তর্জাতিক বিমানবন্দর-কুড়িল এলিভেটেড এক্সপ্রেসওয়ে","ঢাকা-চট্টগ্রাম","ঢাকা-ময়মনসিংহ"], 1, 2],
+      ["বাংলাদেশের কোন বিমানবন্দর তৃতীয় টার্মিনাল নির্মাণাধীন?", ["চট্টগ্রাম শাহ আমানত","হযরত শাহজালাল আন্তর্জাতিক","ওসমানী আন্তর্জাতিক","যশোর বিমানবন্দর"], 1, 1],
+      ["ঢাকায় BRT (Bus Rapid Transit) রুট কোনটি?", ["মতিঝিল-গাজীপুর","উত্তরা-মিরপুর","ঢাকা-নারায়ণগঞ্জ","ঢাকা-মুন্সীগঞ্জ"], 0, 2],
+      ["পদ্মা সেতু নির্মাণ করে কোন কোম্পানি?", ["জাপানের শিমিজু","চীনের CRBC (China Railway Major Bridge)","যুক্তরাষ্ট্রের বেকটেল","দক্ষিণ কোরিয়ার হুন্দাই"], 1, 2],
+      ["মেট্রোরেল MRT-6 এর মোট দৈর্ঘ্য কত কিমি?", ["১৯.৮৭","২০.১","২৫","১৬.৫"], 0, 2],
+      ["পদ্মা সেতুর নির্মাণ ব্যয় কত (আনুমানিক)?", ["১৫,০০০ কোটি টাকা","২৫,০০০ কোটি টাকা","৩০,১৯৩ কোটি টাকা","৪০,০০০ কোটি টাকা"], 2, 2],
+      ["বঙ্গবন্ধু টানেলটি কোন দুটি শহরকে সংযুক্ত করবে?", ["ঢাকা-নারায়ণগঞ্জ","চট্টগ্রাম শহর-আনোয়ারা","চট্টগ্রাম-ফেনী","মিরসরাই-সীতাকুণ্ড"], 1, 2],
+      ["ঢাকা মেট্রোরেলের প্রথম যাত্রা কোন স্টেশন থেকে?", ["আগারগাঁও","মতিঝিল","উত্তরা উত্তর","পল্লবী"], 2, 2],
+      ["বাংলাদেশের প্রথম 'স্পেশাল ইকোনমিক জোন' কোথায়?", ["চট্টগ্রাম","মীরসরাই","সাভার","নারায়ণগঞ্জ"], 1, 2],
+      ["রূপপুর পারমাণবিক বিদ্যুৎ কেন্দ্র কোন নদীর তীরে?", ["পদ্মা","যমুনা","মেঘনা","তিস্তা"], 0, 2],
+      ["MRT-6 কোন সংস্থার অর্থায়নে নির্মিত হচ্ছে?", ["বিশ্বব্যাংক","ADB","JICA (জাপান)","চীনা সরকার"], 2, 2],
+      ["পায়রা সমুদ্রবন্দরের কাছে নির্মিতব্য বিমানবন্দরের নাম?", ["পায়রা আন্তর্জাতিক বিমানবন্দর","কলাপাড়া বিমানবন্দর","বরিশাল বিমানবন্দর","পটুয়াখালী বিমানবন্দর"], 0, 3],
+      ["বাংলাদেশ-ভারত সীমান্তে মৈত্রী সেতু কোথায়?", ["আখাউড়া","বেনাপোল","হিলি","ফেনী নদী তীরে (শুভলং-সাবরুম)"], 3, 2],
+      ["বাংলাদেশের 'ডিজিটাল বাংলাদেশ' রূপকল্প কোন সালের মধ্যে অর্জনের লক্ষ্য?", ["২০২১","২০২৩","২০৩০","২০৪১"], 0, 2],
+      ["বাংলাদেশের কোন বন্দরে কন্টেইনার টার্মিনাল সম্প্রসারণ প্রকল্প সবচেয়ে বড়?", ["মংলা","পায়রা","চট্টগ্রাম বন্দর","নারায়ণগঞ্জ"], 2, 1],
+      ["রূপপুর পারমাণবিক প্রকল্পে কোন দেশ প্রযুক্তি ও সহায়তা দিচ্ছে?", ["যুক্তরাষ্ট্র","ফ্রান্স","রাশিয়া","জাপান"], 2, 1],
     ]},
     { name: 'আন্তর্জাতিক বিষয়াবলি ও অর্থনীতি', imp: 3, mcqs: [
       ["জাতিসংঘের সদর দপ্তর?", ["লন্ডন","জেনেভা","প্যারিস","নিউইয়র্ক"], 3, 1],
@@ -1950,6 +1984,28 @@ gk: {
       ["বিশ্বে তৈরি পোশাক রপ্তানিতে বাংলাদেশ কততম?", ["প্রথম","দ্বিতীয়","তৃতীয়","চতুর্থ"], 1, 2],
       ["ড. মুহাম্মদ ইউনূস নোবেল পুরস্কার পান কত সালে?", ["২০০৪","২০০৫","২০০৬","২০০৭"], 2, 1],
       ["SDG বাস্তবায়নের সময়সীমা?", ["২০২৫","২০৩০","২০৩৫","২০৫০"], 1, 1],
+      ["জাতিসংঘের নিরাপত্তা পরিষদে স্থায়ী সদস্য কতটি?", ["৩","৪","৫","৬"], 2, 1],
+      ["জাতিসংঘের বর্তমান মহাসচিব কে (২০২৫)?", ["বান কি-মুন","কফি আনান","আন্তোনিও গুতেরেস","কোফি আনান"], 2, 1],
+      ["বিশ্বব্যাংকের সদর দপ্তর?", ["নিউইয়র্ক","লন্ডন","ওয়াশিংটন ডিসি","জেনেভা"], 2, 1],
+      ["ASEAN-এর সদর দপ্তর?", ["সিঙ্গাপুর","জাকার্তা","ব্যাংকক","কুয়ালালামপুর"], 1, 1],
+      ["NATO কত সালে প্রতিষ্ঠিত হয়?", ["১৯৪৫","১৯৪৭","১৯৪৯","১৯৫১"], 2, 2],
+      ["আন্তর্জাতিক আদালতের (ICJ) সদর দপ্তর কোথায়?", ["নিউইয়র্ক","জেনেভা","হেগ (নেদারল্যান্ডস)","ব্রাসেলস"], 2, 1],
+      ["G20-এর সদস্য সংখ্যা কত?", ["১৫","১৮","২০","২২"], 2, 1],
+      ["আন্তর্জাতিক শ্রম সংস্থা (ILO)-এর সদর দপ্তর কোথায়?", ["নিউইয়র্ক","প্যারিস","জেনেভা","লন্ডন"], 2, 1],
+      ["UNICEF-এর সদর দপ্তর কোথায়?", ["জেনেভা","লন্ডন","নিউইয়র্ক","প্যারিস"], 2, 1],
+      ["UNESCO-র সদর দপ্তর কোথায়?", ["নিউইয়র্ক","জেনেভা","লন্ডন","প্যারিস"], 3, 1],
+      ["বাংলাদেশ D-8 সংস্থার সদস্য। D-8 কী?", ["উন্নত ৮টি দেশের জোট","মুসলিম সংখ্যাগরিষ্ঠ ৮টি উন্নয়নশীল দেশের জোট","দক্ষিণ এশিয়ার ৮টি দেশ","৮টি গণতান্ত্রিক দেশ"], 1, 2],
+      ["কমনওয়েলথের সদর দপ্তর কোথায়?", ["লন্ডন","প্যারিস","ব্রাসেলস","অটোয়া"], 0, 1],
+      ["আন্তর্জাতিক মুদ্রা তহবিল (IMF) কত সালে প্রতিষ্ঠিত হয়?", ["১৯৪৫","১৯৪৪","১৯৪৬","১৯৪৭"], 0, 2],
+      ["বিশ্ব বাণিজ্য সংস্থা (WTO) আগে কী নামে পরিচিত ছিল?", ["UN Trade Organisation","GATT","World Commerce Body","UN WTO"], 1, 2],
+      ["জলবায়ু পরিবর্তন বিষয়ক প্যারিস চুক্তি কত সালে সই হয়?", ["২০১৩","২০১৪","২০১৫","২০১৬"], 2, 1],
+      ["আন্তর্জাতিক অপরাধ আদালত (ICC) কোথায়?", ["জেনেভা","নিউইয়র্ক","হেগ","ব্রাসেলস"], 2, 1],
+      ["BRICS-এ কতটি দেশ আছে (২০২৪ সালের পর)?", ["৫","৬","৯","১১"], 3, 2],
+      ["'মানবাধিকারের সর্বজনীন ঘোষণা' কত সালে স্বাক্ষরিত হয়?", ["১৯৪৫","১৯৪৬","১৯৪৮","১৯৫০"], 2, 1],
+      ["FAO (খাদ্য ও কৃষি সংস্থা)-এর সদর দপ্তর কোথায়?", ["জেনেভা","নিউইয়র্ক","রোম","লন্ডন"], 2, 1],
+      ["বাংলাদেশ কততম বছরে জাতিসংঘ শান্তিরক্ষায় শীর্ষ সৈন্যপ্রদানকারী দেশ?", ["টানা ৩ বছর","টানা ১০ বছর","প্রায় ১৫+ বছর ধরে","প্রথমবার ২০২৪ সালে"], 2, 2],
+      ["ইউক্রেন-রাশিয়া যুদ্ধ শুরু হয় কত সালে?", ["২০২১","২০২২","২০২৩","২০২০"], 1, 1],
+      ["হামাস-ইসরায়েল যুদ্ধ শুরু হয় কত সালে?", ["২০২১","২০২২","২০২৩","২০২৪"], 2, 1],
     ]},
     { name: 'সাম্প্রতিক বাংলাদেশ ২০২৩–২০২৫', imp: 3, mcqs: [
       ["জুলাই ২০২৪-এর আন্দোলন কোনটি?", ["শ্রমিক আন্দোলন","কোটা সংস্কার আন্দোলন","কৃষক আন্দোলন","শিক্ষা সংস্কার আন্দোলন"], 1, 1],
@@ -1962,6 +2018,27 @@ gk: {
       ["বাংলাদেশ ব্যাংকের গভর্নর (২০২৪-২৫)?", ["আব্দুর রউফ তালুকদার","ফজলে কবির","আতিউর রহমান","আহসান এইচ মনসুর"], 3, 2],
       ["২০২৩-২৪ সালে বাংলাদেশের রেমিট্যান্স কত?", ["$১৬ বিলিয়ন","$২১.৯ বিলিয়ন","$২৫ বিলিয়ন","$৩০ বিলিয়ন"], 1, 2],
       ["বাংলাদেশ LDC থেকে উত্তরণ করবে কত সালে?", ["২০২৫","২০২৬","২০২৭","২০২৮"], 2, 2],
+      ["বাংলাদেশে জুলাই ২০২৪ আন্দোলনে প্রাথমিক দাবি কী ছিল?", ["মজুরি বৃদ্ধি","সরকারি চাকরিতে কোটা সংস্কার","শিক্ষা সংস্কার","ভোটাধিকার"],1, 1],
+      ["ড. মুহাম্মদ ইউনূস অন্তর্বর্তী সরকারের প্রধান উপদেষ্টা হন কবে?", ["৫ আগস্ট ২০২৪","৮ আগস্ট ২০২৪","১৫ আগস্ট ২০২৪","৩১ আগস্ট ২০২৪"], 1, 1],
+      ["২০২৪ সালের অলিম্পিক গেমস কোথায় অনুষ্ঠিত হয়?", ["লন্ডন","টোকিও","প্যারিস","লস অ্যাঞ্জেলেস"], 2, 1],
+      ["২০২৩ ক্রিকেট বিশ্বকাপ কোথায় অনুষ্ঠিত হয়?", ["বাংলাদেশ","পাকিস্তান","ভারত","অস্ট্রেলিয়া"], 2, 1],
+      ["বাংলাদেশের বর্তমান GDP প্রবৃদ্ধির হার (২০২৪-২৫, আনুমানিক)?", ["৪.৫%","৫.২%","৬.৫%","৮%"], 1, 2],
+      ["বাংলাদেশের প্রধান রপ্তানি পণ্য কোনটি?", ["পাট","চামড়া","তৈরি পোশাক (RMG)","চিংড়ি"], 2, 1],
+      ["২০২৪-২৫ সালে বাংলাদেশের বৈদেশিক মুদ্রার রিজার্ভ (আনুমানিক)?", ["$৫ বিলিয়ন","$১৫-২০ বিলিয়ন","$৩৫ বিলিয়ন","$৫০ বিলিয়ন"], 1, 2],
+      ["ব্র্যাক-এর প্রতিষ্ঠাতা কে?", ["ড. মুহাম্মদ ইউনূস","ড. ফজলে হাসান আবেদ","ড. আতিউর রহমান","ড. ওয়াহিদউদ্দিন মাহমুদ"], 1, 1],
+      ["বাংলাদেশের সবচেয়ে বড় তৈরি পোশাক রপ্তানি বাজার কোনটি?", ["যুক্তরাষ্ট্র","যুক্তরাজ্য","ইউরোপীয় ইউনিয়ন","কানাডা"], 2, 1],
+      ["বাংলাদেশে ৫G নেটওয়ার্ক চালুর প্রক্রিয়া কোন সালে শুরু হয়?", ["২০২২","২০২৩","২০২৪","২০২৫"], 2, 2],
+      ["বাংলাদেশের প্রথম নারী অর্থমন্ত্রী কে?", ["শেখ হাসিনা","রওশন এরশাদ","তারানা হালিম","কোনো নারী অর্থমন্ত্রী হননি"], 3, 2],
+      ["ঢাকার বায়ুদূষণ সমস্যার মূল উৎস কোনটি?", ["কলকারখানা","নির্মাণ ধুলো ও যানবাহনের ধোঁয়া","কৃষিজমি পোড়ানো","রান্নার চুলা"], 1, 2],
+      ["বাংলাদেশে জাতীয় পরিচয়পত্র (NID) ব্যবস্থাপনা কোন সংস্থা করে?", ["নির্বাচন কমিশন","জন্ম ও মৃত্যু নিবন্ধন","স্থানীয় সরকার বিভাগ","বিআরটিএ"], 0, 2],
+      ["২০২৪ সালে ফিফা বিশ্বকাপ ফুটবল কোথায় হয়?", ["কাতার","আর্জেন্টিনা","কানাডা-মেক্সিকো-যুক্তরাষ্ট্র","নভেম্বর ২০২৬ এ হবে"], 3, 2],
+      ["বাংলাদেশের তৈরি পোশাক শিল্পে নিরাপত্তা উন্নয়নে Accord ও Alliance গঠিত হয় কত সালে?", ["২০১০","২০১১","২০১৩","২০১৫"], 2, 2],
+      ["২০২৩-২৪ সালে বাংলাদেশের মোট রপ্তানি আয়?", ["$৪০ বিলিয়ন","$৫০ বিলিয়ন","$৫৫ বিলিয়ন","$৬৫ বিলিয়ন"], 1, 2],
+      ["বাংলাদেশে বর্তমানে (২০২৫) কয়টি সরকারি বিশ্ববিদ্যালয় আছে (আনুমানিক)?", ["৩০","৪০","৫৩","৬০"], 2, 2],
+      ["বাংলাদেশের প্রথম ব্লু-ইকোনমি (সামুদ্রিক অর্থনীতি) নীতিমালা তৈরি হয় কত সালে?", ["২০১৫","২০১৬","২০১৮","২০২০"], 2, 2],
+      ["২০২৪ সালে বাংলাদেশ ক্রিকেট দল প্রথমবারের মতো কোথায় টেস্ট সিরিজ জিতেছে?", ["ইংল্যান্ড","ভারত","পাকিস্তান","শ্রীলঙ্কা"], 3, 2],
+      ["বাংলাদেশে মোবাইল ব্যাংকিংয়ের অগ্রণী সেবা কোনটি?", ["নগদ","bKash","রকেট","ওকে ওয়ালেট"], 1, 1],
+      ["ঢাকা বিশ্ববিদ্যালয়ের বর্তমান উপাচার্য (২০২৫)?", ["ড. মো. আখতারুজ্জামান","ড. এ এস এম মাকসুদ কামাল","ড. নিয়াজ আহমেদ","ড. মো. আবু তাহের"], 1, 2],
     ]}
   ]
 },
@@ -2427,7 +2504,16 @@ const Util = {
 // APP NAVIGATION
 // ══════════════════════════════
 const App = {
-  nav(name) {
+  _pendingNav: null,
+
+  nav(name, force) {
+    // If exam is active and not a forced nav, show warning
+    if (!force && ExamEngine._state) {
+      App._pendingNav = name;
+      const ov = document.getElementById('focusNavWarning');
+      if (ov) { ov.style.display = 'flex'; }
+      return;
+    }
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
     document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
     const panel = document.getElementById('panel-' + name);
@@ -2436,7 +2522,7 @@ const App = {
     document.getElementById('nb-' + name)?.classList.add('on');
 
     // Panel-specific side effects
-    if (name === 'history') HistoryManager.render();
+    if (name === 'history') { HistoryManager.render(); HistoryManager.renderPaused(); }
     if (name === 'subjects') {
       document.getElementById('subj-selection').style.display = 'block';
       document.getElementById('subj-reader').classList.remove('on');
@@ -2454,6 +2540,35 @@ const App = {
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+
+  _navSaveAndLeave() {
+    const ov = document.getElementById('focusNavWarning');
+    if (ov) ov.style.display = 'none';
+    if (ExamEngine._state) {
+      const autoName = `⏸ ${ExamEngine._state.subjectName} — ${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`;
+      SavedPrograms._autoSave(autoName);
+    }
+    const dest = App._pendingNav;
+    App._pendingNav = null;
+    App.nav(dest, true);
+  },
+
+  _navDiscard() {
+    const ov = document.getElementById('focusNavWarning');
+    if (ov) ov.style.display = 'none';
+    ExamEngine._clearTimers();
+    FocusMode.deactivate();
+    ExamEngine._state = null;
+    const dest = App._pendingNav;
+    App._pendingNav = null;
+    App.nav(dest, true);
+  },
+
+  _navStay() {
+    const ov = document.getElementById('focusNavWarning');
+    if (ov) ov.style.display = 'none';
+    App._pendingNav = null;
   }
 };
 
@@ -3126,8 +3241,36 @@ const ExamEngine = {
 // HISTORY MANAGER
 // ══════════════════════════════
 const HistoryManager = {
+  renderPaused() {
+    const paused = SavedPrograms._load().filter(x => x.paused);
+    const el = document.getElementById('pausedExamsSection');
+    if (!el) return;
+    if (!paused.length) { el.style.display = 'none'; return; }
+    el.style.display = 'block';
+    el.innerHTML = `
+      <div class="hist-head" style="margin-bottom:.6rem">
+        <h2 style="font-size:1rem;color:var(--amber)">⏸ Paused Exams</h2>
+      </div>
+      <div class="hist-list" style="margin-bottom:1.5rem">
+        ${paused.map(it => `
+        <div class="hi">
+          <div class="hi-head" style="cursor:default">
+            <span class="hi-date">${it.date}</span>
+            <span class="hi-name">${it.subjectName}</span>
+            <span class="hi-mode">Paused · ${it.diff || 'custom'}</span>
+            <span class="hi-score a">${it.answers.filter(a=>a!==null).length}/${it.questionsMeta.length} answered</span>
+          </div>
+          <div class="hi-body" style="display:flex;gap:.5rem;padding:.6rem 1rem;flex-wrap:wrap">
+            <button class="btn-pri" style="font-size:.78rem;padding:.4rem 1.2rem" onclick="SavedPrograms.load(${it.id});App.nav('test',true)">▶ Resume</button>
+            <button class="btn-sec" style="font-size:.78rem;padding:.4rem 1rem" onclick="SavedPrograms.del(${it.id});HistoryManager.renderPaused()">✕ Delete</button>
+          </div>
+        </div>`).join('')}
+      </div>`;
+  },
+
   render() {
     const body = document.getElementById('histBody');
+    this.renderPaused();
     if (!State.history.length) {
       body.innerHTML = '<div class="hist-empty">No tests yet.<br><strong>Go to 🎯 Test to start your first exam!</strong></div>';
       return;
@@ -3630,6 +3773,28 @@ const SavedPrograms = {
     const items = this._load().filter(x => x.id !== id);
     this._store(items);
     this.renderPanel();
+  },
+
+  _autoSave(name) {
+    if (!ExamEngine._state) return;
+    const { subjectName, mode, diff, answers, questions } = ExamEngine._state;
+    const items = this._load();
+    items.unshift({
+      id: Date.now(),
+      name,
+      date: new Date().toLocaleString(),
+      paused: true,
+      subjectName, mode, diff,
+      answers: [...answers],
+      questionsMeta: questions.map(q => ({ q: q.q, opts: q.opts, corr: q.corr, chapName: q.chapName, subj: q.subj }))
+    });
+    this._store(items);
+    ExamEngine._clearTimers();
+    FocusMode.deactivate();
+    ExamEngine._state = null;
+    document.getElementById('exam-screen').style.display = 'none';
+    document.getElementById('test-modes').style.display = 'block';
+    HistoryManager.renderPaused();
   }
 };
 
