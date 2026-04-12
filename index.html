@@ -1126,109 +1126,9 @@ option { background: var(--bg3); }
   to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-/* ══ UI SHOWCASE PANEL ══ */
-#panel-ui {
-  min-height: 100vh;
-  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99,102,241,.18) 0%, transparent 65%),
-              radial-gradient(ellipse 50% 40% at 85% 80%, rgba(99,102,241,.12) 0%, transparent 55%),
-              #020617;
-}
-.ui-showcase-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
-.ui-showcase-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: #fff; margin-bottom: .3rem; }
-.ui-showcase-sub { color: var(--muted); font-size: .86rem; margin-bottom: 2rem; }
-.glass-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-
-/* Glass card */
-.glass-card {
-  background: rgba(255,255,255,.04);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 24px;
-  padding: 1.8rem;
-  position: relative;
-  overflow: hidden;
-  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
-}
-.glass-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(99,102,241,.18);
-}
-.glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
-}
-.gc-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
-  background: rgba(99,102,241,.15);
-  border: 1px solid rgba(99,102,241,.3);
-  border-radius: 100px;
-  padding: .22rem .75rem;
-  font-size: .66rem;
-  color: #818cf8;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-.gc-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.55rem;
-  color: #fff;
-  margin-bottom: .5rem;
-  line-height: 1.15;
-}
-.gc-desc { color: rgba(255,255,255,.45); font-size: .82rem; line-height: 1.7; margin-bottom: 1.4rem; }
-.gc-meta { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
-.gc-tag { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 100px; padding: .16rem .62rem; font-size: .68rem; color: rgba(255,255,255,.4); }
-.gc-btn {
-  display: block;
-  width: 100%;
-  background: #6366f1;
-  color: #fff;
-  border: none;
-  padding: .72rem 1.5rem;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: .88rem;
-  letter-spacing: .02em;
-  cursor: pointer;
-  transition: all .22s var(--ease);
-  box-shadow: 0 0 0 0 rgba(99,102,241,.5);
-  position: relative;
-  overflow: hidden;
-}
-.gc-btn::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 14px;
-  background: transparent;
-  border: 2px solid rgba(99,102,241,.4);
-  pointer-events: none;
-  box-shadow: 0 0 24px 4px rgba(99,102,241,.35);
-}
-.gc-btn:hover { background: #4f46e5; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(99,102,241,.4); }
-
-/* ACE CARD ICON */
-.ace-icon-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-.ace-svg-container {
-  filter: drop-shadow(0 8px 32px rgba(255,255,255,.15));
-  transition: transform .3s var(--spring), filter .3s;
-}
-.ace-svg-container:hover {
-  transform: scale(1.06) rotate(-3deg);
-  filter: drop-shadow(0 16px 48px rgba(255,255,255,.25));
-}
-
+/* ══ CONFETTI ══ */
+#confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:900;display:none}
+</style>
 </head>
 <body>
 
@@ -1276,7 +1176,6 @@ option { background: var(--bg3); }
   <button class="nb nb-test" id="nb-test" onclick="App.nav('test')">🎯 Test</button>
   <button class="nb" id="nb-history" onclick="App.nav('history')">History</button>
   <button class="nb nb-about" id="nb-about" onclick="App.nav('about')">About</button>
-  <button class="nb" id="nb-ui" onclick="App.nav('ui')" style="color:var(--purple)">✦ UI</button>
 </nav>
 
 <!-- ══ HOME PANEL ══ -->
@@ -1538,92 +1437,6 @@ option { background: var(--bg3); }
     <div class="about-section">
       <h3>💌 A Message to You</h3>
       <p style="color:var(--gold);font-family:'DM Serif Display',serif;font-size:.95rem;font-style:italic;line-height:1.7">"The only way to get better is to practice like it matters, even when it doesn't feel like it does. You're already ahead of who you were yesterday."</p>
-    </div>
-  </div>
-</div>
-
-<!-- ══ UI SHOWCASE PANEL ══ -->
-<div class="panel" id="panel-ui">
-  <div class="ui-showcase-wrap">
-    <div class="ui-showcase-title">✦ UI Showcase</div>
-    <div class="ui-showcase-sub">Glassmorphism Study Cards · Ace Icon Design</div>
-
-    <div class="glass-grid">
-
-      <!-- Card 1 -->
-      <div class="glass-card">
-        <span class="gc-badge">✦ Accounting</span>
-        <div class="gc-title">Financial<br>Statements</div>
-        <div class="gc-desc">Balance sheets, income statements, and the language of business money.</div>
-        <div class="gc-meta">
-          <span class="gc-tag">30 MCQs</span>
-          <span class="gc-tag">★★★</span>
-          <span class="gc-tag">High Priority</span>
-        </div>
-        <button class="gc-btn" onclick="App.nav('subjects')">→ Start Studying</button>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="glass-card">
-        <span class="gc-badge">✦ Management</span>
-        <div class="gc-title">Henri Fayol's<br>14 Principles</div>
-        <div class="gc-desc">The foundational pillars of modern management theory and organizational design.</div>
-        <div class="gc-meta">
-          <span class="gc-tag">20 MCQs</span>
-          <span class="gc-tag">★★★</span>
-          <span class="gc-tag">Exam Favourite</span>
-        </div>
-        <button class="gc-btn" onclick="App.nav('subjects')">→ Start Studying</button>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="glass-card">
-        <span class="gc-badge">✦ English</span>
-        <div class="gc-title">Grammar<br>Mastery</div>
-        <div class="gc-desc">Tenses, prepositions, and sentence correction — score full marks on language.</div>
-        <div class="gc-meta">
-          <span class="gc-tag">25 MCQs</span>
-          <span class="gc-tag">★★</span>
-          <span class="gc-tag">Medium</span>
-        </div>
-        <button class="gc-btn" onclick="App.nav('subjects')">→ Start Studying</button>
-      </div>
-
-      <!-- Card 4: Ace Icon -->
-      <div class="glass-card" style="grid-column: span 1;">
-        <span class="gc-badge">✦ App Icon</span>
-        <div class="gc-title">The Ace</div>
-        <div class="gc-desc">Symbol of mastery — the top card. Play your hand wisely.</div>
-        <div class="ace-icon-wrap">
-          <div class="ace-svg-container">
-            <svg width="120" height="160" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Card body -->
-              <rect x="2" y="2" width="116" height="156" rx="12" fill="white" stroke="black" stroke-width="3"/>
-              <!-- Inner border -->
-              <rect x="8" y="8" width="104" height="144" rx="8" fill="none" stroke="black" stroke-width="1" stroke-dasharray="4 3" opacity="0.25"/>
-              <!-- Top-left small A -->
-              <text x="14" y="30" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="black">A</text>
-              <!-- Top-left small spade -->
-              <path d="M18 36 C18 33 15 30 15 27 C15 24.5 18 23 18 23 C18 23 21 24.5 21 27 C21 30 18 33 18 36Z" fill="black"/>
-              <path d="M16 36 L20 36 L19 39 L17 39 Z" fill="black"/>
-              <!-- Bottom-right small A (rotated) -->
-              <g transform="rotate(180 60 80)">
-                <text x="14" y="30" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="black">A</text>
-                <path d="M18 36 C18 33 15 30 15 27 C15 24.5 18 23 18 23 C18 23 21 24.5 21 27 C21 30 18 33 18 36Z" fill="black"/>
-                <path d="M16 36 L20 36 L19 39 L17 39 Z" fill="black"/>
-              </g>
-              <!-- Center large spade -->
-              <g transform="translate(60 80)">
-                <!-- Main spade shape -->
-                <path d="M0 -28 C0 -28 -22 -8 -22 8 C-22 20 -12 26 0 20 C12 26 22 20 22 8 C22 -8 0 -28 0 -28Z" fill="black"/>
-                <!-- Spade handle -->
-                <path d="M-10 20 L10 20 L7 34 L-7 34 Z" fill="black"/>
-              </g>
-            </svg>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>
@@ -3437,3 +3250,4 @@ ExamEngine.finish = function() {
 </script>
 </body>
 </html>
+
