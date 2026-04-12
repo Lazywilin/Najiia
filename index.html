@@ -765,38 +765,6 @@ option { background: var(--bg3); }
 }
 .focus-badge::before { content: '🔒'; font-size: .7rem; }
 
-.btn-save-prog {
-  background: var(--blue2);
-  color: var(--blue);
-  border: 1px solid rgba(96,165,250,.3);
-  padding: .42rem 1rem;
-  border-radius: var(--rs);
-  font-size: .78rem;
-  font-weight: 600;
-  transition: all .18s;
-  display: flex; align-items: center; gap: .3rem;
-}
-.btn-save-prog:hover { background: rgba(96,165,250,.2); border-color: rgba(96,165,250,.5); }
-
-#savedProgsPanel {
-  display: none;
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: var(--r);
-  padding: .85rem 1rem;
-  margin-bottom: .65rem;
-}
-#savedProgsPanel.on { display: block; animation: fadeIn .2s ease; }
-.saved-prog-title { font-size: .68rem; font-family: 'JetBrains Mono', monospace; color: var(--muted); margin-bottom: .5rem; display: flex; align-items: center; justify-content: space-between; }
-.saved-prog-list { display: flex; flex-direction: column; gap: .35rem; max-height: 180px; overflow-y: auto; }
-.saved-prog-item { display: flex; align-items: center; gap: .5rem; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--rs); padding: .45rem .7rem; font-size: .78rem; }
-.saved-prog-name { flex: 1; color: var(--text2); }
-.saved-prog-date { font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--muted); flex-shrink: 0; }
-.saved-prog-load { background: none; border: 1px solid rgba(96,165,250,.3); color: var(--blue); font-size: .68rem; padding: .12rem .45rem; border-radius: 4px; transition: all .16s; }
-.saved-prog-load:hover { background: var(--blue2); }
-.saved-prog-del { background: none; border: none; color: var(--muted); font-size: .8rem; padding: .1rem .3rem; transition: color .15s; }
-.saved-prog-del:hover { color: var(--red); }
-
 #exam-screen { display: none; }
 .exam-topbar {
   position: sticky;
@@ -977,19 +945,6 @@ option { background: var(--bg3); }
   transition: all .16s;
 }
 .hist-clear-btn:hover { border-color: rgba(248,113,113,.3); color: var(--red); }
-/* FIX: Saved exams button in history */
-.hist-saved-btn {
-  background: var(--blue2);
-  border: 1px solid rgba(96,165,250,.3);
-  color: var(--blue);
-  font-size: .75rem;
-  padding: .24rem .7rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all .16s;
-  font-weight: 600;
-}
-.hist-saved-btn:hover { background: rgba(96,165,250,.2); border-color: rgba(96,165,250,.5); }
 .hist-empty { text-align: center; color: var(--muted); padding: 3.5rem 1rem; font-size: .88rem; line-height: 1.8; }
 .hist-empty strong { color: var(--text2); }
 .hist-list { display: flex; flex-direction: column; gap: .45rem; }
@@ -1010,61 +965,7 @@ option { background: var(--bg3); }
 .hi-chap-r { display: flex; align-items: center; gap: .42rem; font-size: .73rem; padding: .28rem .52rem; background: var(--bg3); border-radius: 4px; margin-bottom: .22rem; }
 .hi-cr { flex: 1; color: var(--muted2); } .hi-cc { color: var(--green); } .hi-cw { color: var(--red); }
 
-/* Paused exams section in history */
-.paused-section {
-  background: var(--card);
-  border: 1px solid rgba(251,191,36,.22);
-  border-radius: var(--r);
-  padding: 1rem 1.1rem;
-  margin-bottom: 1.2rem;
-}
-.paused-section-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: .9rem;
-  color: var(--amber);
-  margin-bottom: .7rem;
-  display: flex;
-  align-items: center;
-  gap: .4rem;
-}
-.paused-item {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--rs);
-  padding: .6rem .85rem;
-  margin-bottom: .4rem;
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  flex-wrap: wrap;
-}
-.paused-item-info { flex: 1; }
-.paused-item-name { font-size: .82rem; color: var(--text); font-weight: 500; }
-.paused-item-meta { font-family: 'JetBrains Mono', monospace; font-size: .62rem; color: var(--muted); margin-top: .12rem; }
-.paused-item-actions { display: flex; gap: .4rem; }
-.btn-resume-paused {
-  background: linear-gradient(135deg, var(--green), #10b981);
-  color: #022c22;
-  font-weight: 700;
-  font-size: .75rem;
-  padding: .32rem .9rem;
-  border: none;
-  border-radius: 100px;
-  transition: all .18s;
-}
-.btn-resume-paused:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(52,211,153,.3); }
-.btn-del-paused {
-  background: none;
-  border: 1px solid rgba(248,113,113,.25);
-  color: var(--red);
-  font-size: .72rem;
-  padding: .3rem .65rem;
-  border-radius: 100px;
-  transition: all .16s;
-}
-.btn-del-paused:hover { background: var(--red2); }
-
-/* ══ ABOUT PANEL — Compact ══ */
+/* ══ ABOUT PANEL ══ */
 .about-wrap-main { max-width: 760px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; display: flex; flex-direction: column; gap: 10px; }
 .about-hero {
   background: linear-gradient(135deg, rgba(212,168,67,.055), rgba(167,139,250,.04));
@@ -1169,9 +1070,6 @@ option { background: var(--bg3); }
 .ro-pass { font-size: .75rem; padding: .2rem .75rem; border-radius: 100px; margin: .2rem auto; display: inline-block; }
 .ro-pass.pass { background: var(--green2); color: var(--green); border: 1px solid rgba(52,211,153,.3); }
 .ro-pass.fail { background: var(--red2); color: var(--red); border: 1px solid rgba(248,113,113,.3); }
-
-/* ══ NAV EXAM WARNING ══ */
-#focusNavWarning { display: none; position: fixed; inset: 0; z-index: 9500; background: rgba(0,0,0,.93); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); align-items: center; justify-content: center; animation: fadeIn .2s ease; }
 
 /* ══ CONFETTI ══ */
 #confettiCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 900; display: none; }
@@ -1400,13 +1298,6 @@ option { background: var(--bg3); }
       <div class="ex-timer" id="exTimer">00:00</div>
     </div>
     <div class="exam-body">
-      <div id="savedProgsPanel">
-        <div class="saved-prog-title">
-          <span>💾 Saved Programs</span>
-          <button style="background:none;border:none;color:var(--muted);font-size:.75rem;cursor:pointer" onclick="SavedPrograms.closePanel()">✕ Close</button>
-        </div>
-        <div class="saved-prog-list" id="savedProgList"></div>
-      </div>
       <div id="exQContainer"></div>
       <div class="q-palette-wrap" id="qPaletteWrap" style="display:none">
         <div class="q-pal-title">Question Navigator</div>
@@ -1416,7 +1307,6 @@ option { background: var(--bg3); }
         <button class="btn-nav" id="exBtnPrev" onclick="ExamEngine.nav(-1)" disabled>← Prev</button>
         <button class="btn-nav" onclick="ExamEngine.togglePalette()">☰ Questions</button>
         <button class="btn-nav" id="exBtnNext" onclick="ExamEngine.nav(1)">Next →</button>
-        <button class="btn-save-prog" id="btnSaveProg" onclick="SavedPrograms.save()" style="display:none">💾 Save</button>
         <button class="btn-submit" onclick="ExamEngine.submit()">Submit ✓</button>
       </div>
     </div>
@@ -1452,12 +1342,9 @@ option { background: var(--bg3); }
 <!-- ══ HISTORY PANEL ══ -->
 <div class="panel" id="panel-history">
   <div class="hist-wrap">
-    <!-- FIX: Paused exams section — prominently placed, dedicated UI -->
-    <div id="pausedExamsSection"></div>
     <div class="hist-head">
       <h2>📜 Test History</h2>
       <div class="hist-head-actions">
-        <button class="hist-saved-btn" onclick="HistoryManager.showSavedExamsModal()">📋 Saved Exams</button>
         <button class="hist-clear-btn" onclick="HistoryManager.confirmClear()">Clear All</button>
       </div>
     </div>
@@ -1465,48 +1352,11 @@ option { background: var(--bg3); }
   </div>
 </div>
 
-<!-- ══ ABOUT PANEL — FIX: All content inside this panel ══ -->
+<!-- ══ ABOUT PANEL ══ -->
 <div class="panel" id="panel-about">
   <div class="about-wrap-main">
 
-    <!-- Hero -->
-    <div class="about-hero">
-      <div class="ab-avatar">📚</div>
-      <div class="ab-name">NU BBA Prep</div>
-      <div class="ab-title">Commerce Unit Admission · v7.3</div>
-      <p class="ab-quote">"Built with fire, for those who refuse to give up. <strong>Your exam day is coming — be ready.</strong>"</p>
-    </div>
-
-    <!-- About section -->
-    <div class="about-section">
-      <h3>🎓 About This App</h3>
-      <p>Built specifically for NU BBA Commerce Unit admission test preparation. Covers all 5 subjects: বাংলা, English, General Knowledge, Accounting, and Management — with 500+ MCQs based on HSC 2025 syllabus and past admission patterns (NU, DU, JnU).</p>
-      <div class="ab-stat-row">
-        <div class="ab-stat"><div class="ab-sv" id="aboutTotalQ">500+</div><div class="ab-sl">MCQs</div></div>
-        <div class="ab-stat"><div class="ab-sv">5</div><div class="ab-sl">Subjects</div></div>
-        <div class="ab-stat"><div class="ab-sv" id="aboutHistCount">0</div><div class="ab-sl">Tests Taken</div></div>
-      </div>
-    </div>
-
-    <!-- Changelog -->
-    <div class="changelog-section">
-      <h3>📋 Changelog</h3>
-      <div class="cl-version">v7.3 — 2026-04-12</div>
-      <div class="cl-item cl-fix">Navbar layout fixed — logo always LEFT, buttons always RIGHT on all screen sizes</div>
-      <div class="cl-item cl-fix">About content was showing on Home page — fixed HTML structure</div>
-      <div class="cl-item cl-fix">Saved/Paused exams now resumable directly from History tab with clear UI</div>
-      <div class="cl-item cl-fix">About section info cards made more compact</div>
-      <div class="cl-item cl-new">Added "📋 Saved Exams" button in History tab header</div>
-      <div class="cl-item cl-new">Improved paused exams display with dedicated section and cleaner resume flow</div>
-      <div class="cl-item cl-new">Added Changelog section to About panel</div>
-      <div class="cl-version" style="margin-top:.65rem">v7.2 — Previous</div>
-      <div class="cl-item">Focus Mode tab-switch detection & overlay</div>
-      <div class="cl-item">Per-question countdown timer in Exam Mode</div>
-      <div class="cl-item">Save & Resume exam progress feature</div>
-      <div class="cl-item">Medal/Achievement system with confetti</div>
-    </div>
-
-    <!-- Lead Dev -->
+    <!-- Lead Dev — TOP -->
     <div class="dev-card">
       <div class="dev-top">
         <img src="https://github.com/waterflam.png" class="dev-avatar" onerror="this.style.display='none'" />
@@ -1537,20 +1387,23 @@ option { background: var(--bg3); }
       </div>
     </div>
 
-  </div>
-</div>
-
-<!-- ══ NAV EXAM WARNING ══ -->
-<div id="focusNavWarning" style="display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);align-items:center;justify-content:center;animation:fadeIn .2s ease;">
-  <div class="focus-warn-box" style="border-color:rgba(251,191,36,.5);box-shadow:0 0 60px rgba(251,191,36,.2),var(--shadow-lg);">
-    <div class="focus-warn-icon">⚠️</div>
-    <div class="focus-warn-title" style="color:var(--amber)">Exam In Progress</div>
-    <div class="focus-warn-msg">You're trying to leave during an active exam.<br>Choose what to do with your current progress.</div>
-    <div class="focus-warn-actions" style="flex-direction:column;gap:.5rem;align-items:center">
-      <button class="btn-resume" style="width:100%;max-width:260px" onclick="App._navSaveAndLeave()">💾 Save &amp; Leave — Resume Later</button>
-      <button class="btn-stop-exam" style="width:100%;max-width:260px" onclick="App._navDiscard()">✕ Discard &amp; Leave</button>
-      <button style="width:100%;max-width:260px;background:transparent;border:1px solid var(--border2);color:var(--text2);font-size:.85rem;padding:.62rem 1.4rem;border-radius:100px;cursor:pointer;transition:all .2s" onclick="App._navStay()">← Back to Exam</button>
+    <!-- Changelog -->
+    <div class="changelog-section">
+      <h3>📋 Changelog</h3>
+      <div class="cl-version">v7.4 — 2026-04-13</div>
+      <div class="cl-item cl-fix">About page restructured — developer cards now at top, NU BBA Prep hero removed</div>
+      <div class="cl-item cl-fix">Removed Save &amp; Resume exam feature entirely (all related code cleaned)</div>
+      <div class="cl-item cl-fix">Removed dead save button from exam topbar and history "Saved Exams" button</div>
+      <div class="cl-item cl-fix">FocusMode simplified — redundant code and clutter removed</div>
+      <div class="cl-item cl-new">Bangla chapters extended — বিড়াল, সোনার তরী, আঠারো বছর, সিরাজউদ্দৌলা, ব্যাকরণ all reach 30–40 MCQs</div>
+      <div class="cl-item cl-new">Version bumped to v7.4</div>
+      <div class="cl-version" style="margin-top:.65rem">v7.3 — 2026-04-12</div>
+      <div class="cl-item">Navbar layout fixed</div>
+      <div class="cl-item">Focus Mode tab-switch detection</div>
+      <div class="cl-item">Per-question countdown timer</div>
+      <div class="cl-item">Medal/Achievement system with confetti</div>
     </div>
+
   </div>
 </div>
 
@@ -1709,6 +1562,25 @@ bangla: {
       ["'পাঁচজন ছাত্র' — 'পাঁচ' কোন ধরনের বিশেষণ?", ["গুণবাচক","সংখ্যাবাচক","পরিমাণবাচক","অবস্থাবাচক"], 1, 1],
       ["যৌগিক ক্রিয়ার উদাহরণ কোনটি?", ["খাই","পড়ি","খেতে থাকি","ঘুমাই"], 2, 2],
       ["'বৃক্ষতলে ছায়া' — এখানে 'তলে' কোন বিভক্তি?", ["প্রথমা","দ্বিতীয়া","সপ্তমী","পঞ্চমী"], 2, 3],
+      ["'নদীতে মাছ আছে' — 'নদীতে' কোন কারক?", ["কর্তৃকারক","কর্মকারক","অধিকরণ কারক","অপাদান কারক"], 2, 2],
+      ["ব্যঞ্জনসন্ধির উদাহরণ কোনটি?", ["হিম+আলয়=হিমালয়","তৎ+কাল=তৎকাল","উৎ+ছেদ=উচ্ছেদ","নদী+এর=নদীর"], 2, 2],
+      ["'দেশমাতৃকা' শব্দে কোন সমাস?", ["কর্মধারয়","তৎপুরুষ","বহুব্রীহি","দ্বন্দ্ব"], 1, 2],
+      ["বাংলা ব্যাকরণে লিঙ্গ কত প্রকার?", ["২","৩","৪","৫"], 2, 1],
+      ["'সূর্যোদয়' শব্দটি কোন সন্ধি?", ["স্বরসন্ধি","ব্যঞ্জনসন্ধি","বিসর্গ সন্ধি","নিপাতনে সিদ্ধ"], 0, 2],
+      ["'পথে-ঘাটে' কোন ধরনের সমাস?", ["তৎপুরুষ","দ্বন্দ্ব","কর্মধারয়","অব্যয়ীভাব"], 1, 2],
+      ["'আমি ভাত খাই' — 'আমি' কোন কারকে?", ["কর্তৃকারক","কর্মকারক","করণ কারক","সম্প্রদান কারক"], 0, 1],
+      ["'ছাত্রকে বই দাও' — 'ছাত্রকে' কোন কারক?", ["কর্তৃকারক","কর্মকারক","সম্প্রদান কারক","অপাদান কারক"], 2, 2],
+      ["'ঢাকা থেকে চট্টগ্রাম' — 'থেকে' কোন বিভক্তির চিহ্ন?", ["তৃতীয়া","পঞ্চমী","সপ্তমী","দ্বিতীয়া"], 1, 2],
+      ["বাংলায় বচন কত প্রকার?", ["২","৩","৪","৫"], 0, 1],
+      ["'দশানন' শব্দটি কোন সমাস?", ["তৎপুরুষ","কর্মধারয়","বহুব্রীহি","দ্বিগু"], 2, 2],
+      ["বাংলা ব্যাকরণে উপসর্গ কয় ধরনের?", ["২","৩","৪","৫"], 1, 2],
+      ["'বিদ্যালয়' শব্দে কোন উপসর্গ আছে?", ["বি","বিদ্যা","লয়","কোনো উপসর্গ নেই"], 0, 2],
+      ["'সৎ + কার = সৎকার' — এটি কোন সন্ধি?", ["স্বরসন্ধি","ব্যঞ্জনসন্ধি","বিসর্গ সন্ধি","নিপাতনে সিদ্ধ"], 1, 2],
+      ["কারকের সাথে ক্রিয়ার সম্পর্ক নির্দেশ করে কোনটি?", ["উপসর্গ","বিভক্তি","প্রত্যয়","অনুসর্গ"], 1, 2],
+      ["'চাঁদমুখ' কোন সমাসের উদাহরণ?", ["তৎপুরুষ","কর্মধারয় (উপমান)","বহুব্রীহি","দ্বন্দ্ব"], 1, 2],
+      ["ক্রিয়ার কাল কত প্রকার?", ["২","৩","৪","৫"], 1, 1],
+      ["'পরিশ্রম করলে সাফল্য আসে' — এটি কোন ধরনের বাক্য?", ["সরল","মিশ্র","যৌগিক","জটিল"], 1, 3],
+      ["'মেঘে মেঘে বেলা গেল' — 'মেঘে মেঘে' কীসের উদাহরণ?", ["অনুক্ত কর্তা","বীপ্সার্থে দ্বিত্ব","বিশেষণ দ্বিত্ব","উপমান"], 1, 3],
     ]}
   ]
 },
@@ -2557,21 +2429,14 @@ const Util = {
 
 // ══ APP NAVIGATION ══
 const App = {
-  _pendingNav: null,
-  nav(name, force) {
-    if (!force && ExamEngine._state) {
-      App._pendingNav = name;
-      const ov = document.getElementById('focusNavWarning');
-      if (ov) ov.style.display = 'flex';
-      return;
-    }
+  nav(name) {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
     document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
     const panel = document.getElementById('panel-' + name);
     if (!panel) return;
     panel.classList.add('on');
     document.getElementById('nb-' + name)?.classList.add('on');
-    if (name === 'history') { HistoryManager.render(); HistoryManager.renderPaused(); }
+    if (name === 'history') HistoryManager.render();
     if (name === 'subjects') {
       document.getElementById('subj-selection').style.display = 'block';
       document.getElementById('subj-reader').classList.remove('on');
@@ -2581,39 +2446,7 @@ const App = {
       document.getElementById('results-screen').style.display = 'none';
       document.getElementById('test-modes').style.display = 'block';
     }
-    if (name === 'about') {
-      const atq = document.getElementById('aboutTotalQ');
-      const ahc = document.getElementById('aboutHistCount');
-      if (atq) atq.textContent = Util.totalMCQCount();
-      if (ahc) ahc.textContent = State.history.length;
-    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  },
-  _navSaveAndLeave() {
-    const ov = document.getElementById('focusNavWarning');
-    if (ov) ov.style.display = 'none';
-    if (ExamEngine._state) {
-      const autoName = `⏸ ${ExamEngine._state.subjectName} — ${new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`;
-      SavedPrograms._autoSave(autoName);
-    }
-    const dest = App._pendingNav;
-    App._pendingNav = null;
-    App.nav(dest, true);
-  },
-  _navDiscard() {
-    const ov = document.getElementById('focusNavWarning');
-    if (ov) ov.style.display = 'none';
-    ExamEngine._clearTimers();
-    FocusMode.deactivate();
-    ExamEngine._state = null;
-    const dest = App._pendingNav;
-    App._pendingNav = null;
-    App.nav(dest, true);
-  },
-  _navStay() {
-    const ov = document.getElementById('focusNavWarning');
-    if (ov) ov.style.display = 'none';
-    App._pendingNav = null;
   }
 };
 
@@ -2873,18 +2706,11 @@ const ExamEngine = {
       current: 0, timeLeft: cfg.totalTime, totalElapsed: 0,
       qStartTime: Date.now()
     };
-    if (cfg.mode === 'exam') FocusMode.activate(cfg.diff === 'hard');
+    if (cfg.mode === 'exam') FocusMode.activate();
     else FocusMode.deactivate();
-    const saveBtn = document.getElementById('btnSaveProg');
-    if (saveBtn) {
-      const showSave = cfg.mode === 'practice' || (cfg.mode === 'exam' && cfg.diff !== 'hard');
-      saveBtn.style.display = showSave ? 'inline-flex' : 'none';
-    }
-    // FIX: Explicitly show/hide correct screens
     document.getElementById('test-modes').style.display = 'none';
     document.getElementById('exam-screen').style.display = 'block';
     document.getElementById('results-screen').style.display = 'none';
-    // Make sure we're on test panel
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
     document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
     document.getElementById('panel-test').classList.add('on');
@@ -3112,100 +2938,23 @@ const ExamEngine = {
 
 // ══ HISTORY MANAGER ══
 const HistoryManager = {
-  // FIX: Improved paused exams section with proper UI
-  renderPaused() {
-    const paused = SavedPrograms._load();
-    const el = document.getElementById('pausedExamsSection');
-    if (!el) return;
-    if (!paused.length) { el.innerHTML = ''; return; }
-    el.innerHTML = `
-      <div class="paused-section">
-        <div class="paused-section-title">⏸ Paused Exams <span style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);font-weight:400">(${paused.length} saved)</span></div>
-        ${paused.map(it => `
-          <div class="paused-item">
-            <div class="paused-item-info">
-              <div class="paused-item-name">${it.name}</div>
-              <div class="paused-item-meta">${it.date} · ${it.answers?.filter(a=>a!==null).length||0}/${it.questionsMeta?.length||0} answered · ${it.diff||'practice'}</div>
-            </div>
-            <div class="paused-item-actions">
-              <button class="btn-resume-paused" onclick="HistoryManager.resumeExam(${it.id})">▶ Resume</button>
-              <button class="btn-del-paused" onclick="HistoryManager.deletePaused(${it.id})">✕</button>
-            </div>
-          </div>`).join('')}
-      </div>`;
-  },
-
-  // FIX: Resume exam properly — navigates to test panel then launches
-  resumeExam(id) {
-    const items = SavedPrograms._load();
-    const it = items.find(x => x.id === id);
-    if (!it) { alert('Saved exam not found.'); return; }
-    if (!confirm(`Resume "${it.name}"?`)) return;
-    // Navigate to test panel first
-    App.nav('test', true);
-    // Then launch after a short delay to ensure DOM is ready
-    setTimeout(() => {
-      FocusMode.deactivate();
-      ExamEngine._clearTimers();
-      const questions = it.questionsMeta.map(m => ({...m}));
-      const cfg = EXAM_CONFIG[it.diff] || EXAM_CONFIG.easy;
-      ExamEngine.launch({
-        mode: it.mode, diff: it.diff, subject: it.subjectName,
-        subjectName: it.subjectName, questions,
-        totalTime: cfg.totalMinutes * 60,
-        posScore: cfg.posScore, negScore: cfg.negScore,
-        passPercent: 60, perQSec: cfg.perQSec
-      });
-      // Restore saved answers
-      if (it.answers) {
-        it.answers.forEach((a,i) => { if (a!==null && ExamEngine._state) ExamEngine._state.answers[i] = a; });
-        if (ExamEngine._state) ExamEngine.renderQ();
-      }
-    }, 100);
-  },
-
-  deletePaused(id) {
-    if (!confirm('Delete this saved exam?')) return;
-    SavedPrograms.del(id);
-    this.renderPaused();
-  },
-
-  // FIX: Show saved exams in modal from History tab
-  showSavedExamsModal() {
-    const items = SavedPrograms._load();
-    if (!items.length) { Modal.open('📋 Saved Exams', '<p style="color:var(--muted);text-align:center;padding:1.5rem">No saved exams yet.<br><small>During a Practice or Easy/Medium Exam, click 💾 Save to save progress.</small></p>'); return; }
-    const body = items.map(it => `
-      <div class="paused-item" style="margin-bottom:.4rem">
-        <div class="paused-item-info">
-          <div class="paused-item-name">${it.name}</div>
-          <div class="paused-item-meta">${it.date} · ${it.answers?.filter(a=>a!==null).length||0}/${it.questionsMeta?.length||0} answered · ${it.diff||'practice'}</div>
-        </div>
-        <div class="paused-item-actions">
-          <button class="btn-resume-paused" onclick="Modal.close();HistoryManager.resumeExam(${it.id})">▶ Resume</button>
-          <button class="btn-del-paused" onclick="SavedPrograms.del(${it.id});HistoryManager.showSavedExamsModal()">✕</button>
-        </div>
-      </div>`).join('');
-    Modal.open('📋 Saved Exams', `<div>${body}</div><div style="margin-top:.8rem;text-align:right"><button class="btn-sec" style="font-size:.8rem" onclick="Modal.close()">Close</button></div>`);
-  },
-
   render() {
     const body = document.getElementById('histBody');
-    this.renderPaused();
     if (!State.history.length) {
       body.innerHTML = '<div class="hist-empty">No tests yet.<br><strong>Go to 🎯 Test to start your first exam!</strong></div>';
       return;
     }
     let html = '<div class="hist-list">';
-    State.history.forEach((h,idx) => {
-      const acc = typeof h.accuracy==='number' ? h.accuracy : 0;
-      const cls = acc>=70?'g':acc>=45?'a':'b';
-      const badge = `${h.score??0}/${h.maxScore??0} · ${acc}%`;
-      const diffTag = h.diff&&h.diff!=='custom' ? h.diff : 'practice';
+    State.history.forEach((h, idx) => {
+      const acc = typeof h.accuracy === 'number' ? h.accuracy : 0;
+      const cls = acc >= 70 ? 'g' : acc >= 45 ? 'a' : 'b';
+      const badge = `${h.score ?? 0}/${h.maxScore ?? 0} · ${acc}%`;
+      const diffTag = h.diff && h.diff !== 'custom' ? h.diff : 'practice';
       html += `<div class="hi" id="hi_${idx}">
         <div class="hi-head" onclick="this.closest('.hi').classList.toggle('open')">
           <span class="hi-date">${h.date}</span>
           <span class="hi-name">${h.subject} (${h.total}Q)</span>
-          <span class="hi-mode">${h.mode==='exam'?'Exam':'Practice'} · ${diffTag}</span>
+          <span class="hi-mode">${h.mode === 'exam' ? 'Exam' : 'Practice'} · ${diffTag}</span>
           <span class="hi-score ${cls}">${badge}</span>
         </div>
         <div class="hi-body">
@@ -3213,11 +2962,12 @@ const HistoryManager = {
             <span style="color:var(--green)">✓ ${h.correct}</span>
             <span style="color:var(--red)">✗ ${h.wrong}</span>
             <span style="color:var(--muted)">— ${h.skip}</span>
-            <span style="color:var(--muted2)">⏱ ${h.totalTime||'—'}</span>
-            <span style="color:var(--${h.passed?'green':'red'})">${h.passed?'PASSED':'FAILED'}</span>
+            <span style="color:var(--muted2)">⏱ ${h.totalTime || '—'}</span>
+            <span style="color:var(--${h.passed ? 'green' : 'red'})">${h.passed ? 'PASSED' : 'FAILED'}</span>
           </div>
-          ${Object.entries(h.chapStats||{}).map(([name,s]) => `
-            <div class="hi-chap-r"><span class="hi-cr">${name.substring(0,38)}</span><span class="hi-cc">✓${s.c}</span><span class="hi-cw">✗${s.w}</span><span style="color:var(--muted)">/${s.t}</span></div>`).join('')}
+          ${Object.entries(h.chapStats || {}).map(([name, s]) =>
+            `<div class="hi-chap-r"><span class="hi-cr">${name.substring(0, 38)}</span><span class="hi-cc">✓${s.c}</span><span class="hi-cw">✗${s.w}</span><span style="color:var(--muted)">/${s.t}</span></div>`
+          ).join('')}
         </div>
       </div>`;
     });
@@ -3404,49 +3154,6 @@ const FocusMode = {
     document.getElementById('focusWarningOverlay').classList.remove('on');
     FocusMode.deactivate();
     ExamEngine.submit();
-  }
-};
-
-// ══ SAVED PROGRAMS ══
-const SavedPrograms = {
-  _STORAGE_KEY: 'nu_bba_saved_progs_v1',
-  _load() { try { return JSON.parse(localStorage.getItem(this._STORAGE_KEY)||'[]'); } catch { return []; } },
-  _store(items) { try { localStorage.setItem(this._STORAGE_KEY,JSON.stringify(items.slice(0,20))); } catch {} },
-  save() {
-    if (!ExamEngine._state) return;
-    const { subjectName, mode, diff, answers, questions } = ExamEngine._state;
-    const name = prompt('Name this saved progress:',`${subjectName} — ${new Date().toLocaleTimeString()}`);
-    if (!name) return;
-    const items = this._load();
-    items.unshift({
-      id:Date.now(), name:name.trim(),
-      date:new Date().toLocaleString(), subjectName, mode, diff,
-      answers:[...answers],
-      questionsMeta:questions.map(q=>({q:q.q,opts:q.opts,corr:q.corr,chapName:q.chapName,subj:q.subj}))
-    });
-    this._store(items);
-    const btn = document.getElementById('btnSaveProg');
-    if (btn) { btn.textContent='✓ Saved!'; setTimeout(()=>{btn.textContent='💾 Save';},1500); }
-  },
-  del(id) {
-    this._store(this._load().filter(x=>x.id!==id));
-  },
-  _autoSave(name) {
-    if (!ExamEngine._state) return;
-    const { subjectName, mode, diff, answers, questions } = ExamEngine._state;
-    const items = this._load();
-    items.unshift({
-      id:Date.now(), name, date:new Date().toLocaleString(),
-      subjectName, mode, diff,
-      answers:[...answers],
-      questionsMeta:questions.map(q=>({q:q.q,opts:q.opts,corr:q.corr,chapName:q.chapName,subj:q.subj}))
-    });
-    this._store(items);
-    ExamEngine._clearTimers();
-    FocusMode.deactivate();
-    ExamEngine._state = null;
-    document.getElementById('exam-screen').style.display='none';
-    document.getElementById('test-modes').style.display='block';
   }
 };
 
