@@ -12,11 +12,72 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  .about-wrap{
+ .dev-card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--rx);
+  padding: 14px;
+  margin-top: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.dev-top{
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 12px;
-} 
+}
+
+.dev-avatar{
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  object-fit: cover;
+  transition: transform .25s var(--ease);
+  border: 1px solid var(--border2);
+}
+
+.dev-name{
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.dev-role{
+  font-size: .8rem;
+  color: var(--gold);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.dev-socials{
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.dev-socials a{
+  flex: 1;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.dev-btn{
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: var(--goldg);
+  color: var(--gold2);
+  border: 1px solid var(--gold3);
+}
 /* ══════════════════════════════════════════════
    DESIGN TOKENS & CSS VARIABLES
 ══════════════════════════════════════════════ */
@@ -1435,9 +1496,27 @@ option { background: var(--bg3); }
 </div>
 
 <!-- ══ ABOUT PANEL ══ -->
-<div class="panel" id="panel-about">
-    </div>
-    
+     <h3>🎓 About Us</h3>
+<p>
+  This platform is built specifically for NU BBA Commerce Unit admission test preparation.
+  Covers all 5 subjects: বাংলা, English, General Knowledge, Accounting, and Management —
+  with 500+ MCQs based on HSC 2025 syllabus and past admission patterns (NU, DU, JnU).
+</p>
+        <!-- ══ ABOUT PANEL ══ -->
+<div class="about-section">
+
+  <h3>🎓 About Us</h3>
+
+  <p>
+    This platform is built specifically for NU BBA Commerce Unit admission test preparation.
+    Covers all 5 subjects: বাংলা, English, General Knowledge, Accounting, and Management —
+    with 500+ MCQs based on HSC 2025 syllabus and past admission patterns (NU, DU, JnU).
+  </p>
+
+</div>
+
+
+<!-- ══ LEAD DEV ══ -->
 <div class="dev-card">
 
   <div class="dev-top">
@@ -1478,7 +1557,7 @@ option { background: var(--bg3); }
     <a href="https://github.com/lazywilin">🐙</a>
     <a href="https://metrolist.meowery.eu">🌐</a>
   </div>
-  </div>
+
 </div>
 
 <!-- ══ NAV EXAM WARNING ══ -->
