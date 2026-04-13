@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>NU BBA Prep — by Waterflame · v7.3</title>
+<title>NU BBA Prep — by Waterflame · v8.0</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1081,6 +1081,117 @@ option { background: var(--bg3); }
 @keyframes glow-red { 0%,100%{box-shadow:none} 50%{box-shadow:0 0 6px rgba(248,113,113,.4)} }
 @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.15)} 100%{transform:scale(1)} }
 @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ══ EXAM RULES OVERLAY ══ */
+#examRulesOverlay {
+  display: none; position: fixed; inset: 0; z-index: 8500;
+  background: rgba(0,0,0,.92); backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  align-items: center; justify-content: center; padding: 1rem;
+  overflow-y: auto;
+}
+#examRulesOverlay.on { display: flex; }
+.er-box {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 20px; max-width: 520px; width: 100%;
+  box-shadow: 0 30px 80px rgba(0,0,0,.7);
+  animation: rmPop .45s cubic-bezier(.34,1.56,.64,1) both;
+  margin: auto; position: relative; overflow: hidden;
+}
+.er-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--purple), var(--blue));
+}
+.er-head { padding: 1.4rem 1.4rem 0.8rem; text-align: center; border-bottom: 1px solid var(--border); }
+.er-icon { font-size: 2.8rem; margin-bottom: .4rem; }
+.er-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: #fff; margin-bottom: .25rem; }
+.er-sub { font-size: .8rem; color: var(--muted); }
+.er-body { padding: 1.1rem 1.4rem; display: flex; flex-direction: column; gap: .75rem; }
+.er-cat { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+.er-cat-head {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .6rem .9rem; background: rgba(255,255,255,.025);
+  border-bottom: 1px solid var(--border);
+  font-size: .78rem; font-weight: 700; color: var(--text);
+}
+.er-cat-head span { font-size: 1rem; }
+.er-cat-body { padding: .55rem .9rem; display: flex; flex-direction: column; gap: .32rem; }
+.er-rule { display: flex; align-items: flex-start; gap: .48rem; font-size: .78rem; color: var(--muted2); line-height: 1.55; }
+.er-rule::before { content: '•'; color: var(--gold); flex-shrink: 0; margin-top: .05rem; font-weight: 700; }
+.er-rule.r-warn::before { color: var(--red); }
+.er-rule.r-ok::before { color: var(--green); }
+.er-rule.r-info::before { color: var(--blue); }
+.er-foot { padding: .9rem 1.4rem; border-top: 1px solid var(--border); display: flex; justify-content: center; }
+.er-close-btn {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #0a0a0a; font-weight: 700; font-size: .92rem;
+  padding: .65rem 2.4rem; border: none; border-radius: 100px;
+  transition: all .2s var(--ease); letter-spacing: .02em;
+}
+.er-close-btn:hover { opacity: .9; transform: translateY(-2px); box-shadow: var(--glow-gold); }
+
+/* ══ ADMIN UNLOCK OVERLAY ══ */
+#adminUnlockOverlay {
+  display: none; position: fixed; inset: 0; z-index: 9500;
+  background: rgba(0,0,0,.95); backdrop-filter: blur(24px);
+  align-items: center; justify-content: center;
+}
+#adminUnlockOverlay.on { display: flex; }
+.au-box { text-align: center; animation: auPop .55s cubic-bezier(.34,1.56,.64,1) both; }
+@keyframes auPop {
+  0%{opacity:0;transform:scale(0.4) rotate(-20deg)}
+  70%{transform:scale(1.08) rotate(3deg)}
+  100%{opacity:1;transform:scale(1) rotate(0)}
+}
+.au-icon { font-size: 5rem; margin-bottom: .8rem; animation: auSpin 1.2s ease-out both; display: block; }
+@keyframes auSpin { 0%{transform:rotate(-360deg) scale(0)} 100%{transform:rotate(0) scale(1)} }
+.au-title {
+  font-family: 'DM Serif Display', serif; font-size: 2rem;
+  background: linear-gradient(135deg, var(--gold), var(--purple), var(--blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: .4rem; letter-spacing: .02em;
+}
+.au-sub { font-size: .88rem; color: var(--muted2); }
+.au-glow {
+  position: fixed; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(167,139,250,.2), transparent);
+  animation: auGlowPulse 1.5s ease-in-out infinite; z-index: -1;
+}
+@keyframes auGlowPulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+
+/* ══ ADMIN EXAM PANEL ══ */
+.admin-exam-panel {
+  background: linear-gradient(135deg, rgba(167,139,250,.1), rgba(212,168,67,.07));
+  border: 1.5px solid rgba(167,139,250,.35); border-radius: var(--r);
+  padding: .85rem 1rem; margin-top: .5rem; display: none;
+}
+.admin-exam-panel.on { display: block; }
+.admin-exam-title {
+  font-size: .65rem; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--purple); font-weight: 700; margin-bottom: .55rem;
+  display: flex; align-items: center; gap: .35rem;
+}
+.admin-btns { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
+.admin-award-btn {
+  background: linear-gradient(135deg, rgba(167,139,250,.2), rgba(212,168,67,.15));
+  border: 1px solid rgba(167,139,250,.4); color: var(--purple);
+  font-size: .8rem; font-weight: 700; padding: .55rem .5rem;
+  border-radius: var(--rs); transition: all .18s var(--ease); cursor: pointer;
+}
+.admin-award-btn:hover { background: rgba(167,139,250,.3); transform: translateY(-1px); box-shadow: 0 0 20px rgba(167,139,250,.35); }
+
+/* ══ LOCKED ANSWER STYLE ══ */
+.ex-opt.locked { opacity: .42; cursor: not-allowed; }
+.ex-opt.locked:hover { background: rgba(255,255,255,.025) !important; border-color: var(--border) !important; color: var(--muted2) !important; transform: none !important; }
+.ex-opt.sel.locked { opacity: 1; }
+
+/* ══ DEV AVATAR HOLD PROGRESS ══ */
+.dev-avatar-wrap { position: relative; display: inline-block; cursor: pointer; }
+.dev-hold-ring {
+  position: absolute; inset: -3px; border-radius: 17px;
+  border: 2.5px solid transparent; pointer-events: none; transition: border-color .15s;
+}
+.dev-hold-ring.active { border-color: var(--purple); box-shadow: 0 0 12px rgba(167,139,250,.5); }
 </style>
 </head>
 <body>
@@ -1114,13 +1225,76 @@ option { background: var(--bg3); }
 <div id="focusWarningOverlay">
   <div class="focus-warn-box">
     <div class="focus-warn-icon">🚫</div>
-    <div class="focus-warn-title">Focus Mode Active</div>
-    <div class="focus-warn-msg">You left the exam tab! Tab-switching is not allowed during an active exam. Stay focused — your time is still running.</div>
+    <div class="focus-warn-title">Exam Submitted</div>
+    <div class="focus-warn-msg">You left the exam tab. Focus Mode detected a tab switch — your exam has been automatically submitted.</div>
     <div class="focus-warn-count" id="focusWarnCount">Tab switch #1</div>
     <div class="focus-warn-actions">
-      <button class="btn-resume" onclick="FocusMode.resume()">✓ Return to Exam</button>
-      <button class="btn-stop-exam" onclick="FocusMode.stopExam()">Stop Exam</button>
+      <button class="btn-resume" onclick="FocusMode.dismissAndFinish()">✓ View Results</button>
     </div>
+  </div>
+</div>
+
+<!-- ══ EXAM RULES OVERLAY ══ -->
+<div id="examRulesOverlay">
+  <div class="er-box">
+    <div class="er-head">
+      <div class="er-icon">📋</div>
+      <div class="er-title">Exam Rules</div>
+      <div class="er-sub">Read carefully before your first exam — shown only once</div>
+    </div>
+    <div class="er-body">
+
+      <div class="er-cat">
+        <div class="er-cat-head"><span>🔒</span> Focus Mode</div>
+        <div class="er-cat-body">
+          <div class="er-rule r-warn">Tab switching is <strong>not allowed</strong> during an active exam. The app monitors your tab visibility.</div>
+          <div class="er-rule r-warn">If you switch to another tab or minimise the window, your exam will be <strong>automatically submitted</strong>.</div>
+          <div class="er-rule r-info">A 🔒 Focus Mode badge appears in the exam header while active.</div>
+        </div>
+      </div>
+
+      <div class="er-cat">
+        <div class="er-cat-head"><span>⏱</span> Timers</div>
+        <div class="er-cat-body">
+          <div class="er-rule r-info">Each question has a <strong>per-question countdown timer</strong> (Easy: 30s · Medium: 20s · Competitive: 15s).</div>
+          <div class="er-rule r-ok">If the per-question timer runs out, <strong>nothing happens automatically</strong> — it is a reminder that time is ticking.</div>
+          <div class="er-rule r-warn">When the <strong>total exam time</strong> runs out, your exam is finished and submitted immediately.</div>
+        </div>
+      </div>
+
+      <div class="er-cat">
+        <div class="er-cat-head"><span>📝</span> Answering</div>
+        <div class="er-cat-body">
+          <div class="er-rule r-warn">Once you pick an answer for a question, <strong>you cannot change it</strong>. Choose carefully!</div>
+          <div class="er-rule r-info">You can navigate between questions using Prev / Next or the Question Navigator palette.</div>
+          <div class="er-rule r-ok">Unanswered (skipped) questions carry <strong>no penalty</strong>.</div>
+        </div>
+      </div>
+
+      <div class="er-cat">
+        <div class="er-cat-head"><span>🏆</span> Scoring & Medals</div>
+        <div class="er-cat-body">
+          <div class="er-rule r-info">Easy: +1 / no negative · Medium: +1 / −0.5 · Competitive: +1 / −1</div>
+          <div class="er-rule r-ok">Earn <strong>Gold</strong> (70%+), <strong>Silver</strong> (55–69%), <strong>Bronze</strong> (40–54%) medals.</div>
+          <div class="er-rule r-warn"><strong>💎 Platinum</strong> requires scoring 90%+ on 3 consecutive exams in <em>Competitive</em> mode only.</div>
+          <div class="er-rule r-info">Pass mark is 60% of max score. Medals are saved permanently.</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="er-foot">
+      <button class="er-close-btn" onclick="ExamRules.close()">✓ Got it — Start Exam</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN UNLOCK OVERLAY ══ -->
+<div id="adminUnlockOverlay">
+  <div class="au-glow"></div>
+  <div class="au-box">
+    <span class="au-icon">⚡</span>
+    <div class="au-title">Dev Feature Unlocked</div>
+    <div class="au-sub">Special powers activated · Refreshing the page resets this</div>
   </div>
 </div>
 
@@ -1299,6 +1473,15 @@ option { background: var(--bg3); }
     </div>
     <div class="exam-body">
       <div id="exQContainer"></div>
+      <div class="admin-exam-panel" id="adminExamPanel">
+        <div class="admin-exam-title">⚡ Dev Override — Award Badge</div>
+        <div class="admin-btns">
+          <button class="admin-award-btn" onclick="AdminMode.awardAndFinish()">🏆 Award Platinum</button>
+          <button class="admin-award-btn" onclick="AdminMode.awardAndFinish()">💎 Instant Badge</button>
+          <button class="admin-award-btn" onclick="AdminMode.awardAndFinish()">⚡ Dev Complete</button>
+          <button class="admin-award-btn" onclick="AdminMode.awardAndFinish()">✓ Force Finish</button>
+        </div>
+      </div>
       <div class="q-palette-wrap" id="qPaletteWrap" style="display:none">
         <div class="q-pal-title">Question Navigator</div>
         <div class="q-pal-grid" id="qPaletteGrid"></div>
@@ -1359,14 +1542,17 @@ option { background: var(--bg3); }
     <!-- Lead Dev — TOP -->
     <div class="dev-card">
       <div class="dev-top">
-        <img src="https://github.com/KytoEmber.png" class="dev-avatar" onerror="this.style.display='none'" />
+        <div class="dev-avatar-wrap" id="devAvatarWrap">
+          <img src="https://github.com/KytoEmber.png" class="dev-avatar" id="devAvatarImg" onerror="this.style.display='none'" />
+          <div class="dev-hold-ring" id="devHoldRing"></div>
+        </div>
         <div>
           <div class="dev-name">Waterflame</div>
           <div class="dev-role">Lead Developer</div>
         </div>
       </div>
       <div class="dev-socials">
-        <a href="https://github.com/KytoEmber" target="_blank">🐈‍⬛</a>
+        <a href="https://github.com/KytoEmber" target="_blank">🌐</a>
         <a href="https://www.facebook.com/Waterflame.abdullah" target="_blank">ⓕ Facebook </a>
       </div>
       <button class="dev-btn" onclick="window.open('https://buymeacoffee.com/waterflame','_blank')">☕ Buy me a coffee</button>
@@ -1382,7 +1568,7 @@ option { background: var(--bg3); }
         </div>
       </div>
       <div class="dev-socials">
-        <a href="https://github.com/lazywilin" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a href="https://github.com/lazywilin" target="_blank"> <a href="https://github.com"></a>
         <a href="https://instagram.com/lazywilin" target="_blank">🅾 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦</a>
       </div>
        <button class="dev-btn" onclick="window.open('https://buymeacoffee.com/lazywilin','_blank')">☕ Buy me a coffee</button>
@@ -1391,7 +1577,15 @@ option { background: var(--bg3); }
     <!-- Changelog -->
     <div class="changelog-section">
       <h3>📋 Changelog</h3>
-      <div class="cl-version">v7.4 — 2026-04-13</div>
+      <div class="cl-version">v8.0 — 2026-04-13</div>
+      <div class="cl-item cl-fix">Focus Mode fully rebuilt — visibilitychange handler now properly bound and deduplicated, no more refresh-to-fix bug</div>
+      <div class="cl-item cl-fix">Focus Mode now auto-submits exam immediately on tab switch instead of showing a resume prompt</div>
+      <div class="cl-item cl-fix">Answer locking — once an answer is picked in Exam Mode, it cannot be changed (applies to all difficulties)</div>
+      <div class="cl-item cl-fix">Platinum medal description corrected: now shows "Score S (90%+) on 3 consecutive exams in Competitive mode"</div>
+      <div class="cl-item cl-fix">Platinum medal locked to Competitive mode only — Easy/Medium streaks no longer count</div>
+      <div class="cl-new">Exam Rules overlay — shown the first time a user starts an exam, categorised rules with close button</div>
+      <div class="cl-new">Answer locking now applies to all difficulties (Easy, Medium, Competitive)</div>
+      <div class="cl-version" style="margin-top:.65rem">v7.4 — 2026-04-13</div>
       <div class="cl-item cl-fix">About page restructured — developer cards now at top, NU BBA Prep hero removed</div>
       <div class="cl-item cl-fix">Removed Save &amp; Resume exam feature entirely (all related code cleaned)</div>
       <div class="cl-item cl-fix">Removed dead save button from exam topbar and history "Saved Exams" button</div>
@@ -2685,7 +2879,7 @@ const TestSetup = {
     questions = Util.shuffle(questions);
     const numSubjs = subjKey === 'all' ? Object.keys(SUBJECTS).length : 1;
     Modal.close();
-    ExamEngine.launch({
+    ExamRules.showIfNeeded({
       mode:'exam', diff, subject:subjKey,
       subjectName: subjKey === 'all' ? 'All Subjects' : SUBJECTS[subjKey].name,
       questions, totalTime:cfg.totalMinutes*60*(subjKey==='all'?numSubjs:1),
@@ -2698,6 +2892,11 @@ const TestSetup = {
 const ExamEngine = {
   _state: null, _totalTimer: null, _qTimer: null, _paletteVisible: false,
   launch(cfg) {
+    // Practice mode goes straight through; exam mode goes via ExamRules
+    if (cfg.mode === 'exam') { ExamRules.showIfNeeded(cfg); return; }
+    this._doLaunch(cfg);
+  },
+  _doLaunch(cfg) {
     this._clearTimers();
     this._state = {
       ...cfg,
@@ -2717,6 +2916,8 @@ const ExamEngine = {
     document.getElementById('panel-test').classList.add('on');
     document.getElementById('nb-test').classList.add('on');
     this._paletteVisible = false;
+    AdminMode.hideExamPanel();
+    if (AdminMode.isActive() && cfg.mode === 'exam') AdminMode.showExamPanel();
     this._totalTimer = setInterval(() => this._tickTotal(), 1000);
     if (this._state.mode === 'exam' && this._state.perQSec) this._startQTimer();
     this.renderQ();
@@ -2799,13 +3000,23 @@ const ExamEngine = {
           ${qTimerDispHtml}
         </div>
         <div class="ex-q-txt">${q}</div>
-        <div class="ex-opts">${opts.map((o,oi) => `<button class="ex-opt${ans===oi?' sel':''}" onclick="ExamEngine.pickOpt(${oi})">${OL[oi]}) ${o}</button>`).join('')}</div>
+        <div class="ex-opts">${opts.map((o,oi) => {
+          const isAnswered = ans !== null && this._state.mode === 'exam';
+          const isSel = ans === oi;
+          let cls = 'ex-opt';
+          if (isSel) cls += ' sel';
+          if (isAnswered && !isSel) cls += ' locked';
+          const disabled = isAnswered ? 'disabled' : '';
+          return `<button class="${cls}" onclick="ExamEngine.pickOpt(${oi})" ${disabled}>${OL[oi]}) ${o}</button>`;
+        }).join('')}</div>
       </div>`;
     this._renderPalette();
     if (showQTimer) this._startQTimer();
   },
   pickOpt(oi) {
     if (!this._state) return;
+    // In exam mode: once answered, lock it — cannot change
+    if (this._state.mode === 'exam' && this._state.answers[this._state.current] !== null) return;
     this._saveQTime();
     this._state.answers[this._state.current] = oi;
     this.renderQ();
@@ -2855,6 +3066,7 @@ const ExamEngine = {
     if (!this._state) return;
     this._clearTimers();
     FocusMode.deactivate();
+    AdminMode.hideExamPanel();
     const { questions, answers, posScore, negScore, subjectName, mode, diff, qTimes, totalTime, timeLeft } = this._state;
     let correct=0, wrong=0, skip=0, score=0;
     const chapStats = {};
@@ -2930,7 +3142,7 @@ const ExamEngine = {
     else TestSetup.openPractice();
   },
   backToModes() {
-    this._clearTimers(); FocusMode.deactivate(); this._state = null;
+    this._clearTimers(); FocusMode.deactivate(); AdminMode.hideExamPanel(); this._state = null;
     document.getElementById('results-screen').style.display = 'none';
     document.getElementById('exam-screen').style.display = 'none';
     document.getElementById('test-modes').style.display = 'block';
@@ -3012,13 +3224,19 @@ const Achievements = {
     if (pct>=25) return 'd';
     return 'f';
   },
-  award(pct, mode) {
+  award(pct, mode, diff) {
     if (mode!=='exam') return null;
     let tier = this.getMedal(pct), platUnlocked = false;
     if (tier==='gold_plat_check') {
       tier = 'gold';
-      MEDALS_STATE.streakA = (MEDALS_STATE.streakA||0)+1;
-      if (MEDALS_STATE.streakA>=3) { MEDALS_STATE.platinum++; platUnlocked=true; }
+      // Platinum streak only counts in competitive (hard) mode
+      if (diff === 'hard') {
+        MEDALS_STATE.streakA = (MEDALS_STATE.streakA||0)+1;
+        if (MEDALS_STATE.streakA>=3) { MEDALS_STATE.platinum++; platUnlocked=true; }
+      } else {
+        // Non-competitive gold still breaks the competitive streak
+        MEDALS_STATE.streakA = 0;
+      }
     } else { MEDALS_STATE.streakA=0; }
     if (tier==='gold') MEDALS_STATE.gold++;
     else if (tier==='silver') MEDALS_STATE.silver++;
@@ -3042,7 +3260,7 @@ const Achievements = {
       makeSlot('m-gold','🥇','GOLD','Score A (70%+) in Exam Mode',M.gold) +
       makeSlot('m-silver','🥈','SILVER','Score B (55–69%) in Exam Mode',M.silver) +
       makeSlot('m-bronze','🥉','BRONZE','Score C (40–54%) in Exam Mode',M.bronze) +
-      (M.platinum>0 ? makeSlot('m-plat m-plat-slot','💎','PLATINUM','???',M.platinum) : '');
+      (M.platinum>0 ? makeSlot('m-plat m-plat-slot','💎','PLATINUM','Score S (90%+) on 3 consecutive Competitive exams',M.platinum) : '');
     document.getElementById('tierDCount').textContent = M.d+'x';
     document.getElementById('tierFCount').textContent = M.f+'x';
   },
@@ -3126,35 +3344,51 @@ const Achievements = {
   }
 };
 
-// ══ FOCUS MODE ══
+// ══ FOCUS MODE — v8 REWRITE ══
 const FocusMode = {
-  _active:false, _switchCount:0,
-  activate(isCompetitive) {
-    this._active=true; this._switchCount=0;
-    document.getElementById('focusBadge').style.display='inline-flex';
-    document.addEventListener('visibilitychange',this._onVisChange);
+  _active: false,
+  _bound: false,
+  _pendingFinish: false,
+  _handler: null,
+  activate() {
+    this._active = true;
+    this._pendingFinish = false;
+    const badge = document.getElementById('focusBadge');
+    if (badge) badge.style.display = 'inline-flex';
+    // Always remove first to avoid duplicate listeners
+    if (this._handler) document.removeEventListener('visibilitychange', this._handler);
+    this._handler = () => {
+      if (!FocusMode._active) return;
+      if (document.hidden) {
+        FocusMode._active = false;
+        FocusMode._pendingFinish = true;
+        const badge = document.getElementById('focusBadge');
+        if (badge) badge.style.display = 'none';
+        // Show the overlay then auto-finish
+        const overlay = document.getElementById('focusWarningOverlay');
+        if (overlay) overlay.classList.add('on');
+        // Stop timers immediately
+        ExamEngine._clearTimers();
+      }
+    };
+    document.addEventListener('visibilitychange', this._handler);
   },
   deactivate() {
-    this._active=false; this._switchCount=0;
-    const badge=document.getElementById('focusBadge');
-    if (badge) badge.style.display='none';
-    document.removeEventListener('visibilitychange',this._onVisChange);
-    document.getElementById('focusWarningOverlay').classList.remove('on');
-  },
-  _onVisChange() {
-    if (!FocusMode._active) return;
-    if (document.hidden) {
-      FocusMode._switchCount++;
-      document.getElementById('focusWarnCount').textContent=`Tab switch #${FocusMode._switchCount}`;
-      document.getElementById('focusWarningOverlay').classList.add('on');
+    this._active = false;
+    this._pendingFinish = false;
+    if (this._handler) {
+      document.removeEventListener('visibilitychange', this._handler);
+      this._handler = null;
     }
+    const badge = document.getElementById('focusBadge');
+    if (badge) badge.style.display = 'none';
+    const overlay = document.getElementById('focusWarningOverlay');
+    if (overlay) overlay.classList.remove('on');
   },
-  resume() { document.getElementById('focusWarningOverlay').classList.remove('on'); },
-  stopExam() {
-    if (!confirm('Stop the exam?')) return;
-    document.getElementById('focusWarningOverlay').classList.remove('on');
-    FocusMode.deactivate();
-    ExamEngine.submit();
+  dismissAndFinish() {
+    const overlay = document.getElementById('focusWarningOverlay');
+    if (overlay) overlay.classList.remove('on');
+    ExamEngine.finish();
   }
 };
 
@@ -3163,7 +3397,7 @@ const _origFinish = ExamEngine.finish.bind(ExamEngine);
 ExamEngine.finish = function() {
   _origFinish();
   if (!this._state) return;
-  const { questions, answers, posScore, negScore, mode } = this._state;
+  const { questions, answers, posScore, negScore, mode, diff } = this._state;
   if (mode!=='exam') return;
   let correct=0, wrong=0, score=0;
   questions.forEach(({corr},i)=>{
@@ -3176,12 +3410,110 @@ ExamEngine.finish = function() {
   const pct = maxScore>0?Math.round(score/maxScore*100):0;
   const passScore = Math.ceil(maxScore*this._state.passPercent/100);
   const passed = score>=passScore;
-  const result = Achievements.award(pct,mode);
+  const result = Achievements.award(pct,mode,diff);
   if (!result) return;
   setTimeout(()=>{
     Achievements.render();
     Achievements.showOverlay({...result,score,maxScore,correct,wrong,pct,passed,passScore,mode});
   },600);
+};
+
+// ══ EXAM RULES — shown only first time ══
+const ExamRules = {
+  _key: 'nu_bba_exam_rules_seen_v8',
+  hasSeen() { try { return !!localStorage.getItem(this._key); } catch { return false; } },
+  markSeen() { try { localStorage.setItem(this._key, '1'); } catch {} },
+  _pendingCfg: null,
+  showIfNeeded(cfg) {
+    if (this.hasSeen()) {
+      this._launch(cfg);
+      return;
+    }
+    this._pendingCfg = cfg;
+    document.getElementById('examRulesOverlay').classList.add('on');
+  },
+  close() {
+    this.markSeen();
+    document.getElementById('examRulesOverlay').classList.remove('on');
+    if (this._pendingCfg) {
+      const cfg = this._pendingCfg;
+      this._pendingCfg = null;
+      this._launch(cfg);
+    }
+  },
+  _launch(cfg) {
+    ExamEngine._doLaunch(cfg);
+  }
+};
+
+// ══ ADMIN MODE ══
+const AdminMode = {
+  _active: false,
+  _holdTimer: null,
+  _holdStart: null,
+  _holdDuration: 10000, // 10 seconds
+  activate() {
+    if (this._active) return;
+    this._active = true;
+    // Show unlock animation
+    const overlay = document.getElementById('adminUnlockOverlay');
+    overlay.classList.add('on');
+    setTimeout(() => overlay.classList.remove('on'), 2800);
+  },
+  isActive() { return this._active; },
+  showExamPanel() {
+    if (!this._active) return;
+    const panel = document.getElementById('adminExamPanel');
+    if (panel) panel.classList.add('on');
+  },
+  hideExamPanel() {
+    const panel = document.getElementById('adminExamPanel');
+    if (panel) panel.classList.remove('on');
+  },
+  awardAndFinish() {
+    if (!this._active || !ExamEngine._state) return;
+    // Force 100% score by setting all answers correct
+    const st = ExamEngine._state;
+    st.questions.forEach((q, i) => { st.answers[i] = q.corr; });
+    ExamEngine._clearTimers();
+    FocusMode.deactivate();
+    this.hideExamPanel();
+    ExamEngine.finish();
+  },
+  initHoldDetect() {
+    const wrap = document.getElementById('devAvatarWrap');
+    const ring = document.getElementById('devHoldRing');
+    if (!wrap) return;
+    let raf = null, startTime = null;
+    const update = () => {
+      const elapsed = Date.now() - startTime;
+      const pct = Math.min(100, (elapsed / this._holdDuration) * 100);
+      if (ring) ring.style.background = `conic-gradient(var(--purple) ${pct}%, transparent 0%)`;
+      if (elapsed >= this._holdDuration) {
+        cancelAnimationFrame(raf);
+        endHold(true);
+        return;
+      }
+      raf = requestAnimationFrame(update);
+    };
+    const startHold = () => {
+      if (this._active) return;
+      startTime = Date.now();
+      if (ring) ring.classList.add('active');
+      raf = requestAnimationFrame(update);
+    };
+    const endHold = (success) => {
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+      if (ring) { ring.classList.remove('active'); ring.style.background = ''; }
+      if (success && !this._active) this.activate();
+    };
+    wrap.addEventListener('mousedown', startHold);
+    wrap.addEventListener('touchstart', startHold, {passive:true});
+    wrap.addEventListener('mouseup', () => endHold(false));
+    wrap.addEventListener('mouseleave', () => endHold(false));
+    wrap.addEventListener('touchend', () => endHold(false));
+    wrap.addEventListener('touchcancel', () => endHold(false));
+  }
 };
 
 // ══ INIT ══
@@ -3227,6 +3559,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Build subjects
   SubjectUI.build();
   Achievements.render();
+  AdminMode.initHoldDetect();
 });
 </script>
 </body>
