@@ -1185,8 +1185,54 @@ option { background: var(--bg3); }
 .ex-opt.locked:hover { background: rgba(255,255,255,.025) !important; border-color: var(--border) !important; color: var(--muted2) !important; transform: none !important; }
 .ex-opt.sel.locked { opacity: 1; }
 
-/* ══ DEV AVATAR HOLD PROGRESS ══ */
-.dev-avatar-wrap { position: relative; display: inline-block; cursor: pointer; }
+/* ══ CREATOR BADGE ══ */
+.creator-badge-row {
+  margin-top: .8rem;
+  padding-top: .8rem;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+.creator-badge-row.on { display: block; }
+.creator-badge-slot {
+  background: linear-gradient(135deg, rgba(167,139,250,.14), rgba(212,168,67,.1), rgba(96,165,250,.1));
+  border: 1.5px solid rgba(167,139,250,.55);
+  border-radius: 10px;
+  padding: .85rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  animation: platGlow 2s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+.creator-badge-slot::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--gold), var(--blue), var(--purple));
+  background-size: 200% 100%;
+  animation: creatorShine 2.5s linear infinite;
+}
+@keyframes creatorShine { 0%{background-position:0%} 100%{background-position:200%} }
+.creator-badge-icon { font-size: 2.2rem; flex-shrink: 0; animation: medalFloat 3.5s ease-in-out infinite; }
+.creator-badge-info { flex: 1; }
+.creator-badge-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: .9rem; font-weight: 700; letter-spacing: .06em;
+  background: linear-gradient(135deg, var(--purple), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: .18rem;
+}
+.creator-badge-desc { font-size: .68rem; color: var(--muted2); line-height: 1.4; }
+.creator-badge-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: .6rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  color: #fff; padding: .18rem .55rem; border-radius: 100px;
+  letter-spacing: .08em; text-transform: uppercase; flex-shrink: 0;
+}
+
+/* ══ CREATOR RESULT OVERLAY ══ */
+.ro-creator { background: linear-gradient(160deg, rgba(167,139,250,.15), rgba(212,168,67,.08)); }
+
 .dev-hold-ring {
   position: absolute; inset: -3px; border-radius: 17px;
   border: 2.5px solid transparent; pointer-events: none; transition: border-color .15s;
@@ -1198,6 +1244,31 @@ option { background: var(--bg3); }
 
 <!-- ══ CONFETTI & RESULT OVERLAY ══ -->
 <canvas id="confettiCanvas"></canvas>
+<!-- Creator Badge Overlay — shown on admin grant -->
+<div id="creatorOverlay" style="display:none;position:fixed;inset:0;z-index:850;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:1rem;overflow-y:auto">
+  <div class="ro-box ro-creator" style="max-width:420px">
+    <button class="ro-close" onclick="document.getElementById('creatorOverlay').style.display='none';ExamEngine.backToModes()">✕</button>
+    <div class="ro-head" style="padding-bottom:.8rem">
+      <span class="ro-medal" style="font-size:4rem">⚡</span>
+      <div class="ro-congrats" style="background:linear-gradient(135deg,var(--purple),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Creator Badge Unlocked!</div>
+      <div class="ro-msg">You've earned the rarest badge in NU BBA Prep. This belongs to those who know the secret. Welcome to the inner circle. ⚡💎</div>
+      <div class="ro-grade-b rg-a" style="margin-top:.6rem">⚡ CREATOR · UNIQUE</div>
+    </div>
+    <div style="padding:.8rem 1.3rem;border-top:1px solid var(--border)">
+      <div class="creator-badge-slot" style="animation:none">
+        <div class="creator-badge-icon" style="font-size:1.8rem">⚡</div>
+        <div class="creator-badge-info">
+          <div class="creator-badge-name">CREATOR BADGE</div>
+          <div class="creator-badge-desc">Granted via dev override. Permanently saved to your profile.</div>
+        </div>
+        <div class="creator-badge-tag">YOURS</div>
+      </div>
+    </div>
+    <div class="ro-actions">
+      <button class="btn-pri" style="flex:1" onclick="document.getElementById('creatorOverlay').style.display='none';ExamEngine.backToModes()">← Back to Modes</button>
+    </div>
+  </div>
+</div>
 <div id="resultOverlay">
   <div class="ro-box">
     <button class="ro-close" onclick="Achievements.closeOverlay()">✕</button>
@@ -1456,6 +1527,16 @@ option { background: var(--bg3); }
         <div class="tier-item tier-d"><div class="tier-dot"></div><span class="tier-label">D Tier</span><span style="font-size:.72rem;color:var(--muted)">40–54% score</span><span class="tier-count" id="tierDCount">0x</span></div>
         <div class="tier-item tier-f"><div class="tier-dot"></div><span class="tier-label">F Tier</span><span style="font-size:.72rem;color:var(--muted)">Below 40%</span><span class="tier-count" id="tierFCount">0x</span></div>
       </div>
+      <div class="creator-badge-row" id="creatorBadgeRow">
+        <div class="creator-badge-slot">
+          <div class="creator-badge-icon">⚡</div>
+          <div class="creator-badge-info">
+            <div class="creator-badge-name">CREATOR BADGE</div>
+            <div class="creator-badge-desc">A rare badge granted to those who know the secret. You are part of the inner circle.</div>
+          </div>
+          <div class="creator-badge-tag">UNIQUE</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1585,6 +1666,7 @@ option { background: var(--bg3); }
       <div class="cl-item cl-fix">Platinum medal locked to Competitive mode only — Easy/Medium streaks no longer count</div>
       <div class="cl-new">Exam Rules overlay — shown the first time a user starts an exam, categorised rules with close button</div>
       <div class="cl-new">Answer locking now applies to all difficulties (Easy, Medium, Competitive)</div>
+      <div class="cl-new">⚡ Creator Badge — a unique achievement for those who find the secret</div>
       <div class="cl-version" style="margin-top:.65rem">v7.4 — 2026-04-13</div>
       <div class="cl-item cl-fix">About page restructured — developer cards now at top, NU BBA Prep hero removed</div>
       <div class="cl-item cl-fix">Removed Save &amp; Resume exam feature entirely (all related code cleaned)</div>
@@ -2562,9 +2644,11 @@ const EXAM_CONFIG = {
 };
 const STORAGE_KEY_MEDALS = 'nu_bba_medals_v6';
 const MEDALS_STATE = (() => {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY_MEDALS) || '{"gold":0,"silver":0,"bronze":0,"platinum":0,"d":0,"f":0,"streakA":0}'); }
-  catch { return {gold:0,silver:0,bronze:0,platinum:0,d:0,f:0,streakA:0}; }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY_MEDALS) || '{"gold":0,"silver":0,"bronze":0,"platinum":0,"d":0,"f":0,"streakA":0,"creator":false}'); }
+  catch { return {gold:0,silver:0,bronze:0,platinum:0,d:0,f:0,streakA:0,creator:false}; }
 })();
+// Ensure creator field exists for old saves
+if (typeof MEDALS_STATE.creator === 'undefined') MEDALS_STATE.creator = false;
 function saveMedals() { try { localStorage.setItem(STORAGE_KEY_MEDALS, JSON.stringify(MEDALS_STATE)); } catch {} }
 
 const EXAM_DATE = new Date('2026-04-25T11:00:00');
@@ -3263,6 +3347,9 @@ const Achievements = {
       (M.platinum>0 ? makeSlot('m-plat m-plat-slot','💎','PLATINUM','Score S (90%+) on 3 consecutive Competitive exams',M.platinum) : '');
     document.getElementById('tierDCount').textContent = M.d+'x';
     document.getElementById('tierFCount').textContent = M.f+'x';
+    // Creator badge row
+    const cbRow = document.getElementById('creatorBadgeRow');
+    if (cbRow) cbRow.classList.toggle('on', !!M.creator);
   },
   showOverlay(result) {
     const { tier, platUnlocked, score, maxScore, correct, wrong, pct, passed, passScore, mode } = result;
@@ -3472,13 +3559,23 @@ const AdminMode = {
   },
   awardAndFinish() {
     if (!this._active || !ExamEngine._state) return;
-    // Force 100% score by setting all answers correct
-    const st = ExamEngine._state;
-    st.questions.forEach((q, i) => { st.answers[i] = q.corr; });
+    // Grant the Creator Badge
+    MEDALS_STATE.creator = true;
+    saveMedals();
+    Achievements.render();
+    // Stop everything cleanly
     ExamEngine._clearTimers();
     FocusMode.deactivate();
     this.hideExamPanel();
-    ExamEngine.finish();
+    // Hide the exam screen
+    document.getElementById('exam-screen').style.display = 'none';
+    // Show creator overlay with confetti
+    const overlay = document.getElementById('creatorOverlay');
+    if (overlay) { overlay.style.display = 'flex'; }
+    // Creator confetti burst
+    Achievements._launchConfetti('platinum', true);
+    // Nullify state so normal finish doesn't double-fire
+    ExamEngine._state = null;
   },
   initHoldDetect() {
     const wrap = document.getElementById('devAvatarWrap');
