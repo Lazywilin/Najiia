@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1081,192 +1082,96 @@ option { background: var(--bg3); }
 @keyframes glow-red { 0%,100%{box-shadow:none} 50%{box-shadow:0 0 6px rgba(248,113,113,.4)} }
 @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.15)} 100%{transform:scale(1)} }
 @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes devUnlock { 0%{opacity:0;transform:scale(.5) rotate(-10deg)} 60%{transform:scale(1.15) rotate(3deg)} 100%{opacity:1;transform:scale(1) rotate(0)} }
+@keyframes adminPulse { 0%,100%{box-shadow:0 0 6px rgba(167,139,250,.3)} 50%{box-shadow:0 0 22px rgba(167,139,250,.65)} }
+@keyframes holdProgress { from{width:0%} to{width:100%} }
 
-/* ══ EXAM RULES OVERLAY ══ */
-#examRulesOverlay {
-  display: none; position: fixed; inset: 0; z-index: 8500;
-  background: rgba(0,0,0,.92); backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  align-items: center; justify-content: center; padding: 1rem;
-  overflow-y: auto;
-}
-#examRulesOverlay.on { display: flex; }
-.er-box {
-  background: var(--bg2); border: 1px solid var(--border2);
-  border-radius: 20px; max-width: 520px; width: 100%;
-  box-shadow: 0 30px 80px rgba(0,0,0,.7);
-  animation: rmPop .45s cubic-bezier(.34,1.56,.64,1) both;
-  margin: auto; position: relative; overflow: hidden;
-}
-.er-box::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--gold), var(--purple), var(--blue));
-}
-.er-head { padding: 1.4rem 1.4rem 0.8rem; text-align: center; border-bottom: 1px solid var(--border); }
-.er-icon { font-size: 2.8rem; margin-bottom: .4rem; }
-.er-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: #fff; margin-bottom: .25rem; }
-.er-sub { font-size: .8rem; color: var(--muted); }
-.er-body { padding: 1.1rem 1.4rem; display: flex; flex-direction: column; gap: .75rem; }
-.er-cat { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
-.er-cat-head {
-  display: flex; align-items: center; gap: .5rem;
-  padding: .6rem .9rem; background: rgba(255,255,255,.025);
-  border-bottom: 1px solid var(--border);
-  font-size: .78rem; font-weight: 700; color: var(--text);
-}
-.er-cat-head span { font-size: 1rem; }
-.er-cat-body { padding: .55rem .9rem; display: flex; flex-direction: column; gap: .32rem; }
-.er-rule { display: flex; align-items: flex-start; gap: .48rem; font-size: .78rem; color: var(--muted2); line-height: 1.55; }
-.er-rule::before { content: '•'; color: var(--gold); flex-shrink: 0; margin-top: .05rem; font-weight: 700; }
-.er-rule.r-warn::before { color: var(--red); }
-.er-rule.r-ok::before { color: var(--green); }
-.er-rule.r-info::before { color: var(--blue); }
-.er-foot { padding: .9rem 1.4rem; border-top: 1px solid var(--border); display: flex; justify-content: center; }
-.er-close-btn {
-  background: linear-gradient(135deg, var(--gold), var(--gold2));
-  color: #0a0a0a; font-weight: 700; font-size: .92rem;
-  padding: .65rem 2.4rem; border: none; border-radius: 100px;
-  transition: all .2s var(--ease); letter-spacing: .02em;
-}
-.er-close-btn:hover { opacity: .9; transform: translateY(-2px); box-shadow: var(--glow-gold); }
+/* Locked answer styles */
+.ex-opt.locked-dim { opacity: .38; cursor: default !important; }
+.ex-opt.locked-ans { background: rgba(96,165,250,.15) !important; border-color: rgba(96,165,250,.45) !important; color: var(--blue) !important; cursor: default !important; }
 
-/* ══ ADMIN UNLOCK OVERLAY ══ */
-#adminUnlockOverlay {
-  display: none; position: fixed; inset: 0; z-index: 9500;
-  background: rgba(0,0,0,.95); backdrop-filter: blur(24px);
-  align-items: center; justify-content: center;
-}
-#adminUnlockOverlay.on { display: flex; }
-.au-box { text-align: center; animation: auPop .55s cubic-bezier(.34,1.56,.64,1) both; }
-@keyframes auPop {
-  0%{opacity:0;transform:scale(0.4) rotate(-20deg)}
-  70%{transform:scale(1.08) rotate(3deg)}
-  100%{opacity:1;transform:scale(1) rotate(0)}
-}
-.au-icon { font-size: 5rem; margin-bottom: .8rem; animation: auSpin 1.2s ease-out both; display: block; }
-@keyframes auSpin { 0%{transform:rotate(-360deg) scale(0)} 100%{transform:rotate(0) scale(1)} }
-.au-title {
-  font-family: 'DM Serif Display', serif; font-size: 2rem;
-  background: linear-gradient(135deg, var(--gold), var(--purple), var(--blue));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  margin-bottom: .4rem; letter-spacing: .02em;
-}
-.au-sub { font-size: .88rem; color: var(--muted2); }
-.au-glow {
-  position: fixed; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(167,139,250,.2), transparent);
-  animation: auGlowPulse 1.5s ease-in-out infinite; z-index: -1;
-}
-@keyframes auGlowPulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+/* Exam rules modal */
+.exam-rules-modal { position: fixed; inset: 0; background: rgba(0,0,0,.82); z-index: 600; display: none; align-items: center; justify-content: center; backdrop-filter: blur(12px); padding: 1rem; overflow-y: auto; }
+.exam-rules-modal.on { display: flex; animation: fadeIn .25s ease; }
+.erm-box { background: var(--card2); border: 1px solid var(--border2); border-radius: 14px; max-width: 500px; width: 100%; box-shadow: 0 30px 70px rgba(0,0,0,.6); overflow: hidden; margin: auto; animation: rmPop .4s cubic-bezier(.34,1.56,.64,1) both; }
+.erm-head { padding: 1.2rem 1.4rem .8rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.erm-head h3 { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: #fff; }
+.erm-body { padding: 1.1rem 1.4rem; }
+.erm-category { margin-bottom: 1rem; }
+.erm-cat-title { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--gold); font-weight: 700; margin-bottom: .4rem; display: flex; align-items: center; gap: .35rem; }
+.erm-rule { display: flex; align-items: flex-start; gap: .5rem; font-size: .83rem; color: var(--muted2); line-height: 1.55; margin-bottom: .32rem; }
+.erm-rule-icon { flex-shrink: 0; margin-top: .05rem; }
+.erm-actions { padding: .8rem 1.4rem 1.1rem; display: flex; gap: .6rem; }
 
-/* ══ ADMIN EXAM PANEL ══ */
-.admin-exam-panel {
-  background: linear-gradient(135deg, rgba(167,139,250,.1), rgba(212,168,67,.07));
-  border: 1.5px solid rgba(167,139,250,.35); border-radius: var(--r);
-  padding: .85rem 1rem; margin-top: .5rem; display: none;
-}
-.admin-exam-panel.on { display: block; }
-.admin-exam-title {
-  font-size: .65rem; text-transform: uppercase; letter-spacing: .12em;
-  color: var(--purple); font-weight: 700; margin-bottom: .55rem;
-  display: flex; align-items: center; gap: .35rem;
-}
-.admin-btns { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
-.admin-award-btn {
-  background: linear-gradient(135deg, rgba(167,139,250,.2), rgba(212,168,67,.15));
-  border: 1px solid rgba(167,139,250,.4); color: var(--purple);
-  font-size: .8rem; font-weight: 700; padding: .55rem .5rem;
-  border-radius: var(--rs); transition: all .18s var(--ease); cursor: pointer;
-}
-.admin-award-btn:hover { background: rgba(167,139,250,.3); transform: translateY(-1px); box-shadow: 0 0 20px rgba(167,139,250,.35); }
-
-/* ══ LOCKED ANSWER STYLE ══ */
-.ex-opt.locked { opacity: .42; cursor: not-allowed; }
-.ex-opt.locked:hover { background: rgba(255,255,255,.025) !important; border-color: var(--border) !important; color: var(--muted2) !important; transform: none !important; }
-.ex-opt.sel.locked { opacity: 1; }
-
-/* ══ CREATOR BADGE ══ */
-.creator-badge-row {
-  margin-top: .8rem;
-  padding-top: .8rem;
-  border-top: 1px solid var(--border);
-  display: none;
-}
-.creator-badge-row.on { display: block; }
-.creator-badge-slot {
-  background: linear-gradient(135deg, rgba(167,139,250,.14), rgba(212,168,67,.1), rgba(96,165,250,.1));
-  border: 1.5px solid rgba(167,139,250,.55);
-  border-radius: 10px;
-  padding: .85rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: .9rem;
-  animation: platGlow 2s ease-in-out infinite;
-  position: relative;
-  overflow: hidden;
-}
-.creator-badge-slot::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--purple), var(--gold), var(--blue), var(--purple));
-  background-size: 200% 100%;
-  animation: creatorShine 2.5s linear infinite;
-}
-@keyframes creatorShine { 0%{background-position:0%} 100%{background-position:200%} }
-.creator-badge-icon { font-size: 2.2rem; flex-shrink: 0; animation: medalFloat 3.5s ease-in-out infinite; }
-.creator-badge-info { flex: 1; }
-.creator-badge-name {
-  font-family: 'DM Serif Display', serif;
-  font-size: .9rem; font-weight: 700; letter-spacing: .06em;
-  background: linear-gradient(135deg, var(--purple), var(--gold));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  margin-bottom: .18rem;
-}
-.creator-badge-desc { font-size: .68rem; color: var(--muted2); line-height: 1.4; }
-.creator-badge-tag {
-  font-family: 'JetBrains Mono', monospace; font-size: .6rem; font-weight: 700;
-  background: linear-gradient(135deg, var(--purple), var(--blue));
-  color: #fff; padding: .18rem .55rem; border-radius: 100px;
-  letter-spacing: .08em; text-transform: uppercase; flex-shrink: 0;
-}
-
-/* ══ CREATOR RESULT OVERLAY ══ */
-.ro-creator { background: linear-gradient(160deg, rgba(167,139,250,.15), rgba(212,168,67,.08)); }
-
-.dev-hold-ring {
-  position: absolute; inset: -3px; border-radius: 17px;
-  border: 2.5px solid transparent; pointer-events: none; transition: border-color .15s;
-}
-.dev-hold-ring.active { border-color: var(--purple); box-shadow: 0 0 12px rgba(167,139,250,.5); }
+/* Admin feature */
+.admin-hold-progress { position: absolute; bottom: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--purple), var(--blue)); border-radius: 0 0 0 4px; width: 0; transition: none; }
+.dev-avatar-wrap { position: relative; display: inline-block; }
+#devUnlockToast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%) scale(.8); background: linear-gradient(135deg, rgba(167,139,250,.18), rgba(96,165,250,.12)); border: 1px solid rgba(167,139,250,.45); border-radius: 12px; padding: .85rem 1.5rem; color: #fff; font-family: 'DM Serif Display', serif; font-size: 1.1rem; z-index: 950; display: none; text-align: center; backdrop-filter: blur(16px); box-shadow: 0 8px 32px rgba(167,139,250,.3); animation: adminPulse 2s ease infinite; }
+#devUnlockToast.show { display: block; animation: devUnlock .55s cubic-bezier(.34,1.56,.64,1) both, adminPulse 2s 1s ease infinite; }
+#adminBadgePanel { display: none; background: var(--card); border: 1px solid rgba(167,139,250,.35); border-radius: var(--r); padding: 1rem; margin: .8rem 1rem; }
+#adminBadgePanel.on { display: block; animation: fadeIn .3s ease; }
+.admin-badge-title { font-size: .78rem; color: var(--purple); font-family: 'DM Serif Display', serif; margin-bottom: .6rem; text-align: center; }
+.admin-badge-btns { display: grid; grid-template-columns: repeat(2,1fr); gap: .5rem; }
+.admin-badge-btn { padding: .6rem; border-radius: var(--rs); font-size: .85rem; font-family: 'DM Serif Display', serif; font-weight: 700; border: 1.5px solid; cursor: pointer; transition: all .2s; }
+.ab-gold { background: rgba(212,168,67,.1); border-color: rgba(212,168,67,.4); color: var(--gold); }
+.ab-silver { background: rgba(180,190,205,.1); border-color: rgba(180,190,205,.35); color: #b0b8c8; }
+.ab-bronze { background: rgba(205,127,50,.1); border-color: rgba(205,127,50,.35); color: #c07832; }
+.ab-plat { background: rgba(167,139,250,.12); border-color: rgba(167,139,250,.4); color: var(--purple); }
+.admin-badge-btn:hover { opacity: .8; transform: translateY(-1px); }
 </style>
 </head>
 <body>
 
 <!-- ══ CONFETTI & RESULT OVERLAY ══ -->
 <canvas id="confettiCanvas"></canvas>
-<!-- Creator Badge Overlay — shown on admin grant -->
-<div id="creatorOverlay" style="display:none;position:fixed;inset:0;z-index:850;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:1rem;overflow-y:auto">
-  <div class="ro-box ro-creator" style="max-width:420px">
-    <button class="ro-close" onclick="document.getElementById('creatorOverlay').style.display='none';ExamEngine.backToModes()">✕</button>
-    <div class="ro-head" style="padding-bottom:.8rem">
-      <span class="ro-medal" style="font-size:4rem">⚡</span>
-      <div class="ro-congrats" style="background:linear-gradient(135deg,var(--purple),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Creator Badge Unlocked!</div>
-      <div class="ro-msg">You've earned the rarest badge in NU BBA Prep. This belongs to those who know the secret. Welcome to the inner circle. ⚡💎</div>
-      <div class="ro-grade-b rg-a" style="margin-top:.6rem">⚡ CREATOR · UNIQUE</div>
+
+<!-- DEV UNLOCK TOAST -->
+<div id="devUnlockToast">✨ Dev Feature Unlocked ✨<br><span style="font-size:.75rem;color:var(--muted2);font-family:'DM Sans',sans-serif">All restrictions removed</span></div>
+
+<!-- EXAM RULES MODAL -->
+<div class="exam-rules-modal" id="examRulesModal">
+  <div class="erm-box">
+    <div class="erm-head">
+      <h3>📋 Exam Rules & How It Works</h3>
+      <button onclick="ExamRules.close()" style="background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer">✕</button>
     </div>
-    <div style="padding:.8rem 1.3rem;border-top:1px solid var(--border)">
-      <div class="creator-badge-slot" style="animation:none">
-        <div class="creator-badge-icon" style="font-size:1.8rem">⚡</div>
-        <div class="creator-badge-info">
-          <div class="creator-badge-name">CREATOR BADGE</div>
-          <div class="creator-badge-desc">Granted via dev override. Permanently saved to your profile.</div>
-        </div>
-        <div class="creator-badge-tag">YOURS</div>
+    <div class="erm-body">
+      <div class="erm-category">
+        <div class="erm-cat-title">⏱ Timer Rules</div>
+        <div class="erm-rule"><span class="erm-rule-icon">•</span><span>Each question has a countdown timer (Easy: 30s, Medium: 20s, Competitive: 15s). It's a <strong>reminder only</strong> — nothing happens when it runs out.</span></div>
+        <div class="erm-rule"><span class="erm-rule-icon">•</span><span>The <strong>total exam timer</strong> matters. When it hits zero, your exam is automatically submitted with whatever answers you have.</span></div>
+      </div>
+      <div class="erm-category">
+        <div class="erm-cat-title">🔒 Answer Rules</div>
+        <div class="erm-rule"><span class="erm-rule-icon">•</span><span>Once you pick an answer, <strong>it is locked</strong>. You cannot change it. Think before you tap.</span></div>
+        <div class="erm-rule"><span class="erm-rule-icon">•</span><span>Unanswered questions count as skipped — no points gained or lost.</span></div>
+      </div>
+      <div class="erm-category">
+        <div class="erm-cat-title">🚫 Focus Mode</div>
+        <div class="erm-rule"><span class="erm-rule-icon">•</span><span><strong>Focus Mode is active during all exams.</strong> Switching tabs or minimising the app will trigger a warning.</span></div>
+        <div class="erm-rule"><span class="erm-rule-icon">•</span><span>If you switch tabs, you can choose to <strong>Resume</strong> or <strong>Stop Exam</strong>. Stopping will submit your current answers.</span></div>
+      </div>
+      <div class="erm-category">
+        <div class="erm-cat-title">🏅 Scoring</div>
+        <div class="erm-rule"><span class="erm-rule-icon">•</span><span>Easy: +1 per correct, no penalty. Medium: +1 correct, −0.5 wrong. Competitive: +1 correct, −1 wrong.</span></div>
+        <div class="erm-rule"><span class="erm-rule-icon">•</span><span>Pass mark is 60% of max score. Earn Gold/Silver/Bronze medals based on your grade.</span></div>
+        <div class="erm-rule"><span class="erm-rule-icon">•</span><span>💎 Platinum medal unlocks if you score 90%+ in 3 consecutive Competitive exams.</span></div>
       </div>
     </div>
-    <div class="ro-actions">
-      <button class="btn-pri" style="flex:1" onclick="document.getElementById('creatorOverlay').style.display='none';ExamEngine.backToModes()">← Back to Modes</button>
+    <div class="erm-actions">
+      <button class="btn-pri" style="flex:1" onclick="ExamRules.close()">Got it — Start Exam! →</button>
     </div>
+  </div>
+</div>
+
+<!-- ADMIN BADGE PANEL (inside exam body) -->
+<div id="adminBadgePanel">
+  <div class="admin-badge-title">⚡ Dev Mode — Award Badge</div>
+  <div class="admin-badge-btns">
+    <button class="admin-badge-btn ab-gold" onclick="AdminFeature.awardBadge('gold')">🥇 Gold Medal</button>
+    <button class="admin-badge-btn ab-silver" onclick="AdminFeature.awardBadge('silver')">🥈 Silver Medal</button>
+    <button class="admin-badge-btn ab-bronze" onclick="AdminFeature.awardBadge('bronze')">🥉 Bronze Medal</button>
+    <button class="admin-badge-btn ab-plat" onclick="AdminFeature.awardBadge('platinum')">💎 Platinum Medal</button>
   </div>
 </div>
 <div id="resultOverlay">
@@ -1296,76 +1201,13 @@ option { background: var(--bg3); }
 <div id="focusWarningOverlay">
   <div class="focus-warn-box">
     <div class="focus-warn-icon">🚫</div>
-    <div class="focus-warn-title">Exam Submitted</div>
-    <div class="focus-warn-msg">You left the exam tab. Focus Mode detected a tab switch — your exam has been automatically submitted.</div>
+    <div class="focus-warn-title">Focus Mode Active</div>
+    <div class="focus-warn-msg">You left the exam tab! Tab-switching is not allowed during an active exam. Stay focused — your time is still running.</div>
     <div class="focus-warn-count" id="focusWarnCount">Tab switch #1</div>
     <div class="focus-warn-actions">
-      <button class="btn-resume" onclick="FocusMode.dismissAndFinish()">✓ View Results</button>
+      <button class="btn-resume" onclick="FocusMode.resume()">✓ Return to Exam</button>
+      <button class="btn-stop-exam" onclick="FocusMode.stopExam()">Stop Exam</button>
     </div>
-  </div>
-</div>
-
-<!-- ══ EXAM RULES OVERLAY ══ -->
-<div id="examRulesOverlay">
-  <div class="er-box">
-    <div class="er-head">
-      <div class="er-icon">📋</div>
-      <div class="er-title">Exam Rules</div>
-      <div class="er-sub">Read carefully before your first exam — shown only once</div>
-    </div>
-    <div class="er-body">
-
-      <div class="er-cat">
-        <div class="er-cat-head"><span>🔒</span> Focus Mode</div>
-        <div class="er-cat-body">
-          <div class="er-rule r-warn">Tab switching is <strong>not allowed</strong> during an active exam. The app monitors your tab visibility.</div>
-          <div class="er-rule r-warn">If you switch to another tab or minimise the window, your exam will be <strong>automatically submitted</strong>.</div>
-          <div class="er-rule r-info">A 🔒 Focus Mode badge appears in the exam header while active.</div>
-        </div>
-      </div>
-
-      <div class="er-cat">
-        <div class="er-cat-head"><span>⏱</span> Timers</div>
-        <div class="er-cat-body">
-          <div class="er-rule r-info">Each question has a <strong>per-question countdown timer</strong> (Easy: 30s · Medium: 20s · Competitive: 15s).</div>
-          <div class="er-rule r-ok">If the per-question timer runs out, <strong>nothing happens automatically</strong> — it is a reminder that time is ticking.</div>
-          <div class="er-rule r-warn">When the <strong>total exam time</strong> runs out, your exam is finished and submitted immediately.</div>
-        </div>
-      </div>
-
-      <div class="er-cat">
-        <div class="er-cat-head"><span>📝</span> Answering</div>
-        <div class="er-cat-body">
-          <div class="er-rule r-warn">Once you pick an answer for a question, <strong>you cannot change it</strong>. Choose carefully!</div>
-          <div class="er-rule r-info">You can navigate between questions using Prev / Next or the Question Navigator palette.</div>
-          <div class="er-rule r-ok">Unanswered (skipped) questions carry <strong>no penalty</strong>.</div>
-        </div>
-      </div>
-
-      <div class="er-cat">
-        <div class="er-cat-head"><span>🏆</span> Scoring & Medals</div>
-        <div class="er-cat-body">
-          <div class="er-rule r-info">Easy: +1 / no negative · Medium: +1 / −0.5 · Competitive: +1 / −1</div>
-          <div class="er-rule r-ok">Earn <strong>Gold</strong> (70%+), <strong>Silver</strong> (55–69%), <strong>Bronze</strong> (40–54%) medals.</div>
-          <div class="er-rule r-warn"><strong>💎 Platinum</strong> requires scoring 90%+ on 3 consecutive exams in <em>Competitive</em> mode only.</div>
-          <div class="er-rule r-info">Pass mark is 60% of max score. Medals are saved permanently.</div>
-        </div>
-      </div>
-
-    </div>
-    <div class="er-foot">
-      <button class="er-close-btn" onclick="ExamRules.close()">✓ Got it — Start Exam</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ ADMIN UNLOCK OVERLAY ══ -->
-<div id="adminUnlockOverlay">
-  <div class="au-glow"></div>
-  <div class="au-box">
-    <span class="au-icon">⚡</span>
-    <div class="au-title">Dev Feature Unlocked</div>
-    <div class="au-sub">Special powers activated · Refreshing the page resets this</div>
   </div>
 </div>
 
@@ -1527,16 +1369,6 @@ option { background: var(--bg3); }
         <div class="tier-item tier-d"><div class="tier-dot"></div><span class="tier-label">D Tier</span><span style="font-size:.72rem;color:var(--muted)">40–54% score</span><span class="tier-count" id="tierDCount">0x</span></div>
         <div class="tier-item tier-f"><div class="tier-dot"></div><span class="tier-label">F Tier</span><span style="font-size:.72rem;color:var(--muted)">Below 40%</span><span class="tier-count" id="tierFCount">0x</span></div>
       </div>
-      <div class="creator-badge-row" id="creatorBadgeRow">
-        <div class="creator-badge-slot">
-          <div class="creator-badge-icon">⚡</div>
-          <div class="creator-badge-info">
-            <div class="creator-badge-name">CREATOR BADGE</div>
-            <div class="creator-badge-desc">A rare badge granted to those who know the secret. You are part of the inner circle.</div>
-          </div>
-          <div class="creator-badge-tag">UNIQUE</div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -1553,16 +1385,17 @@ option { background: var(--bg3); }
       <div class="ex-timer" id="exTimer">00:00</div>
     </div>
     <div class="exam-body">
-      <div id="exQContainer"></div>
-      <div class="admin-exam-panel" id="adminExamPanel">
-        <div class="admin-exam-title">⚡ Dev Override — Award Badge</div>
-        <div class="admin-btns">
-          <button class="admin-award-btn" onclick="AdminMode.awardAndFinish()">🏆 Award Platinum</button>
-          <button class="admin-award-btn" onclick="AdminMode.awardAndFinish()">💎 Instant Badge</button>
-          <button class="admin-award-btn" onclick="AdminMode.awardAndFinish()">⚡ Dev Complete</button>
-          <button class="admin-award-btn" onclick="AdminMode.awardAndFinish()">✓ Force Finish</button>
+      <!-- Admin badge panel injected here when admin mode is active -->
+      <div id="adminBadgePanel" style="display:none;background:var(--card);border:1px solid rgba(167,139,250,.35);border-radius:var(--r);padding:1rem;margin-bottom:.8rem;">
+        <div style="font-size:.78rem;color:var(--purple);font-family:'DM Serif Display',serif;margin-bottom:.6rem;text-align:center">⚡ Dev Mode — Award Badge</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem">
+          <button class="admin-badge-btn ab-gold" onclick="AdminFeature.awardBadge('gold')">🥇 Gold Medal</button>
+          <button class="admin-badge-btn ab-silver" onclick="AdminFeature.awardBadge('silver')">🥈 Silver Medal</button>
+          <button class="admin-badge-btn ab-bronze" onclick="AdminFeature.awardBadge('bronze')">🥉 Bronze Medal</button>
+          <button class="admin-badge-btn ab-plat" onclick="AdminFeature.awardBadge('platinum')">💎 Platinum Medal</button>
         </div>
       </div>
+      <div id="exQContainer"></div>
       <div class="q-palette-wrap" id="qPaletteWrap" style="display:none">
         <div class="q-pal-title">Question Navigator</div>
         <div class="q-pal-grid" id="qPaletteGrid"></div>
@@ -1623,9 +1456,16 @@ option { background: var(--bg3); }
     <!-- Lead Dev — TOP -->
     <div class="dev-card">
       <div class="dev-top">
-        <div class="dev-avatar-wrap" id="devAvatarWrap">
-          <img src="https://github.com/KytoEmber.png" class="dev-avatar" id="devAvatarImg" onerror="this.style.display='none'" />
-          <div class="dev-hold-ring" id="devHoldRing"></div>
+        <div class="dev-avatar-wrap">
+          <img src="https://github.com/KytoEmber.png" id="devAvatarImg" class="dev-avatar"
+            onerror="this.style.display='none'"
+            onmousedown="AdminFeature.startHold(event)"
+            onmouseup="AdminFeature.endHold()"
+            onmouseleave="AdminFeature.endHold()"
+            ontouchstart="AdminFeature.startHold(event);event.preventDefault()"
+            ontouchend="AdminFeature.endHold()"
+            style="user-select:none;-webkit-user-drag:none;cursor:pointer" />
+          <div id="adminHoldBar" class="admin-hold-progress"></div>
         </div>
         <div>
           <div class="dev-name">Waterflame</div>
@@ -1645,7 +1485,7 @@ option { background: var(--bg3); }
         <img src="https://github.com/lazywilin.png" class="dev-avatar" onerror="this.style.display='none'" />
         <div>
           <div class="dev-name">Lazywilin</div>
-          <div class="dev-role">Senior Lead Developer</div>
+          <div class="dev-role">Senior Software Engineer</div>
         </div>
       </div>
       <div class="dev-socials">
@@ -1658,16 +1498,18 @@ option { background: var(--bg3); }
     <!-- Changelog -->
     <div class="changelog-section">
       <h3>📋 Changelog</h3>
+
+      <div class="cl-version">v8.1 — 2026-04-13 (Current)</div>
+      <div class="cl-item cl-fix">Fixed Few Text Errors And Link Errors </div>
+      
       <div class="cl-version">v8.0 — 2026-04-13</div>
-      <div class="cl-item cl-fix">Focus Mode fully rebuilt — visibilitychange handler now properly bound and deduplicated, no more refresh-to-fix bug</div>
-      <div class="cl-item cl-fix">Focus Mode now auto-submits exam immediately on tab switch instead of showing a resume prompt</div>
-      <div class="cl-item cl-fix">Answer locking — once an answer is picked in Exam Mode, it cannot be changed (applies to all difficulties)</div>
-      <div class="cl-item cl-fix">Platinum medal description corrected: now shows "Score S (90%+) on 3 consecutive exams in Competitive mode"</div>
-      <div class="cl-item cl-fix">Platinum medal locked to Competitive mode only — Easy/Medium streaks no longer count</div>
-      <div class="cl-new">Exam Rules overlay — shown the first time a user starts an exam, categorised rules with close button</div>
-      <div class="cl-new">Answer locking now applies to all difficulties (Easy, Medium, Competitive)</div>
-      <div class="cl-new">⚡ Creator Badge — a unique achievement for those who find the secret</div>
-     
+      <div class="cl-item cl-fix">Focus Mode completely rewritten — proper event listener binding prevents duplicate/stale listeners across exam sessions</div>
+      <div class="cl-item cl-fix">App navigation now blocks tab-switching during active exams — shows Focus Mode warning instead of silently switching</div>
+      <div class="cl-item cl-fix">Answers are now permanently locked once picked — cannot be changed after selection in all difficulty modes</div>
+      <div class="cl-item cl-fix">Platinum medal fixed — only counts streaks in Competitive mode; description updated after unlocking</div>
+      <div class="cl-item cl-new">Exam Rules modal added — shown first time only, explains timers, answer locking, Focus Mode, and scoring</div>
+      <div class="cl-item cl-new">Post-exam result overlay now shows performance tab immediately after finishing with medal, grade and stats</div>
+
       <div class="cl-version" style="margin-top:.65rem">v7.4 — 2026-04-12</div>
       <div class="cl-item cl-fix">About page restructured — developer cards at top</div>
       <div class="cl-item cl-fix">Save &amp; Resume exam feature removed entirely</div>
@@ -2652,11 +2494,9 @@ const EXAM_CONFIG = {
 };
 const STORAGE_KEY_MEDALS = 'nu_bba_medals_v6';
 const MEDALS_STATE = (() => {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY_MEDALS) || '{"gold":0,"silver":0,"bronze":0,"platinum":0,"d":0,"f":0,"streakA":0,"creator":false}'); }
-  catch { return {gold:0,silver:0,bronze:0,platinum:0,d:0,f:0,streakA:0,creator:false}; }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY_MEDALS) || '{"gold":0,"silver":0,"bronze":0,"platinum":0,"d":0,"f":0,"streakA":0}'); }
+  catch { return {gold:0,silver:0,bronze:0,platinum:0,d:0,f:0,streakA:0}; }
 })();
-// Ensure creator field exists for old saves
-if (typeof MEDALS_STATE.creator === 'undefined') MEDALS_STATE.creator = false;
 function saveMedals() { try { localStorage.setItem(STORAGE_KEY_MEDALS, JSON.stringify(MEDALS_STATE)); } catch {} }
 
 const EXAM_DATE = new Date('2026-04-25T11:00:00');
@@ -2717,6 +2557,16 @@ const Util = {
 // ══ APP NAVIGATION ══
 const App = {
   nav(name) {
+    // Block navigation during active exam (Focus Mode)
+    if (FocusMode._active && ExamEngine._state) {
+      const ov = document.getElementById('focusWarningOverlay');
+      if (ov) {
+        const el = document.getElementById('focusWarnCount');
+        if (el) el.textContent = '⚠️ Navigation blocked during exam';
+        ov.classList.add('on');
+      }
+      return;
+    }
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
     document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
     const panel = document.getElementById('panel-' + name);
@@ -2971,7 +2821,7 @@ const TestSetup = {
     questions = Util.shuffle(questions);
     const numSubjs = subjKey === 'all' ? Object.keys(SUBJECTS).length : 1;
     Modal.close();
-    ExamRules.showIfNeeded({
+    ExamEngine.launch({
       mode:'exam', diff, subject:subjKey,
       subjectName: subjKey === 'all' ? 'All Subjects' : SUBJECTS[subjKey].name,
       questions, totalTime:cfg.totalMinutes*60*(subjKey==='all'?numSubjs:1),
@@ -2984,11 +2834,6 @@ const TestSetup = {
 const ExamEngine = {
   _state: null, _totalTimer: null, _qTimer: null, _paletteVisible: false,
   launch(cfg) {
-    // Practice mode goes straight through; exam mode goes via ExamRules
-    if (cfg.mode === 'exam') { ExamRules.showIfNeeded(cfg); return; }
-    this._doLaunch(cfg);
-  },
-  _doLaunch(cfg) {
     this._clearTimers();
     this._state = {
       ...cfg,
@@ -3008,8 +2853,9 @@ const ExamEngine = {
     document.getElementById('panel-test').classList.add('on');
     document.getElementById('nb-test').classList.add('on');
     this._paletteVisible = false;
-    AdminMode.hideExamPanel();
-    if (AdminMode.isActive() && cfg.mode === 'exam') AdminMode.showExamPanel();
+    // Show admin panel if admin mode is active
+    const adminPanel = document.getElementById('adminBadgePanel');
+    if (adminPanel) adminPanel.style.display = window._adminMode ? 'block' : 'none';
     this._totalTimer = setInterval(() => this._tickTotal(), 1000);
     if (this._state.mode === 'exam' && this._state.perQSec) this._startQTimer();
     this.renderQ();
@@ -3093,13 +2939,12 @@ const ExamEngine = {
         </div>
         <div class="ex-q-txt">${q}</div>
         <div class="ex-opts">${opts.map((o,oi) => {
-          const isAnswered = ans !== null && this._state.mode === 'exam';
-          const isSel = ans === oi;
+          const isSelected = ans === oi;
+          const isLocked = ans !== null;
           let cls = 'ex-opt';
-          if (isSel) cls += ' sel';
-          if (isAnswered && !isSel) cls += ' locked';
-          const disabled = isAnswered ? 'disabled' : '';
-          return `<button class="${cls}" onclick="ExamEngine.pickOpt(${oi})" ${disabled}>${OL[oi]}) ${o}</button>`;
+          if (isSelected) cls += ' sel locked-ans';
+          else if (isLocked) cls += ' locked-dim';
+          return `<button class="${cls}" onclick="ExamEngine.pickOpt(${oi})" ${isLocked ? 'disabled style="cursor:default"' : ''}>${OL[oi]}) ${o}</button>`;
         }).join('')}</div>
       </div>`;
     this._renderPalette();
@@ -3107,10 +2952,11 @@ const ExamEngine = {
   },
   pickOpt(oi) {
     if (!this._state) return;
-    // In exam mode: once answered, lock it — cannot change
-    if (this._state.mode === 'exam' && this._state.answers[this._state.current] !== null) return;
+    const { answers, current } = this._state;
+    // LOCK: once an answer is picked, it cannot be changed
+    if (answers[current] !== null) return;
     this._saveQTime();
-    this._state.answers[this._state.current] = oi;
+    this._state.answers[current] = oi;
     this.renderQ();
   },
   nav(dir) {
@@ -3158,7 +3004,6 @@ const ExamEngine = {
     if (!this._state) return;
     this._clearTimers();
     FocusMode.deactivate();
-    AdminMode.hideExamPanel();
     const { questions, answers, posScore, negScore, subjectName, mode, diff, qTimes, totalTime, timeLeft } = this._state;
     let correct=0, wrong=0, skip=0, score=0;
     const chapStats = {};
@@ -3234,7 +3079,7 @@ const ExamEngine = {
     else TestSetup.openPractice();
   },
   backToModes() {
-    this._clearTimers(); FocusMode.deactivate(); AdminMode.hideExamPanel(); this._state = null;
+    this._clearTimers(); FocusMode.deactivate(); this._state = null;
     document.getElementById('results-screen').style.display = 'none';
     document.getElementById('exam-screen').style.display = 'none';
     document.getElementById('test-modes').style.display = 'block';
@@ -3326,7 +3171,7 @@ const Achievements = {
         MEDALS_STATE.streakA = (MEDALS_STATE.streakA||0)+1;
         if (MEDALS_STATE.streakA>=3) { MEDALS_STATE.platinum++; platUnlocked=true; }
       } else {
-        // Non-competitive gold still breaks the competitive streak
+        // Non-competitive gold doesn't advance plat streak
         MEDALS_STATE.streakA = 0;
       }
     } else { MEDALS_STATE.streakA=0; }
@@ -3352,12 +3197,11 @@ const Achievements = {
       makeSlot('m-gold','🥇','GOLD','Score A (70%+) in Exam Mode',M.gold) +
       makeSlot('m-silver','🥈','SILVER','Score B (55–69%) in Exam Mode',M.silver) +
       makeSlot('m-bronze','🥉','BRONZE','Score C (40–54%) in Exam Mode',M.bronze) +
-      (M.platinum>0 ? makeSlot('m-plat m-plat-slot','💎','PLATINUM','Score S (90%+) on 3 consecutive Competitive exams',M.platinum) : '');
+      (M.platinum>0
+        ? makeSlot('m-plat m-plat-slot','💎','PLATINUM','Score S (90+) on 3 consecutive exams in Competitive mode',M.platinum)
+        : '');
     document.getElementById('tierDCount').textContent = M.d+'x';
     document.getElementById('tierFCount').textContent = M.f+'x';
-    // Creator badge row
-    const cbRow = document.getElementById('creatorBadgeRow');
-    if (cbRow) cbRow.classList.toggle('on', !!M.creator);
   },
   showOverlay(result) {
     const { tier, platUnlocked, score, maxScore, correct, wrong, pct, passed, passScore, mode } = result;
@@ -3439,50 +3283,53 @@ const Achievements = {
   }
 };
 
-// ══ FOCUS MODE — v8 REWRITE ══
+// ══ FOCUS MODE (v8 - fixed) ══
 const FocusMode = {
-  _active: false,
-  _bound: false,
-  _pendingFinish: false,
-  _handler: null,
+  _active: false, _switchCount: 0, _boundListener: null,
+
   activate() {
-    this._active = true;
-    this._pendingFinish = false;
-    const badge = document.getElementById('focusBadge');
-    if (badge) badge.style.display = 'inline-flex';
-    // Always remove first to avoid duplicate listeners
-    if (this._handler) document.removeEventListener('visibilitychange', this._handler);
-    this._handler = () => {
+    this._active = true; this._switchCount = 0;
+    // Remove any old listener first to prevent duplicates
+    if (this._boundListener) document.removeEventListener('visibilitychange', this._boundListener);
+    // Create fresh bound listener
+    this._boundListener = () => {
       if (!FocusMode._active) return;
       if (document.hidden) {
-        FocusMode._active = false;
-        FocusMode._pendingFinish = true;
-        const badge = document.getElementById('focusBadge');
-        if (badge) badge.style.display = 'none';
-        // Show the overlay then auto-finish
-        const overlay = document.getElementById('focusWarningOverlay');
-        if (overlay) overlay.classList.add('on');
-        // Stop timers immediately
-        ExamEngine._clearTimers();
+        FocusMode._switchCount++;
+        const el = document.getElementById('focusWarnCount');
+        if (el) el.textContent = `Tab switch #${FocusMode._switchCount}`;
+        const ov = document.getElementById('focusWarningOverlay');
+        if (ov) ov.classList.add('on');
       }
     };
-    document.addEventListener('visibilitychange', this._handler);
+    document.addEventListener('visibilitychange', this._boundListener);
+    const badge = document.getElementById('focusBadge');
+    if (badge) badge.style.display = 'inline-flex';
   },
+
   deactivate() {
-    this._active = false;
-    this._pendingFinish = false;
-    if (this._handler) {
-      document.removeEventListener('visibilitychange', this._handler);
-      this._handler = null;
+    this._active = false; this._switchCount = 0;
+    if (this._boundListener) {
+      document.removeEventListener('visibilitychange', this._boundListener);
+      this._boundListener = null;
     }
     const badge = document.getElementById('focusBadge');
     if (badge) badge.style.display = 'none';
-    const overlay = document.getElementById('focusWarningOverlay');
-    if (overlay) overlay.classList.remove('on');
+    const ov = document.getElementById('focusWarningOverlay');
+    if (ov) ov.classList.remove('on');
   },
-  dismissAndFinish() {
-    const overlay = document.getElementById('focusWarningOverlay');
-    if (overlay) overlay.classList.remove('on');
+
+  resume() {
+    const ov = document.getElementById('focusWarningOverlay');
+    if (ov) ov.classList.remove('on');
+  },
+
+  stopExam() {
+    if (!confirm('Stop the exam? Your current answers will be submitted.')) return;
+    const ov = document.getElementById('focusWarningOverlay');
+    if (ov) ov.classList.remove('on');
+    FocusMode.deactivate();
+    ExamEngine._clearTimers();
     ExamEngine.finish();
   }
 };
@@ -3505,120 +3352,14 @@ ExamEngine.finish = function() {
   const pct = maxScore>0?Math.round(score/maxScore*100):0;
   const passScore = Math.ceil(maxScore*this._state.passPercent/100);
   const passed = score>=passScore;
-  const result = Achievements.award(pct,mode,diff);
+  const result = Achievements.award(pct, mode, diff);
   if (!result) return;
   setTimeout(()=>{
     Achievements.render();
     Achievements.showOverlay({...result,score,maxScore,correct,wrong,pct,passed,passScore,mode});
+    // Check admin mode - also add admin badge if active
+    if (window._adminMode) AdminFeature.checkPostExam();
   },600);
-};
-
-// ══ EXAM RULES — shown only first time ══
-const ExamRules = {
-  _key: 'nu_bba_exam_rules_seen_v8',
-  hasSeen() { try { return !!localStorage.getItem(this._key); } catch { return false; } },
-  markSeen() { try { localStorage.setItem(this._key, '1'); } catch {} },
-  _pendingCfg: null,
-  showIfNeeded(cfg) {
-    if (this.hasSeen()) {
-      this._launch(cfg);
-      return;
-    }
-    this._pendingCfg = cfg;
-    document.getElementById('examRulesOverlay').classList.add('on');
-  },
-  close() {
-    this.markSeen();
-    document.getElementById('examRulesOverlay').classList.remove('on');
-    if (this._pendingCfg) {
-      const cfg = this._pendingCfg;
-      this._pendingCfg = null;
-      this._launch(cfg);
-    }
-  },
-  _launch(cfg) {
-    ExamEngine._doLaunch(cfg);
-  }
-};
-
-// ══ ADMIN MODE ══
-const AdminMode = {
-  _active: false,
-  _holdTimer: null,
-  _holdStart: null,
-  _holdDuration: 10000, // 10 seconds
-  activate() {
-    if (this._active) return;
-    this._active = true;
-    // Show unlock animation
-    const overlay = document.getElementById('adminUnlockOverlay');
-    overlay.classList.add('on');
-    setTimeout(() => overlay.classList.remove('on'), 2800);
-  },
-  isActive() { return this._active; },
-  showExamPanel() {
-    if (!this._active) return;
-    const panel = document.getElementById('adminExamPanel');
-    if (panel) panel.classList.add('on');
-  },
-  hideExamPanel() {
-    const panel = document.getElementById('adminExamPanel');
-    if (panel) panel.classList.remove('on');
-  },
-  awardAndFinish() {
-    if (!this._active || !ExamEngine._state) return;
-    // Grant the Creator Badge
-    MEDALS_STATE.creator = true;
-    saveMedals();
-    Achievements.render();
-    // Stop everything cleanly
-    ExamEngine._clearTimers();
-    FocusMode.deactivate();
-    this.hideExamPanel();
-    // Hide the exam screen
-    document.getElementById('exam-screen').style.display = 'none';
-    // Show creator overlay with confetti
-    const overlay = document.getElementById('creatorOverlay');
-    if (overlay) { overlay.style.display = 'flex'; }
-    // Creator confetti burst
-    Achievements._launchConfetti('platinum', true);
-    // Nullify state so normal finish doesn't double-fire
-    ExamEngine._state = null;
-  },
-  initHoldDetect() {
-    const wrap = document.getElementById('devAvatarWrap');
-    const ring = document.getElementById('devHoldRing');
-    if (!wrap) return;
-    let raf = null, startTime = null;
-    const update = () => {
-      const elapsed = Date.now() - startTime;
-      const pct = Math.min(100, (elapsed / this._holdDuration) * 100);
-      if (ring) ring.style.background = `conic-gradient(var(--purple) ${pct}%, transparent 0%)`;
-      if (elapsed >= this._holdDuration) {
-        cancelAnimationFrame(raf);
-        endHold(true);
-        return;
-      }
-      raf = requestAnimationFrame(update);
-    };
-    const startHold = () => {
-      if (this._active) return;
-      startTime = Date.now();
-      if (ring) ring.classList.add('active');
-      raf = requestAnimationFrame(update);
-    };
-    const endHold = (success) => {
-      if (raf) { cancelAnimationFrame(raf); raf = null; }
-      if (ring) { ring.classList.remove('active'); ring.style.background = ''; }
-      if (success && !this._active) this.activate();
-    };
-    wrap.addEventListener('mousedown', startHold);
-    wrap.addEventListener('touchstart', startHold, {passive:true});
-    wrap.addEventListener('mouseup', () => endHold(false));
-    wrap.addEventListener('mouseleave', () => endHold(false));
-    wrap.addEventListener('touchend', () => endHold(false));
-    wrap.addEventListener('touchcancel', () => endHold(false));
-  }
 };
 
 // ══ INIT ══
@@ -3664,8 +3405,206 @@ window.addEventListener('DOMContentLoaded', () => {
   // Build subjects
   SubjectUI.build();
   Achievements.render();
-  AdminMode.initHoldDetect();
+
+  // Admin hold listener on dev avatar
+  AdminFeature.initHold();
 });
+
+// ══════════════════════════════
+// EXAM RULES (first-time modal)
+// ══════════════════════════════
+const RULES_SEEN_KEY = 'nu_exam_rules_seen_v8';
+const ExamRules = {
+  _pendingCfg: null,
+
+  // Called before launching exam — show rules first time only
+  show(cfg) {
+    this._pendingCfg = cfg;
+    const seen = localStorage.getItem(RULES_SEEN_KEY);
+    if (seen) {
+      // Already seen — go straight to exam
+      this._launch();
+      return;
+    }
+    const modal = document.getElementById('examRulesModal');
+    if (modal) modal.classList.add('on');
+  },
+
+  close() {
+    const modal = document.getElementById('examRulesModal');
+    if (modal) modal.classList.remove('on');
+    try { localStorage.setItem(RULES_SEEN_KEY, '1'); } catch{}
+    if (this._pendingCfg) this._launch();
+  },
+
+  // Show admin badge panel if admin mode active
+  _launch() {
+    const cfg = this._pendingCfg;
+    this._pendingCfg = null;
+    if (!cfg) return;
+    Modal.close();
+    ExamEngine.launch(cfg);
+    // Show admin badge panel if admin mode active - place inside exam body
+    if (window._adminMode) {
+      setTimeout(() => {
+        const panel = document.getElementById('adminBadgePanel');
+        const examBody = document.querySelector('.exam-body');
+        if (panel && examBody) {
+          if (!examBody.contains(panel)) examBody.prepend(panel);
+          panel.classList.add('on');
+        } else if (panel) {
+          panel.classList.add('on');
+        }
+      }, 100);
+    }
+  }
+};
+
+// ══════════════════════════════
+// ADMIN FEATURE
+// ══════════════════════════════
+window._adminMode = false;
+const AdminFeature = {
+  _holdTimer: null,
+  _holdStart: null,
+  _animFrame: null,
+  HOLD_DURATION: 10000, // 10 seconds
+
+  initHold() {
+    const img = document.getElementById('devAvatarImg');
+    if (!img) return;
+    // Touch events (mobile)
+    img.addEventListener('touchstart', (e) => { e.preventDefault(); this._startHold(); }, {passive:false});
+    img.addEventListener('touchend', () => this._cancelHold());
+    img.addEventListener('touchcancel', () => this._cancelHold());
+    // Mouse events (desktop)
+    img.addEventListener('mousedown', () => this._startHold());
+    img.addEventListener('mouseup', () => this._cancelHold());
+    img.addEventListener('mouseleave', () => this._cancelHold());
+  },
+
+  _startHold() {
+    if (window._adminMode) return; // already unlocked
+    this._holdStart = Date.now();
+    const bar = document.getElementById('adminHoldBar');
+    if (bar) { bar.style.transition = 'none'; bar.style.width = '0%'; }
+
+    const animate = () => {
+      const elapsed = Date.now() - this._holdStart;
+      const pct = Math.min(100, (elapsed / this.HOLD_DURATION) * 100);
+      if (bar) { bar.style.transition = 'none'; bar.style.width = pct + '%'; }
+      if (elapsed >= this.HOLD_DURATION) {
+        this._unlock();
+        return;
+      }
+      this._animFrame = requestAnimationFrame(animate);
+    };
+    this._animFrame = requestAnimationFrame(animate);
+  },
+
+  _cancelHold() {
+    if (this._animFrame) { cancelAnimationFrame(this._animFrame); this._animFrame = null; }
+    const bar = document.getElementById('adminHoldBar');
+    if (bar) { bar.style.transition = 'width .3s ease'; bar.style.width = '0%'; }
+    this._holdStart = null;
+  },
+
+  _unlock() {
+    this._cancelHold();
+    window._adminMode = true;
+    // Show GSAP toast
+    const toast = document.getElementById('devUnlockToast');
+    if (toast) {
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 3500);
+    }
+    // Animate with GSAP if available
+    if (typeof gsap !== 'undefined') {
+      gsap.from('#devUnlockToast', {y: -30, scale: 0.6, duration: 0.5, ease: 'back.out(2)'});
+    }
+  },
+
+  awardBadge(tier) {
+    if (!window._adminMode) return;
+    const M = MEDALS_STATE;
+    if (tier === 'gold') M.gold++;
+    else if (tier === 'silver') M.silver++;
+    else if (tier === 'bronze') M.bronze++;
+    else if (tier === 'platinum') { M.platinum++; M.streakA = 3; }
+    saveMedals();
+    Achievements.render();
+    // End exam and show overlay with the awarded tier
+    const panel = document.getElementById('adminBadgePanel');
+    if (panel) panel.classList.remove('on');
+    if (ExamEngine._state) {
+      ExamEngine._clearTimers();
+      // Direct overlay show — skip normal finish
+      FocusMode.deactivate();
+      document.getElementById('exam-screen').style.display = 'none';
+      document.getElementById('results-screen').style.display = 'block';
+      // Minimal result render
+      document.getElementById('rScoreBig').textContent = '—';
+      document.getElementById('rMaxScore').textContent = '—';
+      document.getElementById('rCorrect').textContent = '—';
+      document.getElementById('rWrong').textContent = '—';
+      document.getElementById('rSkip').textContent = '—';
+      document.getElementById('rAccuracy').textContent = '—';
+      document.getElementById('rTimeTaken').textContent = '—';
+      document.getElementById('rAvgTime').textContent = '—';
+      document.getElementById('rChapBreak').innerHTML = '<div style="color:var(--muted);font-size:.8rem;padding:.5rem 0">Dev Mode — badge awarded directly</div>';
+      document.getElementById('rReview').innerHTML = '';
+      document.getElementById('rGrade').textContent = '';
+      document.getElementById('rPass').textContent = '';
+      ExamEngine._state = null;
+      setTimeout(() => {
+        const platUnlocked = tier === 'platinum';
+        Achievements.showOverlay({
+          tier: platUnlocked ? 'gold' : tier,
+          platUnlocked,
+          score: 0, maxScore: 0, correct: 0, wrong: 0,
+          pct: tier === 'gold' || tier === 'platinum' ? 95 : tier === 'silver' ? 65 : 45,
+          passed: true, passScore: 0, mode: 'exam'
+        });
+      }, 400);
+    }
+  },
+
+  checkPostExam() {
+    const panel = document.getElementById('adminBadgePanel');
+    if (panel) panel.classList.remove('on');
+  }
+};
+
+// ══ Patch TestSetup.startExam to show rules first ══
+const _origStartExam = TestSetup.startExam.bind(TestSetup);
+TestSetup.startExam = function() {
+  const diff = this._selDiff || 'easy';
+  const cfg = EXAM_CONFIG[diff];
+  const subjKey = document.getElementById('eSubj')?.value;
+  if (!subjKey) return;
+  let questions = [];
+  const doSubj = (key) => {
+    let pool = [];
+    SUBJECTS[key].chapters.forEach(ch => {
+      ch.mcqs.forEach(([q,opts,corr]) => pool.push({q,opts,corr,chapName:ch.name.substring(0,30),subj:key}));
+    });
+    questions = questions.concat(Util.shuffle(pool).slice(0,cfg.q));
+  };
+  if (subjKey === 'all') Object.keys(SUBJECTS).forEach(k => doSubj(k));
+  else doSubj(subjKey);
+  questions = Util.shuffle(questions);
+  const numSubjs = subjKey === 'all' ? Object.keys(SUBJECTS).length : 1;
+
+  const launchCfg = {
+    mode:'exam', diff, subject:subjKey,
+    subjectName: subjKey === 'all' ? 'All Subjects' : SUBJECTS[subjKey].name,
+    questions, totalTime:cfg.totalMinutes*60*(subjKey==='all'?numSubjs:1),
+    posScore:cfg.posScore, negScore:cfg.negScore, passPercent:60, perQSec:cfg.perQSec
+  };
+
+  // Show rules first time, then launch
+  ExamRules.show(launchCfg);
+};
 </script>
 </body>
 </html>
