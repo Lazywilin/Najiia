@@ -3368,7 +3368,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const diff = EXAM_DATE - new Date();
     if (diff<=0) {
       const ecUnits=document.getElementById('ecUnits');
-      if (ecUnits) ecUnits.innerHTML='<div class="ec-expired">🎓 Exam Day has arrived!</div>';
+      if (ecUnits) ecUnits.innerHTML='<div class="ec-expired">🎓 The exam has ended, best wishes to all!</div>';
       const dEl=document.getElementById('daysLeft'); if(dEl)dEl.textContent='0';
       return;
     }
