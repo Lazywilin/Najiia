@@ -1241,6 +1241,8 @@ option { background: var(--bg3); }
       <button class="btn-pri" onclick="App.nav('subjects')">📖 Start Reading</button>
       <button class="btn-sec" onclick="App.nav('test')">🎯 Take Test</button>
       <button class="btn-ghost" onclick="App.nav('about')">✨ About</button>
+      <button class="btn-sec" onclick="window.open('https://result.nu.ac.bd/','_blank')" style="border-color:var(--blue);color:var(--blue)">🎓 Result 1</button>
+      <button class="btn-sec" onclick="window.open('https://www.nu.ac.bd/results/','_blank')" style="border-color:var(--purple);color:var(--purple)">🎓 Result 2</button>
     </div>
   </div>
 
@@ -1248,16 +1250,13 @@ option { background: var(--bg3); }
     <div class="exam-countdown">
       <div class="ec-header">
         <div>
-          <div class="ec-label">📅 NU BBA Exam Countdown</div>
+          <div class="ec-label">📅 NU BBA Exam Status</div>
           <div class="ec-date">April 25, 2026 · 11:00 AM</div>
         </div>
-        <div class="ec-admit">Admit card ~7 days before.<br>Check nu.ac.bd/admissions</div>
+        <div class="ec-admit">Exam has ended.<br>Thank you for using our site!</div>
       </div>
       <div class="ec-units" id="ecUnits">
-        <div class="ec-unit"><span class="ec-num" id="ecD">—</span><span class="ec-unit-label">Days</span></div>
-        <div class="ec-unit"><span class="ec-num" id="ecH">—</span><span class="ec-unit-label">Hours</span></div>
-        <div class="ec-unit"><span class="ec-num" id="ecM">—</span><span class="ec-unit-label">Minutes</span></div>
-        <div class="ec-unit"><span class="ec-num" id="ecS">—</span><span class="ec-unit-label">Seconds</span></div>
+        <div class="ec-expired" style="font-size:1.2rem;width:100%">🎓 Exam has ended. Thank you for using our site!</div>
       </div>
     </div>
 
